@@ -300,7 +300,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/06/10/makefile/" itemprop="url">Markdown基本语法</a></h1>
+                <a class="post-title-link" href="/2020/06/10/makefile/" itemprop="url">Makefile基本语法</a></h1>
         
 
         <div class="post-meta">
@@ -335,8 +335,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Makefile/" itemprop="url" rel="index">
-                    <span itemprop="name">Makefile</span>
+                  <a href="/categories/Makefile%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">Makefile基本语法</span>
                   </a>
                 </span>
 
@@ -439,6 +439,12 @@
 <h2 id="模式规则"><a href="#模式规则" class="headerlink" title="模式规则"></a>模式规则</h2><p>模式规则中，至少在规则的目标定定义中要包涵“%”，否则就是一般规则，目标中的“%”表示对文件名的匹配，“%”表示长度任意的非空字符串，比如“%.c”就是所有的以.c 结尾的文件</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">objects</span> = <span class="string">main.o input.o calcu.o</span></span><br><span class="line"><span class="attr">main</span>: <span class="string">$(objects)</span></span><br><span class="line">	<span class="attr">gcc</span> <span class="string">-o main $(objects)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">%.o</span> : <span class="string">%.c</span></span><br><span class="line">	<span class="attr">gcc</span> <span class="string">-c $&lt;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">clean</span>:<span class="string"></span></span><br><span class="line">	<span class="attr">rm</span> <span class="string">*.o</span></span><br><span class="line">	<span class="attr">rm</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
 <p>上诉代码可代替2.1中的代码，更加精简</p>
+<h2 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h2><p>Makefile 中的函数是已经定义好的，我们直接使用，不支持我们自定义函数。<br>函数的用法如下：<br><code>$(函数名 参数集合）</code></p>
+<p>1、函数 subst<br>函数 subst 用来完成字符串替换，调用形式如下：<br><code>$(subst &lt;from&gt;,&lt;to&gt;,&lt;text&gt;)</code><br>此函数的功能是将字符串<text>中的<from>内容替换为<to>，函数返回被替换以后的字符串，比如如下示例：<br><code>$(subst zou,ZZK,my name is zzk)</code><br>把字符串“my name is zzk”中的“zzk”替换为“zou”，替换完成以后的字符串为“my name is zou”。</p>
+<p>2、函数 patsubst<br>函数 patsubst 用来完成模式字符串替换，使用方法如下：<br><code>$(patsubst &lt;pattern&gt;,&lt;replacement&gt;,&lt;text&gt;)</code><br>此函数查找字符串<text>中的单词是否符合模式<pattern>，如果匹配就用<replacement>来替换掉， <pattern>可以使用包括通配符“%”，表示任意长度的字符串，函数返回值就是替换后<br>的字符串。如果<replacement>中也包涵“%”，那么<replacement>中的“%”将是<pattern>中的那个“%”所代表的字符串，比如：<br><code>$(patsubst %.c,%.o,a.c b.c c.c)</code><br>将字符串“a.c b.c c.c”中的所有符合“%.c”的字符串，替换为“%.o”，替换完成以后的字符串为“a.o b.o c.o”。</p>
+<p>符串为“a.o b.o c.o”。<br>3、函数 dir<br>函数 dir 用来获取目录，使用方法如下：<br><code>$(dir &lt;names…&gt;)</code><br>此函数用来从文件名序列<names>中提取出目录部分，返回值是文件名序列<names>的目录部分，比如：<br><code>$(dir &lt;/src/a.c&gt;)</code><br>提取文件“/src/a.c”的目录部分，也就是“/src”。</p>
+<p>4、函数 notdir<br>函数 notdir 看名字就是知道去除文件中的目录部分，也就是提取文件名，用法如下：<br><code>$(notdir &lt;names…&gt;)</code><br>此函数用与从文件名序列<names>中提取出文件名非目录部分，比如：<br><code>$(notdir &lt;/src/a.c&gt;)</code><br>提取文件“/src/a.c”中的非目录部分，也就是文件名“a.c”。</p>
+<p>5、函数 foreach<br>foreach 函数用来完成循环，用法如下：<br><code>$(foreach &lt;var&gt;, &lt;list&gt;,&lt;text&gt;)</code><br>此函数的意思就是把参数list中的单词逐一取出来放到参数var中，然后再执行text所包含的表达式。每次text都会返回一个字符串，循环的过程中， text中所包含的每个字符串会以空格隔开，最后当整个循环结束时，<text>所返回的每个字符串所组成的整个字符串将会是函数 foreach 函数的返回值。</p>
 
           
         
@@ -622,6 +628,12 @@
 
 
 <h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">//</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">//</span>]: <span class="link"># (哈哈我是注释，不会在浏览器中显示。)</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h2><p>Markdown中的转义字符为\，可以转义的有：</p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">\\</span> 反斜杠</span><br><span class="line"><span class="symbol">\`</span> 反引号</span><br><span class="line"><span class="symbol">\*</span> 星号</span><br><span class="line"><span class="symbol">\_</span> 下划线</span><br><span class="line"><span class="symbol">\&#123;</span><span class="symbol">\&#125;</span> 大括号</span><br><span class="line"><span class="symbol">\[</span><span class="symbol">\]</span> 中括号</span><br><span class="line"><span class="symbol">\(</span><span class="symbol">\)</span> 小括号</span><br><span class="line"><span class="symbol">\#</span> 井号</span><br><span class="line"><span class="symbol">\+</span> 加号</span><br><span class="line"><span class="symbol">\-</span> 减号</span><br><span class="line"><span class="symbol">\.</span> 英文句号</span><br><span class="line"><span class="symbol">\!</span> 感叹号</span><br><span class="line"><span class="symbol">\&lt;</span>&gt;尖括号</span><br></pre></td></tr></table></figure>
+
 
 <h2 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h2><p>在 Hexo 中插入图片，首先需要将图片放在 source/images/ 文件夹下，然后如下方式进行插入：</p>
 <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!<span class="selector-attr">[]</span>(/images/insert_image.jpg)</span><br></pre></td></tr></table></figure>

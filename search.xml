@@ -46,6 +46,12 @@
 
 <h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">//</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">//</span>]: <span class="link"># (哈哈我是注释，不会在浏览器中显示。)</span></span><br></pre></td></tr></table></figure>
 
+
+
+<h2 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h2><p>Markdown中的转义字符为\，可以转义的有：</p>
+<figure class="highlight taggerscript"><table><tr><td class="code"><pre><span class="line"><span class="symbol">\\</span> 反斜杠</span><br><span class="line"><span class="symbol">\`</span> 反引号</span><br><span class="line"><span class="symbol">\*</span> 星号</span><br><span class="line"><span class="symbol">\_</span> 下划线</span><br><span class="line"><span class="symbol">\&#123;</span><span class="symbol">\&#125;</span> 大括号</span><br><span class="line"><span class="symbol">\[</span><span class="symbol">\]</span> 中括号</span><br><span class="line"><span class="symbol">\(</span><span class="symbol">\)</span> 小括号</span><br><span class="line"><span class="symbol">\#</span> 井号</span><br><span class="line"><span class="symbol">\+</span> 加号</span><br><span class="line"><span class="symbol">\-</span> 减号</span><br><span class="line"><span class="symbol">\.</span> 英文句号</span><br><span class="line"><span class="symbol">\!</span> 感叹号</span><br><span class="line"><span class="symbol">\&lt;</span>&gt;尖括号</span><br></pre></td></tr></table></figure>
+
+
 <h2 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h2><p>在 Hexo 中插入图片，首先需要将图片放在 source/images/ 文件夹下，然后如下方式进行插入：</p>
 <figure class="highlight less"><table><tr><td class="code"><pre><span class="line">!<span class="selector-attr">[]</span>(/images/insert_image.jpg)</span><br></pre></td></tr></table></figure>
 <p>效果：<br><img src="/images/header.jpg" alt=""></p>
@@ -127,7 +133,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Markdown基本语法</title>
+    <title>Makefile基本语法</title>
     <url>/2020/06/10/makefile/</url>
     <content><![CDATA[<h1 id="什么是Makefile"><a href="#什么是Makefile" class="headerlink" title="什么是Makefile"></a>什么是Makefile</h1><p>使用 GCC 编译器在 Linux 进行 C 语言编译，通过在终端执行 gcc 命令来完成 C 文件的编译，如果我们的工程只有一两个 C 文件还好，需要输入的命令不多，当文件有几十、上百甚至上万个的时候用终端输入 GCC 命令的方法显然是不现实的。如果我们能够编写一个文件，这个文件描述了编译哪些源码文件、如何编译那就好了，每次需要编译工程的时只需要使用这个文件就行了。这种问题怎么可能难倒聪明的程序员，为此提出了一个解决大工程编译的工具： make，描述哪些文件需要编译、哪些需要重新编译的文件就叫做 Makefile，命令即可完成整个工程的自动编译，极大的提高了软件开发的效率。</p>
 <h1 id="Makefile语法"><a href="#Makefile语法" class="headerlink" title="Makefile语法"></a>Makefile语法</h1><h2 id="Makefile文件的创建和运行"><a href="#Makefile文件的创建和运行" class="headerlink" title="Makefile文件的创建和运行"></a>Makefile文件的创建和运行</h2><p>在工程目录下创建名为“Makefile”的文件，文件名一定要叫做“Makefile”！！！区分大小写</p>
@@ -194,9 +200,15 @@
 <h2 id="模式规则"><a href="#模式规则" class="headerlink" title="模式规则"></a>模式规则</h2><p>模式规则中，至少在规则的目标定定义中要包涵“%”，否则就是一般规则，目标中的“%”表示对文件名的匹配，“%”表示长度任意的非空字符串，比如“%.c”就是所有的以.c 结尾的文件</p>
 <figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">objects</span> = <span class="string">main.o input.o calcu.o</span></span><br><span class="line"><span class="attr">main</span>: <span class="string">$(objects)</span></span><br><span class="line">	<span class="attr">gcc</span> <span class="string">-o main $(objects)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">%.o</span> : <span class="string">%.c</span></span><br><span class="line">	<span class="attr">gcc</span> <span class="string">-c $&lt;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">clean</span>:<span class="string"></span></span><br><span class="line">	<span class="attr">rm</span> <span class="string">*.o</span></span><br><span class="line">	<span class="attr">rm</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
 <p>上诉代码可代替2.1中的代码，更加精简</p>
+<h2 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h2><p>Makefile 中的函数是已经定义好的，我们直接使用，不支持我们自定义函数。<br>函数的用法如下：<br><code>$(函数名 参数集合）</code></p>
+<p>1、函数 subst<br>函数 subst 用来完成字符串替换，调用形式如下：<br><code>$(subst &lt;from&gt;,&lt;to&gt;,&lt;text&gt;)</code><br>此函数的功能是将字符串<text>中的<from>内容替换为<to>，函数返回被替换以后的字符串，比如如下示例：<br><code>$(subst zou,ZZK,my name is zzk)</code><br>把字符串“my name is zzk”中的“zzk”替换为“zou”，替换完成以后的字符串为“my name is zou”。</p>
+<p>2、函数 patsubst<br>函数 patsubst 用来完成模式字符串替换，使用方法如下：<br><code>$(patsubst &lt;pattern&gt;,&lt;replacement&gt;,&lt;text&gt;)</code><br>此函数查找字符串<text>中的单词是否符合模式<pattern>，如果匹配就用<replacement>来替换掉， <pattern>可以使用包括通配符“%”，表示任意长度的字符串，函数返回值就是替换后<br>的字符串。如果<replacement>中也包涵“%”，那么<replacement>中的“%”将是<pattern>中的那个“%”所代表的字符串，比如：<br><code>$(patsubst %.c,%.o,a.c b.c c.c)</code><br>将字符串“a.c b.c c.c”中的所有符合“%.c”的字符串，替换为“%.o”，替换完成以后的字符串为“a.o b.o c.o”。</p>
+<p>符串为“a.o b.o c.o”。<br>3、函数 dir<br>函数 dir 用来获取目录，使用方法如下：<br><code>$(dir &lt;names…&gt;)</code><br>此函数用来从文件名序列<names>中提取出目录部分，返回值是文件名序列<names>的目录部分，比如：<br><code>$(dir &lt;/src/a.c&gt;)</code><br>提取文件“/src/a.c”的目录部分，也就是“/src”。</p>
+<p>4、函数 notdir<br>函数 notdir 看名字就是知道去除文件中的目录部分，也就是提取文件名，用法如下：<br><code>$(notdir &lt;names…&gt;)</code><br>此函数用与从文件名序列<names>中提取出文件名非目录部分，比如：<br><code>$(notdir &lt;/src/a.c&gt;)</code><br>提取文件“/src/a.c”中的非目录部分，也就是文件名“a.c”。</p>
+<p>5、函数 foreach<br>foreach 函数用来完成循环，用法如下：<br><code>$(foreach &lt;var&gt;, &lt;list&gt;,&lt;text&gt;)</code><br>此函数的意思就是把参数list中的单词逐一取出来放到参数var中，然后再执行text所包含的表达式。每次text都会返回一个字符串，循环的过程中， text中所包含的每个字符串会以空格隔开，最后当整个循环结束时，<text>所返回的每个字符串所组成的整个字符串将会是函数 foreach 函数的返回值。</p>
 ]]></content>
       <categories>
-        <category>Makefile</category>
+        <category>Makefile基本语法</category>
       </categories>
       <tags>
         <tag>Makefile</tag>
