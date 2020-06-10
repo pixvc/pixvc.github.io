@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Markdown基本语法</title>
-    <url>/2020/03/16/hello-world/</url>
+    <url>/2020/06/10/hello-world/</url>
     <content><![CDATA[<h1 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h1><p>在source/_posts 文件夹下创建.md文件<br>配置属性</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Markdown基本语法</span></span><br><span class="line"><span class="attr">data:</span> <span class="number">2019</span><span class="number">-6</span><span class="number">-10</span></span><br><span class="line"><span class="attr">categories:</span>    </span><br><span class="line"><span class="bullet">-</span> <span class="string">lua语言</span>    <span class="comment">##添加到lua语言分类，也也可以新建一个分类</span></span><br><span class="line"><span class="string">tags：</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">lua</span>        <span class="comment">#添加标签</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">编程</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
 
@@ -122,5 +122,8 @@
       <categories>
         <category>Markdown</category>
       </categories>
+      <tags>
+        <tag>makedown</tag>
+      </tags>
   </entry>
 </search>
