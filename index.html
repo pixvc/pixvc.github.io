@@ -310,7 +310,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/03/16/hello-world/" itemprop="url">略略略</a></h1>
+                <a class="post-title-link" href="/2020/03/16/hello-world/" itemprop="url">Markdown基本语法</a></h1>
         
 
         <div class="post-meta">
@@ -332,6 +332,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Markdown/" itemprop="url" rel="index">
+                    <span itemprop="name">Markdown</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -362,7 +384,55 @@
       
         
           
-            
+            <h1 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h1><p>在source/_posts 文件夹下创建.md文件<br>配置属性</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Markdown基本语法</span></span><br><span class="line"><span class="attr">data:</span> <span class="number">2019</span><span class="number">-6</span><span class="number">-10</span></span><br><span class="line"><span class="attr">categories:</span>    </span><br><span class="line"><span class="bullet">-</span> <span class="string">lua语言</span>    <span class="comment">##添加到lua语言分类，也也可以新建一个分类</span></span><br><span class="line"><span class="string">tags：</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">lua</span>        <span class="comment">#添加标签</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">编程</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><p>Markdown 是一种标记语言，语法简单，易阅读易编写，可以让用户完全脱离鼠标写出样式丰富的文档，广受程序员喜爱，目前许多网站都已经支持通过 Markdown 语法来写文章或者发表评论。 </p>
+<h2 id="分级标题"><a href="#分级标题" class="headerlink" title="分级标题"></a>分级标题</h2><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 一级标题</span><br><span class="line">## 二级标题</span><br><span class="line">### 三级标题</span><br><span class="line">#### 四级标题</span><br><span class="line">##### 五级标题</span><br><span class="line">###### 六级标题</span><br></pre></td></tr></table></figure>
+
+<h2 id="斜体和粗体"><a href="#斜体和粗体" class="headerlink" title="斜体和粗体"></a>斜体和粗体</h2><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="strong">*这是斜体*</span> 或 <span class="emphasis">_这也是斜体_</span> </span><br><span class="line">*<span class="strong">*这是粗体*</span><span class="strong">*</span></span><br><span class="line"><span class="strong">*</span>*<span class="strong">*这是加粗斜体*</span>*<span class="strong">*</span></span><br><span class="line"><span class="strong">~~这是删除线~~</span></span><br></pre></td></tr></table></figure>
+<p>效果：<br><em>这是斜体</em> 或 <em>这也是斜体</em><br><strong>这是粗体</strong><br><strong><em>这是加粗斜体</em></strong><br><del>这是删除线</del> </p>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">|<span class="string"> 表头1</span>|<span class="string">表头2</span>|<span class="string">表头3</span>|<span class="string">表头4</span></span><br><span class="line">|<span class="string">-</span>|<span class="string"> :- </span>|<span class="string"> :-: </span>|<span class="string"> -: </span>|</span><br><span class="line">|<span class="string">默认左对齐</span>|<span class="string">左对齐</span>|<span class="string">居中对其</span>|<span class="string">右对齐</span>|</span><br><span class="line">|<span class="string">默认左对齐</span>|<span class="string">左对齐</span>|<span class="string">居中对其</span>|<span class="string">右对齐</span>|</span><br><span class="line">|<span class="string">默认左对齐</span>|<span class="string">左对齐</span>|<span class="string">居中对其</span>|<span class="string">右对齐</span>|</span><br></pre></td></tr></table></figure>
+<p>效果：（表格与文字要有空行）</p>
+<table>
+<thead>
+<tr>
+<th>表头1</th>
+<th align="left">表头2</th>
+<th align="center">表头3</th>
+<th align="right">表头4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>默认左对齐</td>
+<td align="left">左对齐</td>
+<td align="center">居中对其</td>
+<td align="right">右对齐</td>
+</tr>
+<tr>
+<td>默认左对齐</td>
+<td align="left">左对齐</td>
+<td align="center">居中对其</td>
+<td align="right">右对齐</td>
+</tr>
+<tr>
+<td>默认左对齐</td>
+<td align="left">左对齐</td>
+<td align="center">居中对其</td>
+<td align="right">右对齐</td>
+</tr>
+</tbody></table>
+<h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">``</span><span class="string">`代码块`</span><span class="string">``</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">//</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">//</span>]: <span class="link"># (哈哈我是注释，不会在浏览器中显示。)</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h1><p>在 Hexo 中插入图片，首先需要将图片放在 source/images/ 文件夹下，然后如下方式进行插入：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!<span class="selector-attr">[]</span>(/images/insert_image.jpg)</span><br></pre></td></tr></table></figure>
+<p>效果：<br><img src="/images/header.jpg" alt=""></p>
+<h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">行内形式：[<span class="string">我的博客</span>](<span class="link">http://pixvc.github.io/</span>)</span><br><span class="line">参考形式：[<span class="string">p站</span>][<span class="symbol">1</span>]，[<span class="string">谷歌</span>][<span class="symbol">2</span>]</span><br><span class="line">[<span class="symbol">1</span>]:<span class="link">https://cn.pornhub.com/</span></span><br><span class="line">[<span class="symbol">2</span>]:<span class="link">https://www.google.com/</span></span><br></pre></td></tr></table></figure>
+<p>效果：<br>行内形式：<a href="http://pixvc.github.io/">我的博客</a><br>参考形式：[p站][1]，[谷歌][2]<br>[1]:<a href="https://cn.pornhub.com/" target="_blank" rel="noopener">https://cn.pornhub.com/</a><br>[2]:<a href="https://www.google.com/" target="_blank" rel="noopener">https://www.google.com/</a></p>
+
           
         
       
@@ -449,6 +519,15 @@
               </div>
             
 
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
             
 
             
@@ -1014,7 +1093,7 @@
 
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":1}});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":1}});</script></body>
 </html>
 <!-- 页面点击小红心 -->
 <script type="text/javascript" src="/js/src/love.js"></script>
