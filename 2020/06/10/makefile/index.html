@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="周菜鸡">
 <meta property="og:description" content="什么是Makefile使用 GCC 编译器在 Linux 进行 C 语言编译，通过在终端执行 gcc 命令来完成 C 文件的编译，如果我们的工程只有一两个 C 文件还好，需要输入的命令不多，当文件有几十、上百甚至上万个的时候用终端输入 GCC 命令的方法显然是不现实的。如果我们能够编写一个文件，这个文件描述了编译哪些源码文件、如何编译那就好了，每次需要编译工程的时只需要使用这个文件就行了。这种问题">
 <meta property="article:published_time" content="2020-06-10T08:09:16.377Z">
-<meta property="article:modified_time" content="2020-06-10T09:29:25.554Z">
+<meta property="article:modified_time" content="2020-06-10T14:01:04.554Z">
 <meta property="article:tag" content="Makefile">
 <meta name="twitter:card" content="summary">
 
@@ -378,6 +378,8 @@
 <h1 id="Makefile语法"><a href="#Makefile语法" class="headerlink" title="Makefile语法"></a>Makefile语法</h1><h2 id="Makefile文件的创建和运行"><a href="#Makefile文件的创建和运行" class="headerlink" title="Makefile文件的创建和运行"></a>Makefile文件的创建和运行</h2><p>在工程目录下创建名为“Makefile”的文件，文件名一定要叫做“Makefile”！！！区分大小写</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">main: main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">  gcc -o main main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">main<span class="selector-class">.o</span>: main.c</span><br><span class="line">  gcc -c main.c</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-class">.o</span>: <span class="selector-tag">input</span>.c</span><br><span class="line">  gcc -c <span class="selector-tag">input</span>.c</span><br><span class="line">calcu<span class="selector-class">.o</span>: calcu.c</span><br><span class="line">  gcc -c calcu.c</span><br><span class="line"> </span><br><span class="line">clean:</span><br><span class="line">  rm *.o</span><br><span class="line">  rm main</span><br></pre></td></tr></table></figure>
 <p>上述代码中所有行首需要空出来的地方一定要<strong><em>使用“TAB”键！</em></strong>不要使用空格键！ 这是Makefile 的语法要求</p>
+<a id="more"></a>
+
 <p>Makefile 编写好以后我们就可以使用 make 命令来编译我们的工程了，直接在命令行中输入“make”即可， make 命令会在当前目录下查找是否存在“Makefile”这个文件，如果存在的话就会按照 Makefile 里面定义的编译方式进行编译。使用命令“make”编译完成以后就会在当前工程目录下生成各种.o 和可执行文件，说明我们编译成功了。</p>
 <h2 id="规则格式"><a href="#规则格式" class="headerlink" title="规则格式"></a>规则格式</h2><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">目标…... : 依赖文件集合……</span><br><span class="line">命令 <span class="number">1</span></span><br><span class="line">命令 <span class="number">2</span></span><br><span class="line">……</span><br></pre></td></tr></table></figure>
 <p>比如下面这条规则：</p>
