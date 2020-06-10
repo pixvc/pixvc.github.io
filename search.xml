@@ -107,19 +107,14 @@
 <p>3.列表嵌套只需在子列表中的选项添加四个空格即可：</p>
 <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">1. </span>第一项：</span><br><span class="line"><span class="bullet">    - </span>第一项嵌套的第一个元素</span><br><span class="line"><span class="bullet">    - </span>第一项嵌套的第二个元素</span><br><span class="line"><span class="bullet">2. </span>第二项：</span><br><span class="line"><span class="bullet">    - </span>第二项嵌套的第一个元素</span><br><span class="line"><span class="bullet">    - </span>第二项嵌套的第二个元素</span><br></pre></td></tr></table></figure>
 <ol>
-<li><p>第一项：</p>
-<ul>
+<li>第一项：<ul>
 <li>第一项嵌套的第一个元素</li>
 <li>第一项嵌套的第二个元素</li>
 </ul>
 </li>
-<li><p>第二项：</p>
-<ul>
-<li><p>第二项嵌套的第一个元素</p>
-</li>
-<li><p>第二项嵌套的第二个元素</p>
-<p>int mian<br>print()</p>
-</li>
+<li>第二项：<ul>
+<li>第二项嵌套的第一个元素</li>
+<li>第二项嵌套的第二个元素</li>
 </ul>
 </li>
 </ol>
