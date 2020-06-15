@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Makefile," />
+  <meta name="keywords" content="lua," />
 
 
 
@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="什么是Makefile使用 GCC 编译器在 Linux 进行 C 语言编译，通过在终端执行 gcc 命令来完成 C 文件的编译，如果我们的工程只有一两个 C 文件还好，需要输入的命令不多，当文件有几十、上百甚至上万个的时候用终端输入 GCC 命令的方法显然是不现实的。如果我们能够编写一个文件，这个文件描述了编译哪些源码文件、如何编译那就好了，每次需要编译工程的时只需要使用这个文件就行了。这种问题">
+<meta name="description" content="ipairs()和pairs()的区别pairs会遍历表中所有的key-value值，而ipairs会根据key的数值从1开始加1递增遍历对应的table[i]值，直到出现第一个不是按1递增的数值时候退出。 下面我们以例子说明一下吧 stars &#x3D; {[1] &#x3D; “Sun”, [2] &#x3D; “Moon”, [5] &#x3D; ‘Earth’} for i, v in pairs(stars) do    p">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Makefile基本语法">
-<meta property="og:url" content="https://pixvc.github.io/2020/06/10/makefile/index.html">
+<meta property="og:title" content="Lua迭代器">
+<meta property="og:url" content="https://pixvc.github.io/2020/06/12/%E8%BF%AD%E4%BB%A3%E5%99%A8/index.html">
 <meta property="og:site_name" content="周菜鸡">
-<meta property="og:description" content="什么是Makefile使用 GCC 编译器在 Linux 进行 C 语言编译，通过在终端执行 gcc 命令来完成 C 文件的编译，如果我们的工程只有一两个 C 文件还好，需要输入的命令不多，当文件有几十、上百甚至上万个的时候用终端输入 GCC 命令的方法显然是不现实的。如果我们能够编写一个文件，这个文件描述了编译哪些源码文件、如何编译那就好了，每次需要编译工程的时只需要使用这个文件就行了。这种问题">
-<meta property="article:published_time" content="2020-06-10T08:09:16.377Z">
-<meta property="article:modified_time" content="2020-06-10T14:01:04.554Z">
-<meta property="article:tag" content="Makefile">
+<meta property="og:description" content="ipairs()和pairs()的区别pairs会遍历表中所有的key-value值，而ipairs会根据key的数值从1开始加1递增遍历对应的table[i]值，直到出现第一个不是按1递增的数值时候退出。 下面我们以例子说明一下吧 stars &#x3D; {[1] &#x3D; “Sun”, [2] &#x3D; “Moon”, [5] &#x3D; ‘Earth’} for i, v in pairs(stars) do    p">
+<meta property="article:published_time" content="2020-06-12T10:25:54.373Z">
+<meta property="article:modified_time" content="2020-06-15T03:58:55.548Z">
+<meta property="article:tag" content="lua">
 <meta name="twitter:card" content="summary">
 
 
@@ -118,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="https://pixvc.github.io/2020/06/10/makefile/"/>
+  <link rel="canonical" href="https://pixvc.github.io/2020/06/12/迭代器/"/>
 
 
 
 
 
-  <title>Makefile基本语法 | 周菜鸡</title>
+  <title>Lua迭代器 | 周菜鸡</title>
   
 
 
@@ -285,7 +285,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://pixvc.github.io/2020/06/10/makefile/">
+    <link itemprop="mainEntityOfPage" href="https://pixvc.github.io/2020/06/12/%E8%BF%AD%E4%BB%A3%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -302,7 +302,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Makefile基本语法</h1>
+          <h1 class="post-title" itemprop="name headline">Lua迭代器</h1>
         
 
         <div class="post-meta">
@@ -314,8 +314,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-10T16:09:16+08:00">
-                2020-06-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-12T18:25:54+08:00">
+                2020-06-12
               </time>
             
 
@@ -337,8 +337,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Makefile%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">Makefile基本语法</span>
+                  <a href="/categories/lua%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
+                    <span itemprop="name">lua语言</span>
                   </a>
                 </span>
 
@@ -374,79 +374,52 @@
       
 
       
-        <h1 id="什么是Makefile"><a href="#什么是Makefile" class="headerlink" title="什么是Makefile"></a>什么是Makefile</h1><p>使用 GCC 编译器在 Linux 进行 C 语言编译，通过在终端执行 gcc 命令来完成 C 文件的编译，如果我们的工程只有一两个 C 文件还好，需要输入的命令不多，当文件有几十、上百甚至上万个的时候用终端输入 GCC 命令的方法显然是不现实的。如果我们能够编写一个文件，这个文件描述了编译哪些源码文件、如何编译那就好了，每次需要编译工程的时只需要使用这个文件就行了。这种问题怎么可能难倒聪明的程序员，为此提出了一个解决大工程编译的工具： make，描述哪些文件需要编译、哪些需要重新编译的文件就叫做 Makefile，命令即可完成整个工程的自动编译，极大的提高了软件开发的效率。</p>
-<h1 id="Makefile语法"><a href="#Makefile语法" class="headerlink" title="Makefile语法"></a>Makefile语法</h1><h2 id="Makefile文件的创建和运行"><a href="#Makefile文件的创建和运行" class="headerlink" title="Makefile文件的创建和运行"></a>Makefile文件的创建和运行</h2><p>在工程目录下创建名为“Makefile”的文件，文件名一定要叫做“Makefile”！！！区分大小写</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">main: main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">  gcc -o main main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">main<span class="selector-class">.o</span>: main.c</span><br><span class="line">  gcc -c main.c</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-class">.o</span>: <span class="selector-tag">input</span>.c</span><br><span class="line">  gcc -c <span class="selector-tag">input</span>.c</span><br><span class="line">calcu<span class="selector-class">.o</span>: calcu.c</span><br><span class="line">  gcc -c calcu.c</span><br><span class="line"> </span><br><span class="line">clean:</span><br><span class="line">  rm *.o</span><br><span class="line">  rm main</span><br></pre></td></tr></table></figure>
-<p>上述代码中所有行首需要空出来的地方一定要<strong><em>使用“TAB”键！</em></strong>不要使用空格键！ 这是Makefile 的语法要求</p>
+        <h1 id="ipairs-和pairs-的区别"><a href="#ipairs-和pairs-的区别" class="headerlink" title="ipairs()和pairs()的区别"></a>ipairs()和pairs()的区别</h1><p>pairs会遍历表中所有的key-value值，而ipairs会根据key的数值从1开始加1递增遍历对应的table[i]值，直到出现第一个不是按1递增的数值时候退出。</p>
+<p>下面我们以例子说明一下吧</p>
+<p>stars = {[1] = “Sun”, [2] = “Moon”, [5] = ‘Earth’}</p>
+<p>for i, v in pairs(stars) do</p>
+<p>   print(i, v)</p>
+<p>end</p>
 <a id="more"></a>
 
-<p>Makefile 编写好以后我们就可以使用 make 命令来编译我们的工程了，直接在命令行中输入“make”即可， make 命令会在当前目录下查找是否存在“Makefile”这个文件，如果存在的话就会按照 Makefile 里面定义的编译方式进行编译。使用命令“make”编译完成以后就会在当前工程目录下生成各种.o 和可执行文件，说明我们编译成功了。</p>
-<h2 id="规则格式"><a href="#规则格式" class="headerlink" title="规则格式"></a>规则格式</h2><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">目标…... : 依赖文件集合……</span><br><span class="line">命令 <span class="number">1</span></span><br><span class="line">命令 <span class="number">2</span></span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>比如下面这条规则：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">main : main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">	gcc -o main main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br></pre></td></tr></table></figure>
-<p>这条规则的目标是 main， main.o、 input.o 和 calcu.o 是生成 main 的依赖文件，如果要更新目标 main，就必须先更新它的所有依赖文件，如果依赖文件中的任何一个有更新，那么目标也必须更新，“更新”就是执行一遍规则中的命令列表。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">main: main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">  gcc -o main main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">main<span class="selector-class">.o</span>: main.c</span><br><span class="line">  gcc -c main.c</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-class">.o</span>: <span class="selector-tag">input</span>.c</span><br><span class="line">  gcc -c <span class="selector-tag">input</span>.c</span><br><span class="line">calcu<span class="selector-class">.o</span>: calcu.c</span><br><span class="line">  gcc -c calcu.c</span><br><span class="line"> </span><br><span class="line">clean:</span><br><span class="line">  rm *.o</span><br><span class="line">  rm main</span><br></pre></td></tr></table></figure>
-<p>上述代码中一共有 5 条规则，1-2 行为第一条规则， 3-4 行为第二条规则， 5-6 行为第三条规则， 7-8 行为第四条规则， 10-12 为第五条规则， make 命令在执行这个 Makefile 的时候其执<br>行步骤如下：<br>首先更新第一条规则中的 main，第一条规则的目标成为默认目标，只要默认目标更新了那么就认为 Makefile 的工作，完成了整个 Makefile 就是为了完成这个工作。在第一次编译的时候由于 main 还不存在，因此第一条规则会执行，第一条规则依赖于文件 main.o、 input.o 和 calcu.o这个三个.o 文件，这三个.o 文件目前还都没有，因此必须先更新这三个文件。 make 会查找以这三个.o 文件为目标的规则并执行。以 main.o 为例，发现更新 main.o 的是第二条规则，因此会执行第二条规则，第二条规则里面的命令为“gcc –c main.c”，这行命令很熟悉了吧，就是不链接编译 main.c，生成 main.o，其它两个.o 文件同理。最后一个规则目标是 clean，它没有依赖文件，因此会默认为依赖文件都是最新的，所以其对应的命令不会执行，当我们想要执行 clean 的话可以直接使用命令“make clean”，执行以后就会删除当前目录下所有的.o 文件以及 main，因此clean 的功能就是完成工程的清理</p>
-<h2 id="Makefile变量"><a href="#Makefile变量" class="headerlink" title="Makefile变量"></a>Makefile变量</h2><p><strong><em>不像 C 语言中的变量有 int、 char等各种类型， Makefile 中的变量都是字符串！</em></strong></p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Makefile 变量的使用</span></span><br><span class="line">objects = main.o input.o calcu.o</span><br><span class="line"><span class="section">main: <span class="variable">$(objects)</span></span></span><br><span class="line">  gcc -o main <span class="variable">$(objects)</span></span><br></pre></td></tr></table></figure>
-<p>第 1 行是注释， Makefile 中可以写注释，注释开头要用符号“#”，不能用 C 语言中的“//”或者“/**/”！第 2 行我们定义了一个变量 objects，并且给这个变量进行了赋值，其值为字符串“main.o input.o calcu.o”，第 3 和 4 行使用到了变量 objects，Makefile 中变量的引用方法是“$(变量名)”，比如本例中的“$(objects)”就是使用变量 objects。</p>
-<h3 id="赋值符"><a href="#赋值符" class="headerlink" title="赋值符"></a>赋值符</h3><p>1.赋值符“=”</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">name = zou</span><br><span class="line">curname = <span class="variable">$(name)</span></span><br><span class="line">name = zouding</span><br><span class="line"></span><br><span class="line"><span class="section">print:</span></span><br><span class="line">  @echo curname: <span class="variable">$(curname)</span></span><br></pre></td></tr></table></figure>
-<p>在 Makefile 要输出一串字符的话使用“echo”，就和 C 语言中的“printf”一样，“echo”前面加了个“@”符号，因为 Make 在执行的过程中会自动输出命令执行过程，在命令前面加上“@”的话就不会输出命令执行过程<br>print为zouding，“=”变量的真实值取决于它所引用的变量的最后一次有效值</p>
-<p>2.赋值符“：=“</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">name = zou</span><br><span class="line">curname := <span class="variable">$(name)</span></span><br><span class="line">name = zouding</span><br><span class="line"></span><br><span class="line"><span class="section">print:</span></span><br><span class="line">  @echo curname: <span class="variable">$(curname)</span></span><br></pre></td></tr></table></figure>
-<p>print的为zou，”:=”只能使用前面赋的值</p>
-<p>3.赋值符”？=“<br><code>curname?=zouding</code><br>上述代码的意思就是，如果变量 curname 前面没有被赋值，那么此变量就是“zouding”，如果前面已经赋过值了，那么就使用前面赋的值。</p>
-<p>4.追加变量”+=“</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">objects = main.o inpiut.o</span><br><span class="line">objects += calcu.o</span><br></pre></td></tr></table></figure>
-<p>一开始变量 objects 的值为“main.o input.o”，后面我们给他追加了一个“calcu.o”，因此变量 objects 变成了<br>“main.o input.o calcu.o”，这个就是变量的追加。</p>
-<h2 id="自动化变量"><a href="#自动化变量" class="headerlink" title="自动化变量"></a>自动化变量</h2><p>所谓自动化变量就是这种变量会把模式中所定义的一系列的文件自动的挨个取出，直至所有的符合模式的文件都取完，自动化变量只应该出现在规则的命令中，常用的自动化变量如表 </p>
-<table>
-<thead>
-<tr>
-<th>自动化变量</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>$@</td>
-<td align="left">规则中的目标集合，在模式规则中，如果有多个目标的话，“$@”表示匹配模式中定义的目标集合。</td>
-</tr>
-<tr>
-<td>$%</td>
-<td align="left">当目标是函数库的时候表示规则中的目标成员名，如果目标不是函数库文件，那么其值为空。</td>
-</tr>
-<tr>
-<td>$&lt;</td>
-<td align="left">依赖文件集合中的第一个文件，如果依赖文件是以模式(即“%” )定义的，那么“$&lt;”就是符合模式的一系列的文件集合。</td>
-</tr>
-<tr>
-<td>$?</td>
-<td align="left">所有比目标新的依赖目标集合，以空格分开。</td>
-</tr>
-<tr>
-<td>$^</td>
-<td align="left">所有依赖文件的集合，使用空格分开，如果在依赖文件中有多个重复的文件，“$^”会去除重复的依赖文件，值保留一份。</td>
-</tr>
-<tr>
-<td>$+</td>
-<td align="left">和“$^”类似，但是当依赖文件存在重复的话不会去除重复的依赖文件。</td>
-</tr>
-<tr>
-<td>$*</td>
-<td align="left">这个变量表示目标模式中”%”及其之前的部分，如果目标是 test/a.test.c，目标模式为 a.%.c，那么“$*”就是 test/a.test。</td>
-</tr>
-</tbody></table>
-<p>常用的三种：<strong><em>$@、 $&lt;和$^</em></strong></p>
-<h2 id="模式规则"><a href="#模式规则" class="headerlink" title="模式规则"></a>模式规则</h2><p>模式规则中，至少在规则的目标定定义中要包涵“%”，否则就是一般规则，目标中的“%”表示对文件名的匹配，“%”表示长度任意的非空字符串，比如“%.c”就是所有的以.c 结尾的文件</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">objects</span> = <span class="string">main.o input.o calcu.o</span></span><br><span class="line"><span class="attr">main</span>: <span class="string">$(objects)</span></span><br><span class="line">	<span class="attr">gcc</span> <span class="string">-o main $(objects)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">%.o</span> : <span class="string">%.c</span></span><br><span class="line">	<span class="attr">gcc</span> <span class="string">-c $&lt;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">clean</span>:<span class="string"></span></span><br><span class="line">	<span class="attr">rm</span> <span class="string">*.o</span></span><br><span class="line">	<span class="attr">rm</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
-<p>上诉代码可代替2.1中的代码，更加精简</p>
-<h2 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h2><p>Makefile 中的函数是已经定义好的，我们直接使用，不支持我们自定义函数。<br>函数的用法如下：<br><code>$(函数名 参数集合）</code></p>
-<p>1、函数 subst<br>函数 subst 用来完成字符串替换，调用形式如下：<br><code>$(subst &lt;from&gt;,&lt;to&gt;,&lt;text&gt;)</code><br>此函数的功能是将字符串<text>中的<from>内容替换为<to>，函数返回被替换以后的字符串，比如如下示例：<br><code>$(subst zou,ZZK,my name is zzk)</code><br>把字符串“my name is zzk”中的“zzk”替换为“zou”，替换完成以后的字符串为“my name is zou”。</p>
-<p>2、函数 patsubst<br>函数 patsubst 用来完成模式字符串替换，使用方法如下：<br><code>$(patsubst &lt;pattern&gt;,&lt;replacement&gt;,&lt;text&gt;)</code><br>此函数查找字符串<text>中的单词是否符合模式<pattern>，如果匹配就用<replacement>来替换掉， <pattern>可以使用包括通配符“%”，表示任意长度的字符串，函数返回值就是替换后<br>的字符串。如果<replacement>中也包涵“%”，那么<replacement>中的“%”将是<pattern>中的那个“%”所代表的字符串，比如：<br><code>$(patsubst %.c,%.o,a.c b.c c.c)</code><br>将字符串“a.c b.c c.c”中的所有符合“%.c”的字符串，替换为“%.o”，替换完成以后的字符串为“a.o b.o c.o”。</p>
-<p>符串为“a.o b.o c.o”。<br>3、函数 dir<br>函数 dir 用来获取目录，使用方法如下：<br><code>$(dir &lt;names…&gt;)</code><br>此函数用来从文件名序列<names>中提取出目录部分，返回值是文件名序列<names>的目录部分，比如：<br><code>$(dir &lt;/src/a.c&gt;)</code><br>提取文件“/src/a.c”的目录部分，也就是“/src”。</p>
-<p>4、函数 notdir<br>函数 notdir 看名字就是知道去除文件中的目录部分，也就是提取文件名，用法如下：<br><code>$(notdir &lt;names…&gt;)</code><br>此函数用与从文件名序列<names>中提取出文件名非目录部分，比如：<br><code>$(notdir &lt;/src/a.c&gt;)</code><br>提取文件“/src/a.c”中的非目录部分，也就是文件名“a.c”。</p>
-<p>5、函数 foreach<br>foreach 函数用来完成循环，用法如下：<br><code>$(foreach &lt;var&gt;, &lt;list&gt;,&lt;text&gt;)</code><br>此函数的意思就是把参数list中的单词逐一取出来放到参数var中，然后再执行text所包含的表达式。每次text都会返回一个字符串，循环的过程中， text中所包含的每个字符串会以空格隔开，最后当整个循环结束时，<text>所返回的每个字符串所组成的整个字符串将会是函数 foreach 函数的返回值。</p>
+<p>使用pairs()将会遍历表中所有的数据，输出结果是：</p>
+<p>1    Sun<br>2    Moon<br>5    Earth</p>
+<p>如果使用ipairs()的话，</p>
+<p>for i, v in ipairs(stars) do</p>
+<p>   print(i, v)</p>
+<p>end</p>
+<p>当i的值遍历到第三个元素时，i的值为5，此时i并不是上一个次i值（2）的+1递增，所以遍历结束，结果则会是：</p>
+<p>1    Sun<br>2    Moon</p>
+<p>ipairs()和pairs()的区别就是这么简单。</p>
+<h1 id="泛型-for-迭代器"><a href="#泛型-for-迭代器" class="headerlink" title="泛型 for 迭代器"></a>泛型 for 迭代器</h1><p>泛型 for 在自己内部保存迭代函数，实际上它保存三个值：迭代函数、状态常量、控制变量。<br>泛型 for 迭代器提供了集合的 key/value 对，语法格式如下：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">pairs</span>(t) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(k, v)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<!--more-->
+
+
+<p>上面代码中，k, v为变量列表；pairs(t)为表达式列表。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span> = &#123;"Google", "Runoob"&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for key</span>,<span class="keyword">value</span> <span class="keyword">in</span> ipairs(<span class="keyword">array</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   print(key, <span class="keyword">value</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">执行结果：</span><br><span class="line"><span class="number">1</span>  Google</span><br><span class="line"><span class="number">2</span>  Runoob</span><br></pre></td></tr></table></figure>
+
+<p>Lua 默认提供的迭代函数 ipairs。</p>
+<p>泛型 for 的执行过程：</p>
+<ul>
+<li>首先，初始化，计算 in 后面表达式的值，表达式应该返回泛型 for 需要的三个值：迭代函数、状态常量、控制变量；与多值赋值一样，如果表达式返回的结果个数不足三个会自动用 nil 补足，多出部分会被忽略。</li>
+<li>第二，将状态常量和控制变量作为参数调用迭代函数（注意：对于 for 结构来说，状态常量没有用处，仅仅在初始化时获取他的值并传递给迭代函数）。</li>
+<li>第三，将迭代函数返回的值赋给变量列表。</li>
+<li>第四，如果返回的第一个值为nil循环结束，否则执行循环体。</li>
+<li>第五，回到第二步再次调用迭代函数</li>
+</ul>
+<h1 id="无状态的迭代器"><a href="#无状态的迭代器" class="headerlink" title="无状态的迭代器"></a>无状态的迭代器</h1><p>无状态的迭代器是指不保留任何状态的迭代器，因此在循环中我们可以利用无状态迭代器避免创建闭包花费额外的代价。</p>
+<p>每一次迭代，迭代函数都是用两个变量（状态常量和控制变量）的值作为参数被调用，一个无状态的迭代器只利用这两个值可以获取下一个元素。这种无状态迭代器的典型的简单的例子是 ipairs，它遍历数组的每一个元素。</p>
+<p>以下实例我们使用了一个简单的函数来实现迭代器，实现 数字 n 的平方：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">--求数字<span class="built_in">j</span>到N的平方</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">square</span><span class="params">(N, j)</span></span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">j</span> &lt;= N</span><br><span class="line">    then</span><br><span class="line">        <span class="keyword">return</span>  <span class="built_in">j</span>+<span class="number">1</span> ,  <span class="built_in">j</span>*<span class="built_in">j</span> --  这里的<span class="built_in">j</span>+<span class="number">1</span> 是为了传给<span class="keyword">for</span>的<span class="built_in">i</span>值，类似++<span class="built_in">i</span>，否则<span class="built_in">i</span>一直不变，死循环</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">--         迭代器函数、恒定状态、控制变量的初值</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>,n in square ,     <span class="number">3</span> ,    <span class="number">1</span></span><br><span class="line">do</span><br><span class="line">    --这里的<span class="built_in">i</span>,n是square返回的</span><br><span class="line">    print(<span class="built_in">i</span><span class="number">-1</span> ,<span class="string">"的平方是"</span> , n)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">iter</span> <span class="params">(a, i)</span></span></span><br><span class="line">    <span class="built_in">i</span> = <span class="built_in">i</span> + <span class="number">1</span></span><br><span class="line">    local v = a[<span class="built_in">i</span>]</span><br><span class="line">    <span class="keyword">if</span> v then</span><br><span class="line">       <span class="keyword">return</span> <span class="built_in">i</span>, v</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ipairs</span> <span class="params">(a)</span></span></span><br><span class="line">    <span class="keyword">return</span> iter, a, <span class="number">0</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>当 Lua 调用 ipairs(a) 开始循环时，他获取三个值：迭代函数 iter、状态常量 a、控制变量初始值 0；然后 Lua 调用 iter(a,0) 返回 1, a[1]（除非 a[1]=nil）；第二次迭代调用 iter(a,1) 返回 2, a[2]……直到第一个 nil 元素。</p>
+<h1 id="多状态的迭代器"><a href="#多状态的迭代器" class="headerlink" title="多状态的迭代器"></a>多状态的迭代器</h1><p>很多情况下，迭代器需要保存多个状态信息而不是简单的状态常量和控制变量，最简单的方法是使用闭包，还有一种方法就是将所有的状态信息封装到 table 内，将 table 作为迭代器的状态常量，因为这种情况下可以将所有的信息存放在 table 内，所以迭代函数通常不需要第二个参数。</p>
+<p>以下实例我们创建了自己的迭代器：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span> = &#123;"Google", "Runoob"&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> elementIterator (collection)</span><br><span class="line">   <span class="keyword">local</span> <span class="keyword">index</span> = <span class="number">0</span></span><br><span class="line">   <span class="keyword">local</span> count = #collection</span><br><span class="line">   <span class="comment">-- 闭包函数</span></span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">function</span> ()</span><br><span class="line">      <span class="keyword">index</span> = <span class="keyword">index</span> + <span class="number">1</span></span><br><span class="line">      <span class="keyword">if</span> <span class="keyword">index</span> &lt;= count</span><br><span class="line">      <span class="keyword">then</span></span><br><span class="line">         <span class="comment">--  返回迭代器的当前元素</span></span><br><span class="line">         <span class="keyword">return</span> collection[<span class="keyword">index</span>]</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> element <span class="keyword">in</span> elementIterator(<span class="keyword">array</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   print(element)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">Google</span><br><span class="line">Runoob</span><br></pre></td></tr></table></figure>
+<p>以上实例中我们可以看到，elementIterator 内使用了闭包函数，实现计算集合大小并输出各个元素。</p>
 
       
     </div>
@@ -464,7 +437,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Makefile/" rel="tag"># Makefile</a>
+            <a href="/tags/lua/" rel="tag"># lua</a>
           
         </div>
       
@@ -477,8 +450,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/06/10/hello-world/" rel="next" title="Markdown基本语法">
-                <i class="fa fa-chevron-left"></i> Markdown基本语法
+              <a href="/2020/06/12/c%E8%AF%AD%E8%A8%80%E5%8F%AF%E5%8F%98%E6%95%B0%E7%9B%AE%E5%8F%82%E6%95%B0/" rel="next" title="c语言中对可变参数列表的简单理解">
+                <i class="fa fa-chevron-left"></i> c语言中对可变参数列表的简单理解
               </a>
             
           </div>
@@ -487,8 +460,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/06/11/lua%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" rel="prev" title="lua基本语法">
-                lua基本语法 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/06/15/%E8%A1%A8/" rel="prev" title="表和元表">
+                表和元表 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -637,7 +610,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是Makefile"><span class="nav-number">1.</span> <span class="nav-text">什么是Makefile</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Makefile语法"><span class="nav-number">2.</span> <span class="nav-text">Makefile语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Makefile文件的创建和运行"><span class="nav-number">2.1.</span> <span class="nav-text">Makefile文件的创建和运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#规则格式"><span class="nav-number">2.2.</span> <span class="nav-text">规则格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Makefile变量"><span class="nav-number">2.3.</span> <span class="nav-text">Makefile变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#赋值符"><span class="nav-number">2.3.1.</span> <span class="nav-text">赋值符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化变量"><span class="nav-number">2.4.</span> <span class="nav-text">自动化变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模式规则"><span class="nav-number">2.5.</span> <span class="nav-text">模式规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用函数"><span class="nav-number">2.6.</span> <span class="nav-text">常用函数</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ipairs-和pairs-的区别"><span class="nav-number">1.</span> <span class="nav-text">ipairs()和pairs()的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#泛型-for-迭代器"><span class="nav-number">2.</span> <span class="nav-text">泛型 for 迭代器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#无状态的迭代器"><span class="nav-number">3.</span> <span class="nav-text">无状态的迭代器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多状态的迭代器"><span class="nav-number">4.</span> <span class="nav-text">多状态的迭代器</span></a></li></ol></div>
             
 
           </div>

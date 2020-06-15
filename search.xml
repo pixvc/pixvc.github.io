@@ -7,6 +7,7 @@
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Markdown基本语法</span></span><br><span class="line"><span class="attr">data:</span> <span class="number">2019</span><span class="number">-6</span><span class="number">-10</span></span><br><span class="line"><span class="attr">categories:</span>    </span><br><span class="line"><span class="bullet">-</span> <span class="string">lua语言</span>    <span class="comment">##添加到lua语言分类，也也可以新建一个分类</span></span><br><span class="line"><span class="string">tags：</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">lua</span>        <span class="comment">#添加标签</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">编程</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
 <p>文章写完回到终端 hexo g 再 hexo d</p>
 <a id="more"></a>
+
 <p>在写博客的时候在文章中使用&lt;!--more--&gt;进行手动截断,这样可以实现只显示摘要的效果，并且在摘要下方生成一个阅读全文的链接</p>
 <h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><p>Markdown 是一种标记语言，语法简单，易阅读易编写，可以让用户完全脱离鼠标写出样式丰富的文档，广受程序员喜爱，目前许多网站都已经支持通过 Markdown 语法来写文章或者发表评论。 </p>
 <h2 id="分级标题"><a href="#分级标题" class="headerlink" title="分级标题"></a>分级标题</h2><figure class="highlight clean"><table><tr><td class="code"><pre><span class="line"># 一级标题</span><br><span class="line">## 二级标题</span><br><span class="line">### 三级标题</span><br><span class="line">#### 四级标题</span><br><span class="line">##### 五级标题</span><br><span class="line">###### 六级标题</span><br></pre></td></tr></table></figure>
@@ -343,9 +344,11 @@
 <p>nil 作比较时应该加上双引号 “：</p>
 <figure class="highlight elm"><table><tr><td class="code"><pre><span class="line">&gt; <span class="keyword">type</span>(<span class="type">X</span>)</span><br><span class="line"><span class="title">nil</span></span><br><span class="line">&gt; <span class="keyword">type</span>(<span class="type">X</span>)==nil</span><br><span class="line"><span class="title">false</span></span><br><span class="line">&gt; <span class="keyword">type</span>(<span class="type">X</span>)=="nil"</span><br><span class="line"><span class="title">true</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 
-
+<hr>
 <h2 id="boolean"><a href="#boolean" class="headerlink" title="boolean"></a>boolean</h2><p>boolean 类型只有两个可选值：true（真） 和 false（假），Lua 把 false 和 nil 看作是 false，其他的都为 true，<strong><em>数字 0 也是 true</em></strong></p>
+<hr>
 <h2 id="number（数字）"><a href="#number（数字）" class="headerlink" title="number（数字）"></a>number（数字）</h2><p>Lua 默认只有一种 number 类型 – double（双精度）类型（默认类型可以修改 luaconf.h 里的定义），以下几种写法都被看作是 number 类型</p>
+<hr>
 <h2 id="string（字符串）"><a href="#string（字符串）" class="headerlink" title="string（字符串）"></a>string（字符串）</h2><p>字符串由一对双引号或单引号来表示。</p>
 <figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">string1</span> = <span class="string">"this is string1"</span></span><br><span class="line"><span class="attr">string2</span> = <span class="string">'this is string2'</span></span><br></pre></td></tr></table></figure>
 <p>也可以用 2 个方括号 “[[]]” 来表示”一块”字符串。</p>
@@ -353,13 +356,13 @@
 
 <p>在对一个数字字符串上进行算术操作时，Lua会尝试将这个数字字符串转成一个数字</p>
 <figure class="highlight isbl"><table><tr><td class="code"><pre><span class="line">&gt; <span class="function"><span class="title">print</span>(<span class="string">"2"</span> + <span class="number">6</span>)</span></span><br><span class="line"><span class="number">8.0</span></span><br><span class="line">&gt; <span class="function"><span class="title">print</span>(<span class="string">"2"</span> + <span class="string">"6"</span>)</span></span><br><span class="line"><span class="number">8.0</span></span><br><span class="line">&gt; <span class="function"><span class="title">print</span>(<span class="string">"2 + 6"</span>)</span></span><br><span class="line"><span class="number">2</span> + <span class="number">6</span></span><br><span class="line">&gt; <span class="function"><span class="title">print</span>(<span class="string">"-2e2"</span> * <span class="string">"6"</span>)</span></span><br><span class="line">-<span class="number">1200.0</span></span><br></pre></td></tr></table></figure>
-<p>字符串连接使用的是 .. ，如</p>
+<p>字符串连接使用的是 ..  如</p>
 <figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">&gt; <span class="builtin-name">print</span>(<span class="string">"a"</span> <span class="built_in">..</span> <span class="string">'b'</span>)</span><br><span class="line">ab</span><br><span class="line">&gt; <span class="builtin-name">print</span>(157 <span class="built_in">..</span> 428)</span><br><span class="line">157428</span><br></pre></td></tr></table></figure>
 
 <p>使用 # 来计算字符串的长度，放在字符串前面</p>
 <figure class="highlight plain"><figcaption><span>len </span></figcaption><table><tr><td class="code"><pre><span class="line">&gt; print(#len)</span><br><span class="line">14</span><br><span class="line">&gt; print(#&quot;www.runoob.com&quot;)</span><br><span class="line">14</span><br></pre></td></tr></table></figure>
 
-
+<hr>
 <h2 id="table表"><a href="#table表" class="headerlink" title="table表"></a>table表</h2><p>在 Lua 里，table 的创建是通过”构造表达式”来完成，最简单构造表达式是{}，用来创建一个空表。也可以在表里添加一些数据，直接初始化表:<br><code>local tbl1 = {}  --创建一个空表</code><br><code>local tbl2 = {&quot;apple&quot;, &quot;pear&quot;, &quot;orange&quot;, &quot;grape&quot;}  --初始化表</code></p>
 <p>不同于其他语言的数组把 0 作为数组的初始索引，在 Lua 里表的默认初始索引一般以 1 开始。Lua 中的表（table）其实是一个”关联数组”（associative arrays），数组的索引可以是数字或者是字符串。</p>
 <figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">a = &#123;&#125;</span><br><span class="line">a[<span class="string">"key"</span>] = <span class="string">"value"</span></span><br><span class="line"><span class="type">key</span> = <span class="number">10</span></span><br><span class="line">a[<span class="type">key</span>] = <span class="number">22</span></span><br><span class="line">a[<span class="type">key</span>] = a[<span class="type">key</span>] + <span class="number">11</span></span><br><span class="line">for k, v in pairs(a) do</span><br><span class="line">    print(k .. <span class="string">" : "</span> .. v)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
@@ -374,7 +377,7 @@
       </tags>
   </entry>
   <entry>
-    <title>循环</title>
+    <title>Lua循环</title>
     <url>/2020/06/11/lua%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5/</url>
     <content><![CDATA[<h1 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h1><h2 id="数值for循环"><a href="#数值for循环" class="headerlink" title="数值for循环"></a>数值for循环</h2><figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> var=<span class="built_in">exp1</span>,<span class="built_in">exp2</span>,exp3 <span class="built_in">do</span>  </span><br><span class="line">    &lt;执行体&gt;  </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 <p>var 从 exp1 变化到 exp2，每次变化以 exp3 为步长递增 var，并执行一次 “执行体”。exp3 是可选的，如果不指定，<strong>默认为1。</strong></p>
@@ -410,6 +413,228 @@
 
 <p>if…elesif…else</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">if(</span> <span class="string">布尔表达式</span> <span class="number">1</span><span class="string">)</span></span><br><span class="line"><span class="string">then</span></span><br><span class="line">   <span class="string">--[</span> <span class="string">在布尔表达式</span> <span class="number">1</span> <span class="string">为</span> <span class="literal">true</span> <span class="string">时执行该语句块</span> <span class="string">--]</span></span><br><span class="line"></span><br><span class="line"><span class="string">elseif(</span> <span class="string">布尔表达式</span> <span class="number">2</span><span class="string">)</span></span><br><span class="line"><span class="string">then</span></span><br><span class="line">   <span class="string">--[</span> <span class="string">在布尔表达式</span> <span class="number">2</span> <span class="string">为</span> <span class="literal">true</span> <span class="string">时执行该语句块</span> <span class="string">--]</span></span><br><span class="line"></span><br><span class="line"><span class="string">elseif(</span> <span class="string">布尔表达式</span> <span class="number">3</span><span class="string">)</span></span><br><span class="line"><span class="string">then</span></span><br><span class="line">   <span class="string">--[</span> <span class="string">在布尔表达式</span> <span class="number">3</span> <span class="string">为</span> <span class="literal">true</span> <span class="string">时执行该语句块</span> <span class="string">--]</span></span><br><span class="line"><span class="string">else</span> </span><br><span class="line">   <span class="string">--[</span> <span class="string">如果以上布尔表达式都不为</span> <span class="literal">true</span> <span class="string">则执行该语句块</span> <span class="string">--]</span></span><br><span class="line"><span class="string">end</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>lua语言</category>
+      </categories>
+      <tags>
+        <tag>lua</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>lua函数</title>
+    <url>/2020/06/12/Lua%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<p>函数定义</p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line">optional_function_scope <span class="function"><span class="keyword">function</span> <span class="title">function_name</span><span class="params">( argument1, argument2, argument3<span class="rest_arg">..., argumentn</span>)</span></span></span><br><span class="line"><span class="function">    <span class="title">function_body</span></span></span><br><span class="line"><span class="function">    <span class="title">return</span> <span class="title">result_params_comma_separated</span></span></span><br><span class="line"><span class="function"><span class="title">end</span></span></span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>解析：</p>
+<ul>
+<li>optional_function_scope: 该参数是可选的制定函数是全局函数还是局部函数，未设置该参数默认为全局函数，如果你需要设置函数为局部函数需要使用关键字 local。</li>
+<li>function_name: 指定函数名称。</li>
+<li>argument1, argument2, argument3…, argumentn: 函数参数，多个参数以逗号隔开，函数也可以不带参数。</li>
+<li>function_body: 函数体，函数中需要执行的代码语句块。</li>
+<li>result_params_comma_separated: 函数返回值，Lua语言函数可以返回多个值，每个值以逗号隔开。</li>
+</ul>
+<hr>
+<h2 id="多返回值"><a href="#多返回值" class="headerlink" title="多返回值"></a>多返回值</h2><p>Lua函数可以返回多个结果值，在return后列出要返回的值的列表即可返回多值</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">maximum</span> <span class="params">(a)</span></span></span><br><span class="line">    <span class="keyword">local</span> mi = <span class="number">1</span>             <span class="comment">-- 最大值索引</span></span><br><span class="line">    <span class="keyword">local</span> m = a[mi]          <span class="comment">-- 最大值</span></span><br><span class="line">    <span class="keyword">for</span> i,val <span class="keyword">in</span> <span class="built_in">ipairs</span>(a) <span class="keyword">do</span></span><br><span class="line">       <span class="keyword">if</span> val &gt; m <span class="keyword">then</span></span><br><span class="line">           mi = i</span><br><span class="line">           m = val</span><br><span class="line">       <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> m, mi</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(maximum(&#123;<span class="number">8</span>,<span class="number">10</span>,<span class="number">23</span>,<span class="number">12</span>,<span class="number">5</span>&#125;))</span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line"><span class="number">23</span> <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h2><p>Lua 函数可以接受可变数目的参数，和 C 语言类似，在函数参数列表中使用三点 … 表示函数有可变的参数</p>
+<figure class="highlight nimrod"><table><tr><td class="code"><pre><span class="line">function add(...)  </span><br><span class="line">local s = <span class="number">0</span>  </span><br><span class="line">  <span class="keyword">for</span> i, v <span class="keyword">in</span> ipairs<span class="meta">&#123;...&#125;</span> <span class="keyword">do</span>   --&gt; <span class="meta">&#123;...&#125;</span> 表示一个由所有变长参数构成的数组  </span><br><span class="line">    s = s + v  </span><br><span class="line">  <span class="keyword">end</span>  </span><br><span class="line">  <span class="keyword">return</span> s  </span><br><span class="line"><span class="keyword">end</span>  </span><br><span class="line">print(add(<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>))  ---&gt;<span class="number">25</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight nimrod"><table><tr><td class="code"><pre><span class="line">function average(...)</span><br><span class="line">   <span class="literal">result</span> = <span class="number">0</span></span><br><span class="line">   local arg=<span class="meta">&#123;...&#125;</span>    --&gt; arg 为一个表，局部变量</span><br><span class="line">   <span class="keyword">for</span> i,v <span class="keyword">in</span> ipairs(arg) <span class="keyword">do</span></span><br><span class="line">      <span class="literal">result</span> = <span class="literal">result</span> + v</span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   print(<span class="string">"总共传入 "</span> .. <span class="comment">#arg .. " 个数")</span></span><br><span class="line">   <span class="keyword">return</span> <span class="literal">result</span>/<span class="comment">#arg</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">"平均值为"</span>,average(<span class="number">10</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>))</span><br></pre></td></tr></table></figure>
+
+
+<p>有时候我们可能需要几个固定参数加上可变参数，固定参数必须放在变长参数之前:</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fwrite</span><span class="params">(fmt, ...)</span></span>  <span class="comment">---&gt; 固定的参数fmt</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">io</span>.<span class="built_in">write</span>(<span class="built_in">string</span>.<span class="built_in">format</span>(fmt, ...))    </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">fwrite(<span class="string">"runoob\n"</span>)       <span class="comment">---&gt;fmt = "runoob", 没有变长参数。  </span></span><br><span class="line">fwrite(<span class="string">"%d%d\n"</span>, <span class="number">1</span>, <span class="number">2</span>)   <span class="comment">---&gt;fmt = "%d%d", 变长参数为 1 和 2</span></span><br><span class="line"></span><br><span class="line">输出结果：</span><br><span class="line">runoob</span><br><span class="line"><span class="number">12</span></span><br></pre></td></tr></table></figure>
+
+<p>通常在遍历变长参数的时候只需要使用 {…}，然而变长参数可能会包含一些 nil，那么就可以用 select 函数来访问变长参数了：select(‘#’, …) 或者 select(n, …)</p>
+<p>select(‘#’, …) 返回可变参数的长度<br>select(n, …) 用于返回 n 到 select(‘#’,…) 的参数</p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">do</span>  </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(<span class="rest_arg">...)  </span></span></span></span><br><span class="line"><span class="function"><span class="params"><span class="rest_arg">        for</span> i = 1, select(<span class="string">'#'</span>, <span class="rest_arg">...) do</span>  --&gt;获取参数总数</span></span></span><br><span class="line"><span class="function"><span class="params">            local arg = select(i, <span class="rest_arg">...); --&gt;读取参数</span></span></span></span><br><span class="line"><span class="function"><span class="params"><span class="rest_arg">            print</span>(<span class="string">"arg"</span>, arg)</span></span>;  </span><br><span class="line">        end  </span><br><span class="line">    end  </span><br><span class="line"> </span><br><span class="line">    foo(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>);  </span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>lua语言</category>
+      </categories>
+      <tags>
+        <tag>lua</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>c语言中对可变参数列表的简单理解</title>
+    <url>/2020/06/12/c%E8%AF%AD%E8%A8%80%E5%8F%AF%E5%8F%98%E6%95%B0%E7%9B%AE%E5%8F%82%E6%95%B0/</url>
+    <content><![CDATA[<p>C中变长实参头文件stdarg.h提供了一个数据类型va-list和三个宏（va-start、va-arg和va-end），用它们在被调用函数不知道参数个数和类型时对可变参数表进行测试，从而为访问可变参数提供了方便且有效的方法。va-list是一个char类型的指针，当被调用函数使用一个可变参数时，它声明一个类型为va-list的变量，该变量用来指向va-arg和va-end所需信息的位置。下面给出va_list、va-start、va-arg和va-end在C中的源码：<br><code>typedef char *  va_list;</code><br><code>#define va_start(ap,v)  ( ap = (va_list)&amp;v + _INTSIZEOF(v) )   //得到可变参数中第一个参数的首地址</code><br><code>#define va_arg(ap,type)    ( *(type *)((ap += _INTSIZEOF(type)) - _INTSIZEOF(type)) )    //将参数转换成需要的类型，并使ap指向下一个参数</code><br><code>#define va_end(ap)      ( ap = (va_list)0 )//功能就是把指针ap赋值为0，使它不指向内存的变量</code></p>
+<a id="more"></a>
+<hr>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdarg.h&gt;</span></span></span><br><span class="line"> <span class="comment">/*函数sum中首先定义了可变参数表指针vap，而后通过va_start ( vap, n )取得了参数表首地址（赋值给了vap），</span></span><br><span class="line"><span class="comment"> 其后的for循环则用来遍历可变参数表。*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> n,...)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i , sum = <span class="number">0</span>;</span><br><span class="line">	va_list vap;  <span class="comment">//声明va_list变量</span></span><br><span class="line">	va_start(vap , n);     <span class="comment">//指向可变参数表中的第一个参数</span></span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span> ; i &lt; n ; ++i)</span><br><span class="line">		sum += va_arg(vap , <span class="keyword">int</span>);     <span class="comment">//取出可变参数表中的参数，并修改参数指针vap使其增加以指向表中下一个参数</span></span><br><span class="line">	va_end(vap);    <span class="comment">//把指针vap赋值为0</span></span><br><span class="line">	<span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> m = sum(<span class="number">3</span> , <span class="number">45</span> , <span class="number">89</span> , <span class="number">72</span>);</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;m&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>函数原型声明，至少需要一个确定的参数，注意括号内的省略号</li>
+<li>在调用参数表之前，定义一个 va_list 类型的变量，(假设va_list 类型变量被定义为ap)；</li>
+<li>然后应该对ap进行初始化，让它指向可变参数表里面的第一个参数，这是通过 va_start 来实现的，第一个参数是 ap 本身，第二个参数是在变参表前面紧挨着的一个变量,即“…”之前的那个参数；</li>
+<li>然后是获取参数，调用va_arg，它的第一个参数是ap，第二个参数是要获取的参数的指定类型，然后返回这个指定类型的值，并且把ap的位置指向变参表的下一个变量位置；</li>
+<li>获取所有的参数之后，我们有必要将这个ap指针关掉，以免发生危险，方法是调用 va_end，他是输入的参数ap置为NULL，应该养成获取完参数表之后关闭指针的习惯。通常va_start和va_end是成对出现。<strong>va-end必须在va-arg读完所有参数后再调用</strong></li>
+</ul>
+]]></content>
+      <categories>
+        <category>C语言</category>
+      </categories>
+      <tags>
+        <tag>C语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Lua迭代器</title>
+    <url>/2020/06/12/%E8%BF%AD%E4%BB%A3%E5%99%A8/</url>
+    <content><![CDATA[<h1 id="ipairs-和pairs-的区别"><a href="#ipairs-和pairs-的区别" class="headerlink" title="ipairs()和pairs()的区别"></a>ipairs()和pairs()的区别</h1><p>pairs会遍历表中所有的key-value值，而ipairs会根据key的数值从1开始加1递增遍历对应的table[i]值，直到出现第一个不是按1递增的数值时候退出。</p>
+<p>下面我们以例子说明一下吧</p>
+<p>stars = {[1] = “Sun”, [2] = “Moon”, [5] = ‘Earth’}</p>
+<p>for i, v in pairs(stars) do</p>
+<p>   print(i, v)</p>
+<p>end</p>
+<a id="more"></a>
+
+<p>使用pairs()将会遍历表中所有的数据，输出结果是：</p>
+<p>1    Sun<br>2    Moon<br>5    Earth</p>
+<p>如果使用ipairs()的话，</p>
+<p>for i, v in ipairs(stars) do</p>
+<p>   print(i, v)</p>
+<p>end</p>
+<p>当i的值遍历到第三个元素时，i的值为5，此时i并不是上一个次i值（2）的+1递增，所以遍历结束，结果则会是：</p>
+<p>1    Sun<br>2    Moon</p>
+<p>ipairs()和pairs()的区别就是这么简单。</p>
+<h1 id="泛型-for-迭代器"><a href="#泛型-for-迭代器" class="headerlink" title="泛型 for 迭代器"></a>泛型 for 迭代器</h1><p>泛型 for 在自己内部保存迭代函数，实际上它保存三个值：迭代函数、状态常量、控制变量。<br>泛型 for 迭代器提供了集合的 key/value 对，语法格式如下：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">pairs</span>(t) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(k, v)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<!--more-->
+
+
+<p>上面代码中，k, v为变量列表；pairs(t)为表达式列表。</p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">array</span> = &#123;"Google", "Runoob"&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for key</span>,<span class="keyword">value</span> <span class="keyword">in</span> ipairs(<span class="keyword">array</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   print(key, <span class="keyword">value</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">执行结果：</span><br><span class="line"><span class="number">1</span>  Google</span><br><span class="line"><span class="number">2</span>  Runoob</span><br></pre></td></tr></table></figure>
+
+<p>Lua 默认提供的迭代函数 ipairs。</p>
+<p>泛型 for 的执行过程：</p>
+<ul>
+<li>首先，初始化，计算 in 后面表达式的值，表达式应该返回泛型 for 需要的三个值：迭代函数、状态常量、控制变量；与多值赋值一样，如果表达式返回的结果个数不足三个会自动用 nil 补足，多出部分会被忽略。</li>
+<li>第二，将状态常量和控制变量作为参数调用迭代函数（注意：对于 for 结构来说，状态常量没有用处，仅仅在初始化时获取他的值并传递给迭代函数）。</li>
+<li>第三，将迭代函数返回的值赋给变量列表。</li>
+<li>第四，如果返回的第一个值为nil循环结束，否则执行循环体。</li>
+<li>第五，回到第二步再次调用迭代函数</li>
+</ul>
+<h1 id="无状态的迭代器"><a href="#无状态的迭代器" class="headerlink" title="无状态的迭代器"></a>无状态的迭代器</h1><p>无状态的迭代器是指不保留任何状态的迭代器，因此在循环中我们可以利用无状态迭代器避免创建闭包花费额外的代价。</p>
+<p>每一次迭代，迭代函数都是用两个变量（状态常量和控制变量）的值作为参数被调用，一个无状态的迭代器只利用这两个值可以获取下一个元素。这种无状态迭代器的典型的简单的例子是 ipairs，它遍历数组的每一个元素。</p>
+<p>以下实例我们使用了一个简单的函数来实现迭代器，实现 数字 n 的平方：</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">--求数字<span class="built_in">j</span>到N的平方</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">square</span><span class="params">(N, j)</span></span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">j</span> &lt;= N</span><br><span class="line">    then</span><br><span class="line">        <span class="keyword">return</span>  <span class="built_in">j</span>+<span class="number">1</span> ,  <span class="built_in">j</span>*<span class="built_in">j</span> --  这里的<span class="built_in">j</span>+<span class="number">1</span> 是为了传给<span class="keyword">for</span>的<span class="built_in">i</span>值，类似++<span class="built_in">i</span>，否则<span class="built_in">i</span>一直不变，死循环</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">--         迭代器函数、恒定状态、控制变量的初值</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>,n in square ,     <span class="number">3</span> ,    <span class="number">1</span></span><br><span class="line">do</span><br><span class="line">    --这里的<span class="built_in">i</span>,n是square返回的</span><br><span class="line">    print(<span class="built_in">i</span><span class="number">-1</span> ,<span class="string">"的平方是"</span> , n)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">iter</span> <span class="params">(a, i)</span></span></span><br><span class="line">    <span class="built_in">i</span> = <span class="built_in">i</span> + <span class="number">1</span></span><br><span class="line">    local v = a[<span class="built_in">i</span>]</span><br><span class="line">    <span class="keyword">if</span> v then</span><br><span class="line">       <span class="keyword">return</span> <span class="built_in">i</span>, v</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ipairs</span> <span class="params">(a)</span></span></span><br><span class="line">    <span class="keyword">return</span> iter, a, <span class="number">0</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>当 Lua 调用 ipairs(a) 开始循环时，他获取三个值：迭代函数 iter、状态常量 a、控制变量初始值 0；然后 Lua 调用 iter(a,0) 返回 1, a[1]（除非 a[1]=nil）；第二次迭代调用 iter(a,1) 返回 2, a[2]……直到第一个 nil 元素。</p>
+<h1 id="多状态的迭代器"><a href="#多状态的迭代器" class="headerlink" title="多状态的迭代器"></a>多状态的迭代器</h1><p>很多情况下，迭代器需要保存多个状态信息而不是简单的状态常量和控制变量，最简单的方法是使用闭包，还有一种方法就是将所有的状态信息封装到 table 内，将 table 作为迭代器的状态常量，因为这种情况下可以将所有的信息存放在 table 内，所以迭代函数通常不需要第二个参数。</p>
+<p>以下实例我们创建了自己的迭代器：</p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">array</span> = &#123;"Google", "Runoob"&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> elementIterator (collection)</span><br><span class="line">   <span class="keyword">local</span> <span class="keyword">index</span> = <span class="number">0</span></span><br><span class="line">   <span class="keyword">local</span> count = #collection</span><br><span class="line">   <span class="comment">-- 闭包函数</span></span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">function</span> ()</span><br><span class="line">      <span class="keyword">index</span> = <span class="keyword">index</span> + <span class="number">1</span></span><br><span class="line">      <span class="keyword">if</span> <span class="keyword">index</span> &lt;= count</span><br><span class="line">      <span class="keyword">then</span></span><br><span class="line">         <span class="comment">--  返回迭代器的当前元素</span></span><br><span class="line">         <span class="keyword">return</span> collection[<span class="keyword">index</span>]</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> element <span class="keyword">in</span> elementIterator(<span class="keyword">array</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   print(element)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">Google</span><br><span class="line">Runoob</span><br></pre></td></tr></table></figure>
+<p>以上实例中我们可以看到，elementIterator 内使用了闭包函数，实现计算集合大小并输出各个元素。</p>
+]]></content>
+      <categories>
+        <category>lua语言</category>
+      </categories>
+      <tags>
+        <tag>lua</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>表和元表</title>
+    <url>/2020/06/15/%E8%A1%A8/</url>
+    <content><![CDATA[<h1 id="表"><a href="#表" class="headerlink" title="表"></a>表</h1><p>table 是Lua的一种数据结构用来帮助我们创建不同的数据类型，如：数组、字典等。<br>Lua table使用关联型数组，你可以用任意类型的值来作数组的索引，但这个值不能是 nil。<br>Lua table 是不固定大小的，你可以根据自己需要进行扩容。</p>
+<h2 id="table-表-的构造"><a href="#table-表-的构造" class="headerlink" title="table(表)的构造"></a>table(表)的构造</h2><figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">-- 初始化表</span><br><span class="line">mytable = &#123;&#125;</span><br><span class="line"></span><br><span class="line">a=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;  --索引默认为<span class="number">1</span>，<span class="number">2</span>，<span class="number">3</span></span><br><span class="line"></span><br><span class="line">-- 指定值</span><br><span class="line">mytable[<span class="number">1</span>]= <span class="string">"Lua"</span></span><br><span class="line"></span><br><span class="line">-- 移除引用</span><br><span class="line">mytable = nil</span><br><span class="line">-- lua 垃圾回收会释放内存</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h2 id="Table-操作"><a href="#Table-操作" class="headerlink" title="Table 操作"></a>Table 操作</h2><ul>
+<li>table.concat (table [, sep [, start [, end]]]):<br>concat是concatenate(连锁, 连接)的缩写. table.concat()函数列出参数中指定table的数组部分从start位置到end位置的所有元素, 元素间以指定的分隔符(sep)隔开。<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">fruits = &#123;<span class="string">"banana"</span>,<span class="string">"orange"</span>,<span class="string">"apple"</span>&#125;</span><br><span class="line"><span class="comment">-- 返回 table 连接后的字符串</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"连接后的字符串 "</span>,<span class="built_in">table</span>.<span class="built_in">concat</span>(fruits))</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 指定连接字符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"连接后的字符串 "</span>,<span class="built_in">table</span>.<span class="built_in">concat</span>(fruits,<span class="string">", "</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 指定索引来连接 table</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"连接后的字符串 "</span>,<span class="built_in">table</span>.<span class="built_in">concat</span>(fruits,<span class="string">", "</span>, <span class="number">2</span>,<span class="number">3</span>))</span><br></pre></td></tr></table></figure></li>
+<li>table.insert (table, [pos,] value):<br>在table的数组部分指定位置(pos)插入值为value的一个元素. pos参数可选, 默认为数组部分末尾.</li>
+<li>table.maxn (table)<br>指定table中所有正数key值中最大的key值. 如果不存在key值为正数的元素, 则返回0。(Lua5.2之后该方法已经不存在了,本文使用了自定义函数实现)</li>
+<li>table.remove (table [, pos])<br>返回table数组部分位于pos位置的元素. 其后的元素会被前移. pos参数可选, 默认为table长度, 即从最后一个元素删起。</li>
+<li>table.sort (table [, comp])<br>对给定的table进行升序排序。</li>
+</ul>
+<h1 id="Lua-元表-Metatable"><a href="#Lua-元表-Metatable" class="headerlink" title="Lua 元表(Metatable)"></a>Lua 元表(Metatable)</h1><p>元表 (metatable) 的表现行为类似于 C++ 语言中的操作符重载，例如我们可以重载 “<strong>add” 元方法 (metamethod)，来计算两个 Lua 数组的并集；或者重载 “</strong>index” 方法，来定义我们自己的 Hash 函数。Lua 提供了两个十分重要的用来处理元表的方法，如下：</p>
+<ul>
+<li>setmetatable(table,metatable): 对指定 table 设置元表(metatable)，如果元表(metatable)中存在 __metatable 键值，setmetatable 会失败。</li>
+<li>getmetatable(table): 返回对象的元表(metatable)。</li>
+</ul>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">mytable = &#123;&#125;                          <span class="comment">-- 普通表</span></span><br><span class="line">mymetatable = &#123;&#125;                      <span class="comment">-- 元表</span></span><br><span class="line"><span class="built_in">setmetatable</span>(mytable,mymetatable)     <span class="comment">-- 把 mymetatable 设为 mytable 的元表</span></span><br></pre></td></tr></table></figure>
+<p>以上代码也可以直接写成一行：<br><code>mytable = setmetatable({},{})</code><br>以下为返回对象元表：<br><code>getmetatable(mytable)                 -- 这回返回mymetatable</code></p>
+<h2 id="index-元方法"><a href="#index-元方法" class="headerlink" title="__index 元方法"></a>__index 元方法</h2><p>当你通过键来访问 table 的时候，如果这个键没有值，那么Lua就会寻找该table的metatable（假定有metatable）中的<strong>index 键。如果</strong>index包含一个表格，Lua会在表格中查找相应的键。</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">$ lua</span><br><span class="line">Lua <span class="number">5.3</span><span class="number">.0</span>  Copyright (C) <span class="number">1994</span><span class="number">-2015</span> Lua.org, PUC-Rio</span><br><span class="line">&gt; other = &#123; foo = <span class="number">3</span> &#125;</span><br><span class="line">&gt; t = setmetatable(&#123;&#125;, &#123; __index = other &#125;)</span><br><span class="line">&gt; t.foo</span><br><span class="line"><span class="number">3</span></span><br><span class="line">&gt; t.bar</span><br><span class="line">nil</span><br></pre></td></tr></table></figure>
+<p>如果__index包含一个函数的话，Lua就会调用那个函数，table和键会作为参数传递给函数。<br>__index 元方法查看表中元素是否存在，如果不存在，返回结果为 nil；如果存在则由 __index 返回结果。</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">mytable = <span class="built_in">setmetatable</span>(&#123;key1 = <span class="string">"value1"</span>&#125;, &#123;</span><br><span class="line">  <span class="built_in">__index</span> = <span class="function"><span class="keyword">function</span><span class="params">(mytable, key)</span></span></span><br><span class="line">    <span class="keyword">if</span> key == <span class="string">"key2"</span> <span class="keyword">then</span></span><br><span class="line">      <span class="keyword">return</span> <span class="string">"metatablevalue"</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(mytable.key1,mytable.key2)</span><br></pre></td></tr></table></figure>
+<p>实例解析：</p>
+<ul>
+<li>mytable 表赋值为 {key1 = “value1”}。</li>
+<li>mytable 设置了元表，元方法为 __index。<br>在mytable表中查找 key1，如果找到，返回该元素，找不到则继续。</li>
+<li>在mytable表中查找 key2，如果找到，返回 metatablevalue，找不到则继续。</li>
+<li>判断元表有没有<strong>index方法，如果</strong>index方法是一个函数，则调用该函数。</li>
+<li>元方法中查看是否传入 “key2” 键的参数（mytable.key2已设置），如果传入 “key2” 参数返回 </li>
+</ul>
+<p>“metatablevalue”，否则返回 mytable 对应的键值。<br>我们可以将以上代码简单写成：<code>mytable = setmetatable({key1 = &quot;value1&quot;}, { __index = { key2 = &quot;metatablevalue&quot; } })</code></p>
+<h2 id="newindex-元方法"><a href="#newindex-元方法" class="headerlink" title="__newindex 元方法"></a>__newindex 元方法</h2><p><strong>newindex 元方法用来对表更新，</strong>index则用来对表访问 。<br>当你给表的一个缺少的索引赋值，解释器就会查找__newindex 元方法：如果存在则调用这个函数而不进行赋值操作。<br>以下实例演示了 __newindex 元方法的应用：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">mymetatable = &#123;&#125;</span><br><span class="line">mytable = setmetatable(&#123;key1 = <span class="string">"value1"</span>&#125;, &#123; __newindex = mymetatable &#125;)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mytable.key1)</span></span></span><br><span class="line"></span><br><span class="line">mytable<span class="selector-class">.newkey</span> = <span class="string">"新值2"</span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mytable.newkey,mymetatable.newkey)</span></span></span><br><span class="line"></span><br><span class="line">mytable<span class="selector-class">.key1</span> = <span class="string">"新值1"</span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mytable.key1,mymetatable.key1)</span></span></span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line">value1</span><br><span class="line">nil    新值<span class="number">2</span></span><br><span class="line">新值<span class="number">1</span>    nil</span><br></pre></td></tr></table></figure>
+<p>以上实例中表设置了元方法 __newindex，在对新索引键（newkey）赋值时（mytable.newkey = “新值2”），会调用元方法，而不进行赋值。而如果对已存在的索引键（key1），则会进行赋值，而不调用元方法 __newindex。</p>
+<h2 id="call-元方法"><a href="#call-元方法" class="headerlink" title="__call 元方法"></a>__call 元方法</h2><p>__call 元方法在 Lua 调用一个值时调用。</p>
+<h2 id="修改表的操作符行为"><a href="#修改表的操作符行为" class="headerlink" title="修改表的操作符行为"></a>修改表的操作符行为</h2><p>通过重载 “__add” 元方法来计算集合的并集实例：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> set1 = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>&#125;   <span class="comment">-- 集合</span></span><br><span class="line"><span class="keyword">local</span> set2 = &#123;<span class="number">20</span>, <span class="number">40</span>, <span class="number">50</span>&#125;   <span class="comment">-- 集合</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 将用于重载__add的函数，注意第一个参数是self</span></span><br><span class="line"><span class="keyword">local</span> union = <span class="function"><span class="keyword">function</span> <span class="params">(self, another)</span></span></span><br><span class="line">    <span class="keyword">local</span> set = &#123;&#125;</span><br><span class="line">    <span class="keyword">local</span> result = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 利用数组来确保集合的互异性</span></span><br><span class="line">    <span class="keyword">for</span> i, j <span class="keyword">in</span> <span class="built_in">pairs</span>(self) <span class="keyword">do</span> set[j] = <span class="literal">true</span> <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">for</span> i, j <span class="keyword">in</span> <span class="built_in">pairs</span>(another) <span class="keyword">do</span> set[j] = <span class="literal">true</span> <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 加入结果集合</span></span><br><span class="line">    <span class="keyword">for</span> i, j <span class="keyword">in</span> <span class="built_in">pairs</span>(set) <span class="keyword">do</span> <span class="built_in">table</span>.<span class="built_in">insert</span>(result, i) <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">setmetatable</span>(set1, &#123;<span class="built_in">__add</span> = union&#125;) <span class="comment">-- 重载 set1 表的 __add 元方法</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">local</span> set3 = set1 + set2</span><br><span class="line"><span class="keyword">for</span> _, j <span class="keyword">in</span> <span class="built_in">pairs</span>(set3) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">io</span>.<span class="built_in">write</span>(j..<span class="string">" "</span>)               <span class="comment">--&gt;output：30 50 20 40 10</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>除了加法可以被重载之外，Lua 提供的所有操作符都可以被重载：</p>
+<table>
+<thead>
+<tr>
+<th>元方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>“__add”</td>
+<td>+ 操作</td>
+</tr>
+<tr>
+<td>“__sub”</td>
+<td>- 操作 其行为类似于 “add” 操作</td>
+</tr>
+<tr>
+<td>“__mul”</td>
+<td>* 操作 其行为类似于 “add” 操作</td>
+</tr>
+<tr>
+<td>“__div”</td>
+<td>/ 操作 其行为类似于 “add” 操作</td>
+</tr>
+<tr>
+<td>“__mod”</td>
+<td>% 操作 其行为类似于 “add” 操作</td>
+</tr>
+<tr>
+<td>“__pow”</td>
+<td>^ （幂）操作 其行为类似于 “add” 操作</td>
+</tr>
+<tr>
+<td>“__unm”</td>
+<td>一元 - 操作</td>
+</tr>
+<tr>
+<td>“__len”</td>
+<td># 操作</td>
+</tr>
+<tr>
+<td>“__eq”</td>
+<td>== 操作 函数 getcomphandler 定义了 Lua 怎样选择一个处理器来作比较操作</td>
+</tr>
+<tr>
+<td>“__lt”</td>
+<td>&lt; 操作</td>
+</tr>
+<tr>
+<td>“__le”</td>
+<td>&lt;= 操作</td>
+</tr>
+</tbody></table>
+]]></content>
       <categories>
         <category>lua语言</category>
       </categories>
