@@ -751,4 +751,144 @@
         <tag>lua</tag>
       </tags>
   </entry>
+  <entry>
+    <title>IIC原理</title>
+    <url>/2020/06/19/IIC/</url>
+    <content><![CDATA[<p><strong><em>STM32的硬件IIC非常复杂，更重要的是它并不稳定，故推荐使用软件模拟IIC</em></strong></p>
+<hr>
+<p>IIC优点：</p>
+<ul>
+<li>仅用两根线就完成了数据传输</li>
+<li>采用器件地址的硬件设置方法，通过软件寻址避免了像SPI那样的器件片选线寻址，显著地简化了微控制器和外围器件之间的连接，连接在同一条总线上</li>
+<li>要求被寻址的设备发回应答信息，这样可以提供相对可靠的系统</li>
+</ul>
+<p>IIC缺点：</p>
+<ul>
+<li>仅能实现半双工通信</li>
+<li>传输速率也相对有限</li>
+<li>易受干扰，并且不检查错误</li>
+</ul>
+<h1 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h1><p><img src="/images/1.png" alt=""></p>
+<a id="more"></a>
+
+<p>它的物理层有如下特点：</p>
+<ol>
+<li>它是一个支持设备的总线。“总线”指多个设备共用的信号线。在一个 I2C 通讯总线<br>中，可连接多个 I2C 通讯设备，支持多个通讯主机及多个通讯从机。</li>
+<li>一个 I2C 总线只使用两条总线线路，一条双向串行数据线(SDA) ，一条串行时钟线(SCL)。数据线即用来表示数据，时钟线用于数据收发同步。</li>
+<li>每个连接到总线的设备都有一个独立的地址，主机可以利用这个地址进行不同设备之间的访问。</li>
+<li>总线通过上拉电阻接到电源。当 I2C 设备空闲时，会输出高阻态，而当所有设备都空闲，都输出高阻态时，由上拉电阻把总线拉成高电平。</li>
+<li>多个主机同时使用总线时，为了防止数据冲突，会利用仲裁方式决定由哪个设备占用总线。</li>
+<li>具有三种传输模式：标准模式传输速率为 100kbit/s ，快速模式为 400kbit/s ，高速模式下可达 3.4Mbit/s，但目前大多 I2C 设备尚不支持高速模式。</li>
+<li>连接到相同总线的 IC 数量受到总线的最大电容 400pF 限制 。 </li>
+</ol>
+<h1 id="I2C-基本读写过程"><a href="#I2C-基本读写过程" class="headerlink" title="I2C 基本读写过程"></a>I2C 基本读写过程</h1><p><img src="/images/2.png" alt=""></p>
+<h2 id="写数据"><a href="#写数据" class="headerlink" title="写数据"></a>写数据</h2><p>若配置的方向传输位为“写数据”方向， 即第一幅图的情况， 广播完地址，接收到应答信号后， 主机开始正式向从机传输数据(DATA)，数据包的大小为 8 位，主机每发送完一个字节数据，都要等待从机的应答信号(ACK)，重复这个过程，可以向从机传输 N 个数据，这个 N 没有大小限制。当数据传输结束时，主机向从机发送一个停止传输信号(P)，表示不再传输数据。</p>
+<hr>
+<h2 id="读数据"><a href="#读数据" class="headerlink" title="读数据"></a>读数据</h2><p>若配置的方向传输位为“读数据”方向， 即第二幅图的情况， 广播完地址，接收到应答信号后， 从机开始向主机返回数据(DATA)，数据包大小也为 8 位，从机每发送完一个数据，都会等待主机的应答信号(ACK)，重复这个过程，可以返回 N 个数据，这个 N 也没有大小限制。当主机希望停止接收数据时，就向从机返回一个非应答信号(NACK)，则从机自动停止数据传输。</p>
+<hr>
+<h2 id="读和写数据"><a href="#读和写数据" class="headerlink" title="读和写数据"></a>读和写数据</h2><p>除了基本的读写， I2C 通讯更常用的是复合格式，即第三幅图的情况，该传输过程有两次起始信号(S)。一般在第一次传输中，主机通过 SLAVE_ADDRESS 寻找到从设备后，发送一段“数据”，这段数据通常用于表示从设备内部的寄存器或存储器地址(注意区分它与 SLAVE_ADDRESS 的区别)；在第二次的传输中，对该地址的内容进行读或写。也就是说，第一次通讯是告诉从机读写地址，第二次则是读写的实际内容。</p>
+<h1 id="协议层"><a href="#协议层" class="headerlink" title="协议层"></a>协议层</h1><h2 id="起始和停止信号"><a href="#起始和停止信号" class="headerlink" title="起始和停止信号"></a>起始和停止信号</h2><p>起始(S)和停止(P)信号是两种特殊的状态。当 SCL 线是高电平时 SDA 线从高电平向低电平切换，这个情况表示通讯的起始。当 SCL 是高电平时 SDA线由低电平向高电平切换，表示通讯的停止。起始和停止信号一般由主机产生。<br><img src="/images/3.png" alt=""></p>
+<h2 id="数据有效性"><a href="#数据有效性" class="headerlink" title="数据有效性"></a>数据有效性</h2><p>I2C 使用 SDA 信号线来传输数据，使用 SCL信号线进行数据同步。 SDA 数据线在 SCL的每个时钟周期传输一位数据。传输时， SCL为高电平的时候 SDA表示的数据有效，即此时的 SDA为高电平时表示数据“1”，为低电平时表示数据“0”。当 SCL为低电平时， SDA的数据无效，一般在这个时候 SDA 进行电平切换，为下一次表示数据做好准备。<br><img src="/images/4.png" alt=""><br><img src="/images/5.png" alt=""></p>
+<p>##地址及数据方向<br>I2C 总线上的每个设备都有自己的独立地址，主机发起通讯时，通过 SDA 信号线发送<br>设备地址(SLAVE_ADDRESS)来查找从机。 I2C 协议规定设备地址可以是 7 位或 10 位，实际中 7 位的地址应用比较广泛。紧跟设备地址的一个数据位用来表示数据传输方向，它是数据方向位(R/W)，第 8 位或第 11 位。数据方向位为“1”时表示主机由从机读数据，该位为“0”时表示主机向从机写数据。<br><img src="/images/6.png" alt=""><br>读数据方向时，主机会释放对 SDA 信号线的控制，由从机控制 SDA 信号线，主机接收信号，写数据方向时， SDA 由主机控制，从机接收信号。</p>
+<h2 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h2><p>IIC总线协议规定，每传送一个字节数据<strong>(含地址及命令)</strong>后，都要有一个应答信号，以确定数据传送是否被对方收到。应答信号由接受设备产生，在SCL信号为高电平期间，接受设备将SDA拉为低电平，表示数据传送正确，产生应答。响应包括“应答(ACK)”和“非应答(NACK)”两种信号。作为数据接收端时，当设备(无论主从机)接收到 I2C 传输的一个字节数据或地址后，若希望对方继续发送数据，则需要向对方发送“应答(ACK)”信号，发送方会继续发送下一个数据；若接收端希望结束数据传输，则向对方发送“非应答(NACK)”信号，发送方接收到该信号后会产生一个停止信号，结束信号传输<br><img src="/images/7.png" alt=""><br><img src="/images/8.png" alt=""><br><strong>*传输时主机产生时钟，在第 9 个时钟时，数据发送端会释放 SDA 的控制权，由数据接收端控制 SDA，若 SDA 为高电平，表示非应答信号(NACK)，低电平表示应答信号(ACK)。 *</strong><br><img src="/images/9.png" alt=""></p>
+<h1 id="stm321编程要点"><a href="#stm321编程要点" class="headerlink" title="stm321编程要点"></a>stm321编程要点</h1><ol>
+<li>配置通讯使用的目标引脚为开漏模式；</li>
+<li>使能 I2C 外设的时钟；</li>
+<li>配置 I2C 外设的模式、地址、速率等参数并使能 I2C 外设；</li>
+<li>编写基本 I2C 按字节收发的函数；</li>
+<li>编写读写内容的函数；</li>
+<li>编写测试程序，对读写数据进行校验。 </li>
+</ol>
+<p>软件模拟IIC</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//初始化IIC</span></span><br><span class="line"><span class="built_in">void</span> IIC_Init(<span class="built_in">void</span>)</span><br><span class="line">&#123;					     </span><br><span class="line">	GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">	RCC_APB2PeriphClockCmd(	RCC_APB2Periph_GPIOB, ENABLE );	<span class="comment">//使能GPIOB时钟</span></span><br><span class="line">	   </span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_7;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP ;   <span class="comment">//推挽输出</span></span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">	GPIO_Init(GPIOB, &amp;GPIO_InitStructure);</span><br><span class="line">	GPIO_SetBits(GPIOB,GPIO_Pin_6|GPIO_Pin_7); 	<span class="comment">//PB6,PB7 输出高，空闲状态</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//产生IIC起始信号</span></span><br><span class="line"><span class="built_in">void</span> IIC_Start(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	SDA_OUT();     <span class="comment">//sda线输出</span></span><br><span class="line">	IIC_SDA=<span class="number">1</span>;	  	  </span><br><span class="line">	IIC_SCL=<span class="number">1</span>;</span><br><span class="line">	delay_us(<span class="number">4</span>);</span><br><span class="line"> 	IIC_SDA=<span class="number">0</span>;    <span class="comment">//START:when CLK is high,DATA change form high to low </span></span><br><span class="line">	delay_us(<span class="number">4</span>);</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;    <span class="comment">//钳住I2C总线，准备发送或接收数据 </span></span><br><span class="line">&#125;	  </span><br><span class="line"><span class="comment">//产生IIC停止信号</span></span><br><span class="line"><span class="built_in">void</span> IIC_Stop(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	SDA_OUT();    <span class="comment">//sda线输出</span></span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">	IIC_SDA=<span class="number">0</span>;    <span class="comment">//STOP:when CLK is high DATA change form low to high</span></span><br><span class="line"> 	delay_us(<span class="number">4</span>);</span><br><span class="line">	IIC_SCL=<span class="number">1</span>; </span><br><span class="line">	IIC_SDA=<span class="number">1</span>;    <span class="comment">//发送I2C总线结束信号</span></span><br><span class="line">	delay_us(<span class="number">4</span>);							   	</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//发送数据后，等待应答信号到来</span></span><br><span class="line"><span class="comment">//返回值：1，接收应答失败，IIC直接退出</span></span><br><span class="line"><span class="comment">//        0，接收应答成功，什么都不做</span></span><br><span class="line">u8 IIC_Wait_Ack(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	u8 ucErrTime=<span class="number">0</span>;</span><br><span class="line">	SDA_IN();      <span class="comment">//SDA设置为输入  </span></span><br><span class="line">	IIC_SDA=<span class="number">1</span>;delay_us(<span class="number">1</span>);	   </span><br><span class="line">	IIC_SCL=<span class="number">1</span>;delay_us(<span class="number">1</span>);	 </span><br><span class="line">	<span class="keyword">while</span>(READ_SDA)</span><br><span class="line">	&#123;</span><br><span class="line">		ucErrTime++;</span><br><span class="line">		<span class="keyword">if</span>(ucErrTime&gt;<span class="number">250</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			IIC_Stop();</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;    <span class="comment">//时钟输出0 	   </span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">//产生ACK应答</span></span><br><span class="line"><span class="built_in">void</span> IIC_Ack(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">	SDA_OUT();</span><br><span class="line">	IIC_SDA=<span class="number">0</span>;</span><br><span class="line">	delay_us(<span class="number">2</span>);</span><br><span class="line">	IIC_SCL=<span class="number">1</span>;</span><br><span class="line">	delay_us(<span class="number">2</span>);</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//不产生ACK应答		    </span></span><br><span class="line"><span class="built_in">void</span> IIC_NAck(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">	SDA_OUT();</span><br><span class="line">	IIC_SDA=<span class="number">1</span>;</span><br><span class="line">	delay_us(<span class="number">2</span>);</span><br><span class="line">	IIC_SCL=<span class="number">1</span>;</span><br><span class="line">	delay_us(<span class="number">2</span>);</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">&#125;					 				     </span><br><span class="line"><span class="comment">//IIC发送一个字节</span></span><br><span class="line"><span class="comment">//返回从机有无应答</span></span><br><span class="line"><span class="comment">//1，有应答</span></span><br><span class="line"><span class="comment">//0，无应答			  </span></span><br><span class="line"><span class="built_in">void</span> IIC_Send_Byte(u8 txd)   <span class="comment">//结合起始、应答、结束信号才能传输数据</span></span><br><span class="line">&#123;                        </span><br><span class="line">    u8 t;   </span><br><span class="line">	SDA_OUT(); 	    </span><br><span class="line">    IIC_SCL=<span class="number">0</span>;            <span class="comment">//拉低时钟开始数据传输</span></span><br><span class="line">    <span class="keyword">for</span>(t=<span class="number">0</span>;t&lt;<span class="number">8</span>;t++)</span><br><span class="line">    &#123;              </span><br><span class="line">        <span class="comment">//IIC_SDA=(txd&amp;0x80)&gt;&gt;7;</span></span><br><span class="line">		<span class="keyword">if</span>((txd&amp;<span class="number">0x80</span>)&gt;&gt;<span class="number">7</span>)</span><br><span class="line">			IIC_SDA=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			IIC_SDA=<span class="number">0</span>;</span><br><span class="line">		txd&lt;&lt;=<span class="number">1</span>; 	  </span><br><span class="line">		delay_us(<span class="number">2</span>);       <span class="comment">//对TEA5767这三个延时都是必须的</span></span><br><span class="line">		IIC_SCL=<span class="number">1</span>;</span><br><span class="line">		delay_us(<span class="number">2</span>); </span><br><span class="line">		IIC_SCL=<span class="number">0</span>;	</span><br><span class="line">		delay_us(<span class="number">2</span>);</span><br><span class="line">    &#125;	 </span><br><span class="line">&#125; 	    </span><br><span class="line"><span class="comment">//读1个字节，ack=1时，发送ACK，ack=0，发送nACK   </span></span><br><span class="line">u8 IIC_Read_Byte(unsigned char ack)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned char i,receive=<span class="number">0</span>;</span><br><span class="line">	SDA_IN();        <span class="comment">//SDA设置为输入</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">8</span>;i++ )</span><br><span class="line">	&#123;</span><br><span class="line">        IIC_SCL=<span class="number">0</span>; </span><br><span class="line">        delay_us(<span class="number">2</span>);</span><br><span class="line">		IIC_SCL=<span class="number">1</span>;</span><br><span class="line">        receive&lt;&lt;=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(READ_SDA)receive++;   </span><br><span class="line">		delay_us(<span class="number">1</span>); </span><br><span class="line">    &#125;					 </span><br><span class="line">    <span class="keyword">if</span> (!ack)</span><br><span class="line">        IIC_NAck();        <span class="comment">//发送nACK</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        IIC_Ack();         <span class="comment">//发送ACK   </span></span><br><span class="line">    <span class="keyword">return</span> receive;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>通信协议</category>
+      </categories>
+      <tags>
+        <tag>IIC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>UART原理</title>
+    <url>/2020/06/19/UART/</url>
+    <content><![CDATA[<p>优点：</p>
+<ul>
+<li>只使用两根电线</li>
+<li>支持多个主服务器和多个从服务器</li>
+<li>ACK / NACK位确认每个帧都已成功传输</li>
+<li>硬件没有UART那么复杂</li>
+<li>众所周知且广泛使用的协议</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>数据传输速率比SPI慢</li>
+<li>数据帧的大小限制为8位</li>
+<li>实现比SPI更复杂的硬件</li>
+</ul>
+<h1 id="异步通信与同步通信区别"><a href="#异步通信与同步通信区别" class="headerlink" title="异步通信与同步通信区别"></a>异步通信与同步通信区别</h1><h2 id="异步通信："><a href="#异步通信：" class="headerlink" title="异步通信："></a>异步通信：</h2><p>异步通信中的接收方并不知道数据什么时候会到达，收发双方可以有各自自己的时钟。发送方发送的时间间隔可以不均，接收方是在数据的起始位和停止位的帮助下实现信息同步的。这种传输通常是很小的分组，比如一个字符为一组，为这个组配备起始位和结束位。所以这种传输方式的效率是比较低的，毕竟额外加入了很多的辅助位作为负载，常用在低速的传输中。<br>举个例子，我们的键盘按下一个按键，发出一个字符信号，异步传输机制就会为它加上前后的辅助同步信息，帮助接收方识别到我们按下了哪一个按键。因为我们敲击键盘的节奏不固定，所以异步是一种很适合的方式。</p>
+<a id="more"></a>
+
+<h2 id="同步通信："><a href="#同步通信：" class="headerlink" title="同步通信："></a>同步通信：</h2><p>  同步通信中双方使用频率一致的时钟，它的分组相比异步则大得多，称为一个数据帧，通过独特的bit串作为启停标识。发送方要以固定的节奏去发送数据，而接收方要时刻做好接收数据的准备，识别到前导码后马上要开始接收数据了。同步这种方式中因为分组很大，很长一段数据才会有额外的辅助位负载，所以效率更高，更加适合对速度要求高的传输，当然这种通信对时序的要求也更高。</p>
+<hr>
+<p>总结一下，异步传输其实是通过字符数据前后的开始和停止码进行再同步，弥补自己刚才注意不集中的不足；而同步方式则是一个规矩的好学生，时刻候命准备工作。异步是你扔出去一个内容，对方靠着内容前后他能嗅到的异样在人潮之中发现了它，把这个内容存下来；而同步是对方在时刻等着你发布号令，你告诉对方我要发送了哦，然后双方一拍即合。</p>
+<h1 id="USART和UART区别"><a href="#USART和UART区别" class="headerlink" title="USART和UART区别"></a>USART和UART区别</h1><p>UART它是在 USART 基础上裁剪掉了同步通信功能，只有异步通信。 简单区分同步和异步就是看通信时需不需要对外提供时钟输出，我们平时用的串口通信基本都是UART。</p>
+<h1 id="协议层"><a href="#协议层" class="headerlink" title="协议层"></a>协议层</h1><h2 id="串口数据包的基本组成"><a href="#串口数据包的基本组成" class="headerlink" title="串口数据包的基本组成"></a>串口数据包的基本组成</h2><p><img src="/images/10.png" alt=""></p>
+<h2 id="原理理解"><a href="#原理理解" class="headerlink" title="原理理解"></a>原理理解</h2><p>也就是双方必要约定一种暗号。<br>也许当时发送这个通信的小组是这样讨论的。<br>经理：我要用一根线就能传输数据，你来给我定个标准。<br>研发：好。<br>经理：只有一根线，我怎么知道数据什么时候开始呢。<br>研发：就一根线，默认是高电平，那就有一个起始位吧。当检测到有低电平的时候，就是开始有一个字节的数据发送了,起始位之后，先是字节的最低位,传送一个字节。<br>经理：可是，就一根线，过来的数据会不会有干扰，容易出错呀。<br>研发：行呀，那就在字节数据后再加一个校验位。可以作奇校验，偶校验，1校验，0校验，无校验。<br>经理：嗯 ，很不错。有起始位就应该有停止位，那我们就再加个停止位在后面吧。<br>经理：传输一串数据，对方要怎么知道数据的拆分呢，怎么按时间或频率去解读数据位，校验位呢。<br>研发：这样吧，双方约定一个波特率吧，定义一个每个位占用多长的时间，这样双方按这个波特率就可以处理了。这个波特率呢，是指1S钟可以传输多个位，也就知道一个位占用多长时间。这样就解决传输的问题了。（波特率：即单位时间内传输的符号个数；）<br>经理：那万一传输过程，数据快太，判断失误停不下来怎么办。<br>研发：那就把停止位可以调节为1个停止位或者2个停止位。这样就可以停下来了。<br>经理：嗯，听着不错。就这样办吧。</p>
+<p>于是，串口通信就这样出来了。<br>在串口的通信参数上，就有了波特率，数据位，停止位，校验位这几个参数来确保串口通信的正确性和稳定上。当然，这只是某个方面保证串口通信的正确性和稳定性，不代表设备间通信的正确性和稳定性。</p>
+<h3 id="1-波特率"><a href="#1-波特率" class="headerlink" title="1. 波特率"></a>1. 波特率</h3><p>异步通讯中由于没有时钟信号接口中是没有时钟信号的)，所以两个通讯设备之间需要约定好波特率，即每个码元的长度。常见的波特率为4800、 9600、 115200 等。波特率：即单位时间内传输的符号个数。</p>
+<h3 id="2-通讯的起始和停止信号"><a href="#2-通讯的起始和停止信号" class="headerlink" title="2. 通讯的起始和停止信号"></a>2. 通讯的起始和停止信号</h3><p>串口通讯的一个数据包从起始信号开始，直到停止信号结束。数据包的起始信号由一个逻辑 0 的数据位表示，而数据包的停止信号可由 0.5、 1、 1.5 或 2 个逻辑 1 的数据位表示，只要双方约定一致即可。</p>
+<h3 id="3-有效数据"><a href="#3-有效数据" class="headerlink" title="3. 有效数据"></a>3. 有效数据</h3><p>在数据包的起始位之后紧接着的就是要传输的主体数据内容，也称为有效数据，有效数据的长度常被约定为 5、 6、 7 或 8 位长。</p>
+<h3 id="4-数据校验"><a href="#4-数据校验" class="headerlink" title="4. 数据校验"></a>4. 数据校验</h3><p>在有效数据之后，有一个可选的数据校验位。由于数据通信相对更容易受到外部干扰导致传输数据出现偏差，可以在传输过程加上校验位来解决这个问题。校验方法有奇校验(odd)、偶校验(even)、 0 校验(space)、 1 校验(mark)以及无校验(noparity)。奇校验要求有效数据和校验位中“1”的个数为奇数，比如一个 8 位长的有效数据为：01101001，此时总共有4个“1”，为达到奇校验效果，校验位为“1”，最后传输的数据将是 8 位的有效数据加上 1 位的校验位总共 9 位。偶校验与奇校验要求刚好相反，要求帧数据和校验位中“1”的个数为偶数，比如数据帧： 11001010，此时数据帧“1”的个数为 4 个，所以偶校验位为“0”。0校验是不管有效数据中的内容是什么，校验位总为“0”， 1 校验是校验位总为“1”。</p>
+<hr>
+<p>在两个UART之间传输数据只需要两根线。数据从发送UART的Tx引脚流向接收UART的Rx引脚：<br><img src="/images/11.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>通信协议</category>
+      </categories>
+      <tags>
+        <tag>UART</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SPI原理</title>
+    <url>/2020/06/19/SPI/</url>
+    <content><![CDATA[<p>SPI 协议是由摩托罗拉公司提出的通讯协议(Serial Peripheral Interface)，即串行外围设备接口，是一种高速全双工的通信总线。它被广泛地使用在 ADC、 LCD 等设备与 MCU 间，要求通讯速率较高的场合。</p>
+<p>SPI接口具有如下优点：</p>
+<ul>
+<li>支持全双工操作；</li>
+<li>操作简单；</li>
+<li>数据传输速率较高。</li>
+</ul>
+<p>SPI接口具有如下缺点：</p>
+<ul>
+<li>需要占用主机较多的口线（每个从机都需要一根片选线）；</li>
+<li>只支持单个主机。</li>
+<li>没有指定的流控制，没有应答机制确认是否接收到数据。</li>
+</ul>
+<h1 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h1><p><img src="/images/13.png" alt=""><br>SPI 通讯使用 3 条总线及片选线， 3 条总线分别为 SCK、 MOSI、 MISO，片选线为 SS，它们的作用介绍如下： </p>
+<ol>
+<li>nSS(Slave Select)：片选信号线，用于选中SPI从设备。每个从设备独立拥有这条nSS信号线，占据主机的一个引脚。设备的其他总线是并联到SPI主机的，即无论多少个从设备，都共同使用这3条总线。当从设备上的nSS引脚被置拉低时表明该从设备被主机选中。</li>
+<li>SCK(Serial Clock)：时钟信号线，通讯数据同步用。时钟信号由通讯主机产生，它决定了SPI的通讯速率。</li>
+<li>MOSI(Master Ouput Slave Input)：主机(数据)输出/从设备(数据)输入引脚，即这条信号线上传输从主机到从机的数据。</li>
+<li>MISO(Master Input Slave Ouput)：主机(数据)输入/从设备(数据)输出引脚，即这条信号线上传输从机从到主机的数据主从机通过两条信号线来传输数据，那么自然是全双工通讯的了。之前的I2C通讯，数据只在一条SDA线上传输，主从机数据交互只能采用半双工。</li>
+</ol>
+<h1 id="协议层"><a href="#协议层" class="headerlink" title="协议层"></a>协议层</h1><p>与 I2C 的类似， SPI 协议定义了通讯的起始和停止信号、数据有效性、时钟同步等环节。</p>
+<h2 id="SPI-基本通讯过程"><a href="#SPI-基本通讯过程" class="headerlink" title="SPI 基本通讯过程"></a>SPI 基本通讯过程</h2><p> SPI 通讯的通讯时序<br><img src="/images/12.png" alt=""><br>这是一个主机的通讯时序。 NSS、 SCK、 MOSI 信号都由主机控制产生，而 MISO 的信号由从机产生，主机通过该信号线读取从机的数据。 MOSI 与 MISO 的信号只在 NSS 为低电平的时候才有效，在 SCK 的每个时钟周期 MOSI 和 MISO 传输一位数据。以上通讯流程中包含的各个信号分解如下：</p>
+<h2 id="通讯的起始和停止信号"><a href="#通讯的起始和停止信号" class="headerlink" title="通讯的起始和停止信号"></a>通讯的起始和停止信号</h2><p>标号①处， nSS信号由高电平变为低电平即为SPI通讯的起始信号，反过来，nSS信号由低电平变为高电平即为SPI通讯的结束信号。这个可比I2C简单得多了。当从机检测到自身的nSS引脚被拉低时就知道自己被主机选中，准备和主机进行通讯</p>
+<h2 id="数据有效性"><a href="#数据有效性" class="headerlink" title="数据有效性"></a>数据有效性</h2><p>SPI 使用 MOSI 及 MISO 信号线来传输数据，使用 SCK 信号线进行数据同步。 MOSI 及MISO 数据线在 SCK 的每个时钟周期传输一位数据，且数据输入输出是同时进行的。数据传输时， MSB 先行或 LSB 先行并没有作硬性规定，但要保证两个 SPI 通讯设备之间使用同样的协定，一般都会采用图中的 MSB 先行模式。<br>观察图中的②③④⑤标号处， MOSI 及 MISO 的数据在 SCK 的上升沿期间变化输出，在SCK 的下降沿时被采样。即在 SCK 的下降沿时刻， MOSI 及 MISO 的数据有效，高电平时表示数据“1”，为低电平时表示数据“0”。在其它时刻，数据无效， MOSI及 MISO 为下一次表示数据做准备。<br>SPI 每次数据传输可以 8 位或 16 位为单位，每次传输的单位数不受限制。 </p>
+<hr>
+<p>这里需要再提及的概念是时钟极性(CPOL)和时钟相位(CPHA)。<br>  时钟极性(CPOL)指通讯设备处于空闲状态(SPI开始通讯前、nSS线无效)时，SCK的状态。</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">CPOL</span> = <span class="number">0</span>：SCK在空闲时为低电平</span><br><span class="line"><span class="attr">CPOL</span> = <span class="number">1</span>：SCK在空闲时为高电平</span><br></pre></td></tr></table></figure>
+<p>  时钟相位(CPHA)指数据的采样时刻位于SCK的偶数边沿采样还是奇数边沿采样。</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">CPHA</span> = <span class="number">0</span>：在SCK的奇数边沿采样</span><br><span class="line"><span class="attr">CPHA</span> = <span class="number">1</span>：在SCK的偶数边沿采样</span><br></pre></td></tr></table></figure>
+<p>  那么这样说来，<strong>*SPI的采样时刻并非由上升沿/下降沿决定的</strong>。注意的是，在数据采样时刻，MOSI和MOSI的电平为有效电平，数据不能在这个时刻进行切换注意的是，在数据采样时刻，MOSI和MOSI的电平为有效电平，数据不能在这个时刻进行切换。在非采样时刻MOSI和MISO上的信号才能切换</p>
+<h1 id="编程要点"><a href="#编程要点" class="headerlink" title="编程要点"></a>编程要点</h1><p>(1) 初始化通讯使用的目标引脚及端口时钟；<br>(2) 使能 SPI 外设的时钟；<br>(3) 配置 SPI 外设的模式、地址、速率等参数并使能 SPI 外设；<br>(4) 编写基本 SPI 按字节收发的函数；<br>(5) 编写读写操作的的函数；<br>(6) 编写测试程序，对读写数据进行校验。 </p>
+]]></content>
+      <categories>
+        <category>通信协议</category>
+      </categories>
+      <tags>
+        <tag>SPI</tag>
+      </tags>
+  </entry>
 </search>

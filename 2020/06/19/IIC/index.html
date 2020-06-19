@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="makedown," />
+  <meta name="keywords" content="IIC," />
 
 
 
@@ -79,18 +79,26 @@
 
 
 
-<meta name="description" content="发布文章在source&#x2F;_posts 文件夹下创建.md文件配置属性 123456789---title: Markdown基本语法data: 2019-6-10categories:    - lua语言    ##添加到lua语言分类，也也可以新建一个分类tags：- lua        #添加标签- 编程--- 文章写完回到终端 hexo g 再 hexo d">
+<meta name="description" content="STM32的硬件IIC非常复杂，更重要的是它并不稳定，故推荐使用软件模拟IIC  IIC优点：  仅用两根线就完成了数据传输 采用器件地址的硬件设置方法，通过软件寻址避免了像SPI那样的器件片选线寻址，显著地简化了微控制器和外围器件之间的连接，连接在同一条总线上 要求被寻址的设备发回应答信息，这样可以提供相对可靠的系统  IIC缺点：  仅能实现半双工通信 传输速率也相对有限 易受干扰，并且不检查">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Markdown基本语法">
-<meta property="og:url" content="https://pixvc.github.io/2020/06/10/hello-world/index.html">
+<meta property="og:title" content="IIC原理">
+<meta property="og:url" content="https://pixvc.github.io/2020/06/19/IIC/index.html">
 <meta property="og:site_name" content="邹菜鸡">
-<meta property="og:description" content="发布文章在source&#x2F;_posts 文件夹下创建.md文件配置属性 123456789---title: Markdown基本语法data: 2019-6-10categories:    - lua语言    ##添加到lua语言分类，也也可以新建一个分类tags：- lua        #添加标签- 编程--- 文章写完回到终端 hexo g 再 hexo d">
-<meta property="og:image" content="https://pixvc.github.io/images/header.jpg">
-<meta property="article:published_time" content="2020-06-10T04:06:03.733Z">
-<meta property="article:modified_time" content="2020-06-15T01:32:45.719Z">
-<meta property="article:tag" content="makedown">
+<meta property="og:description" content="STM32的硬件IIC非常复杂，更重要的是它并不稳定，故推荐使用软件模拟IIC  IIC优点：  仅用两根线就完成了数据传输 采用器件地址的硬件设置方法，通过软件寻址避免了像SPI那样的器件片选线寻址，显著地简化了微控制器和外围器件之间的连接，连接在同一条总线上 要求被寻址的设备发回应答信息，这样可以提供相对可靠的系统  IIC缺点：  仅能实现半双工通信 传输速率也相对有限 易受干扰，并且不检查">
+<meta property="og:image" content="https://pixvc.github.io/images/1.png">
+<meta property="og:image" content="https://pixvc.github.io/images/2.png">
+<meta property="og:image" content="https://pixvc.github.io/images/3.png">
+<meta property="og:image" content="https://pixvc.github.io/images/4.png">
+<meta property="og:image" content="https://pixvc.github.io/images/5.png">
+<meta property="og:image" content="https://pixvc.github.io/images/6.png">
+<meta property="og:image" content="https://pixvc.github.io/images/7.png">
+<meta property="og:image" content="https://pixvc.github.io/images/8.png">
+<meta property="og:image" content="https://pixvc.github.io/images/9.png">
+<meta property="article:published_time" content="2020-06-19T02:18:08.067Z">
+<meta property="article:modified_time" content="2020-06-19T02:43:59.142Z">
+<meta property="article:tag" content="IIC">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pixvc.github.io/images/header.jpg">
+<meta name="twitter:image" content="https://pixvc.github.io/images/1.png">
 
 
 
@@ -120,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="https://pixvc.github.io/2020/06/10/hello-world/"/>
+  <link rel="canonical" href="https://pixvc.github.io/2020/06/19/IIC/"/>
 
 
 
 
 
-  <title>Markdown基本语法 | 邹菜鸡</title>
+  <title>IIC原理 | 邹菜鸡</title>
   
 
 
@@ -287,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://pixvc.github.io/2020/06/10/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://pixvc.github.io/2020/06/19/IIC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -304,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Markdown基本语法</h1>
+          <h1 class="post-title" itemprop="name headline">IIC原理</h1>
         
 
         <div class="post-meta">
@@ -316,8 +324,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-10T12:06:03+08:00">
-                2020-06-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-19T10:18:08+08:00">
+                2020-06-19
               </time>
             
 
@@ -339,8 +347,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Markdown/" itemprop="url" rel="index">
-                    <span itemprop="name">Markdown</span>
+                  <a href="/categories/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">通信协议</span>
                   </a>
                 </span>
 
@@ -376,131 +384,53 @@
       
 
       
-        <h1 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h1><p>在source/_posts 文件夹下创建.md文件<br>配置属性</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Markdown基本语法</span></span><br><span class="line"><span class="attr">data:</span> <span class="number">2019</span><span class="number">-6</span><span class="number">-10</span></span><br><span class="line"><span class="attr">categories:</span>    </span><br><span class="line"><span class="bullet">-</span> <span class="string">lua语言</span>    <span class="comment">##添加到lua语言分类，也也可以新建一个分类</span></span><br><span class="line"><span class="string">tags：</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">lua</span>        <span class="comment">#添加标签</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">编程</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
-<p>文章写完回到终端 hexo g 再 hexo d</p>
+        <p><strong><em>STM32的硬件IIC非常复杂，更重要的是它并不稳定，故推荐使用软件模拟IIC</em></strong></p>
+<hr>
+<p>IIC优点：</p>
+<ul>
+<li>仅用两根线就完成了数据传输</li>
+<li>采用器件地址的硬件设置方法，通过软件寻址避免了像SPI那样的器件片选线寻址，显著地简化了微控制器和外围器件之间的连接，连接在同一条总线上</li>
+<li>要求被寻址的设备发回应答信息，这样可以提供相对可靠的系统</li>
+</ul>
+<p>IIC缺点：</p>
+<ul>
+<li>仅能实现半双工通信</li>
+<li>传输速率也相对有限</li>
+<li>易受干扰，并且不检查错误</li>
+</ul>
+<h1 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h1><p><img src="/images/1.png" alt=""></p>
 <a id="more"></a>
 
-<p>在写博客的时候在文章中使用&lt;!--more--&gt;进行手动截断,这样可以实现只显示摘要的效果，并且在摘要下方生成一个阅读全文的链接</p>
-<h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><p>Markdown 是一种标记语言，语法简单，易阅读易编写，可以让用户完全脱离鼠标写出样式丰富的文档，广受程序员喜爱，目前许多网站都已经支持通过 Markdown 语法来写文章或者发表评论。 </p>
-<h2 id="分级标题"><a href="#分级标题" class="headerlink" title="分级标题"></a>分级标题</h2><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 一级标题</span><br><span class="line">## 二级标题</span><br><span class="line">### 三级标题</span><br><span class="line">#### 四级标题</span><br><span class="line">##### 五级标题</span><br><span class="line">###### 六级标题</span><br></pre></td></tr></table></figure>
-
-<h2 id="斜体和粗体"><a href="#斜体和粗体" class="headerlink" title="斜体和粗体"></a>斜体和粗体</h2><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="strong">*这是斜体*</span> 或 <span class="emphasis">_这也是斜体_</span> </span><br><span class="line">*<span class="strong">*这是粗体*</span><span class="strong">*</span></span><br><span class="line"><span class="strong">*</span>*<span class="strong">*这是加粗斜体*</span>*<span class="strong">*</span></span><br><span class="line"><span class="strong">~~这是删除线~~</span></span><br></pre></td></tr></table></figure>
-<p>效果：<br><em>这是斜体</em> 或 <em>这也是斜体</em><br><strong>这是粗体</strong><br><strong><em>这是加粗斜体</em></strong><br><del>这是删除线</del> </p>
-<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">|<span class="string"> 表头1</span>|<span class="string">表头2</span>|<span class="string">表头3</span>|<span class="string">表头4</span></span><br><span class="line">|<span class="string">-</span>|<span class="string"> :- </span>|<span class="string"> :-: </span>|<span class="string"> -: </span>|</span><br><span class="line">|<span class="string">默认左对齐</span>|<span class="string">左对齐</span>|<span class="string">居中对其</span>|<span class="string">右对齐</span>|</span><br><span class="line">|<span class="string">默认左对齐</span>|<span class="string">左对齐</span>|<span class="string">居中对其</span>|<span class="string">右对齐</span>|</span><br><span class="line">|<span class="string">默认左对齐</span>|<span class="string">左对齐</span>|<span class="string">居中对其</span>|<span class="string">右对齐</span>|</span><br></pre></td></tr></table></figure>
-<p>效果：（表格与文字要有空行）</p>
-<table>
-<thead>
-<tr>
-<th>表头1</th>
-<th align="left">表头2</th>
-<th align="center">表头3</th>
-<th align="right">表头4</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>默认左对齐</td>
-<td align="left">左对齐</td>
-<td align="center">居中对其</td>
-<td align="right">右对齐</td>
-</tr>
-<tr>
-<td>默认左对齐</td>
-<td align="left">左对齐</td>
-<td align="center">居中对其</td>
-<td align="right">右对齐</td>
-</tr>
-<tr>
-<td>默认左对齐</td>
-<td align="left">左对齐</td>
-<td align="center">居中对其</td>
-<td align="right">右对齐</td>
-</tr>
-</tbody></table>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">```代码块```  #单行代码一个点包起来</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">//</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">//</span>]: <span class="link"># (哈哈我是注释，不会在浏览器中显示。)</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h2><p>Markdown中的转义字符为\，可以转义的有：</p>
-<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">\\</span> 反斜杠</span><br><span class="line"><span class="symbol">\`</span> 反引号</span><br><span class="line"><span class="symbol">\*</span> 星号</span><br><span class="line"><span class="symbol">\_</span> 下划线</span><br><span class="line"><span class="symbol">\&#123;</span><span class="symbol">\&#125;</span> 大括号</span><br><span class="line"><span class="symbol">\[</span><span class="symbol">\]</span> 中括号</span><br><span class="line"><span class="symbol">\(</span><span class="symbol">\)</span> 小括号</span><br><span class="line"><span class="symbol">\#</span> 井号</span><br><span class="line"><span class="symbol">\+</span> 加号</span><br><span class="line"><span class="symbol">\-</span> 减号</span><br><span class="line"><span class="symbol">\.</span> 英文句号</span><br><span class="line"><span class="symbol">\!</span> 感叹号</span><br><span class="line"><span class="symbol">\&lt;</span>&gt;尖括号</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h2><p>在 Hexo 中插入图片，首先需要将图片放在 source/images/ 文件夹下，然后如下方式进行插入：</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!<span class="selector-attr">[]</span>(/images/insert_image.jpg)</span><br></pre></td></tr></table></figure>
-<p>效果：<br><img src="/images/header.jpg" alt=""></p>
-<h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">行内形式：[<span class="string">我的博客</span>](<span class="link">http://pixvc.github.io/</span>)</span><br><span class="line">参考形式：[<span class="string">p站</span>][<span class="symbol">1</span>]，[<span class="string">谷歌</span>][<span class="symbol">2</span>]</span><br><span class="line">[<span class="symbol">1</span>]:<span class="link">https://cn.pornhub.com/</span></span><br><span class="line">[<span class="symbol">2</span>]:<span class="link">https://www.google.com/</span></span><br></pre></td></tr></table></figure>
-<p>效果：<br>行内形式：<a href="http://pixvc.github.io/">我的博客</a><br>参考形式：[p站][1]，[谷歌][2]<br>[1]:<a href="https://cn.pornhub.com/" target="_blank" rel="noopener">https://cn.pornhub.com/</a><br>[2]:<a href="https://www.google.com/" target="_blank" rel="noopener">https://www.google.com/</a></p>
-<h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">----</span><br><span class="line">**<span class="strong">*</span></span><br><span class="line"><span class="strong">*</span>***<span class="strong">*</span></span><br></pre></td></tr></table></figure>
-<h2 id="效果："><a href="#效果：" class="headerlink" title="效果："></a>效果：</h2><hr>
-<hr>
-<hr>
-<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;这是引用的内容</span><br><span class="line"><span class="meta">&gt;&gt;</span>这是引用的内容</span><br><span class="line"><span class="meta">&gt;&gt;</span>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;这是引用的内容</span><br></pre></td></tr></table></figure>
-<p>效果：</p>
-<blockquote>
-<p>这是引用的内容</p>
-<blockquote>
-<p>这是引用的内容</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>这是引用的内容</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>1.无序列表使用星号(*)、加号(+)或是减号(-)作为列表标记：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>第一项</span><br><span class="line"><span class="bullet">* </span>第二项</span><br><span class="line"><span class="bullet">* </span>第三项</span><br><span class="line"></span><br><span class="line"><span class="bullet">+ </span>第一项</span><br><span class="line"><span class="bullet">+ </span>第二项</span><br><span class="line"><span class="bullet">+ </span>第三项</span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>第一项</span><br><span class="line"><span class="bullet">- </span>第二项</span><br><span class="line"><span class="bullet">- </span>第三项</span><br></pre></td></tr></table></figure>
-<ul>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
-</ul>
-<ul>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
-</ul>
-<ul>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
-</ul>
-<p>2.有序列表使用数字并加上 . 号来表示，如：</p>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> 第一项</span><br><span class="line"><span class="number">2.</span> 第二项</span><br><span class="line"><span class="number">3.</span> 第三项</span><br></pre></td></tr></table></figure>
+<p>它的物理层有如下特点：</p>
 <ol>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
+<li>它是一个支持设备的总线。“总线”指多个设备共用的信号线。在一个 I2C 通讯总线<br>中，可连接多个 I2C 通讯设备，支持多个通讯主机及多个通讯从机。</li>
+<li>一个 I2C 总线只使用两条总线线路，一条双向串行数据线(SDA) ，一条串行时钟线(SCL)。数据线即用来表示数据，时钟线用于数据收发同步。</li>
+<li>每个连接到总线的设备都有一个独立的地址，主机可以利用这个地址进行不同设备之间的访问。</li>
+<li>总线通过上拉电阻接到电源。当 I2C 设备空闲时，会输出高阻态，而当所有设备都空闲，都输出高阻态时，由上拉电阻把总线拉成高电平。</li>
+<li>多个主机同时使用总线时，为了防止数据冲突，会利用仲裁方式决定由哪个设备占用总线。</li>
+<li>具有三种传输模式：标准模式传输速率为 100kbit/s ，快速模式为 400kbit/s ，高速模式下可达 3.4Mbit/s，但目前大多 I2C 设备尚不支持高速模式。</li>
+<li>连接到相同总线的 IC 数量受到总线的最大电容 400pF 限制 。 </li>
 </ol>
-<p>3.列表嵌套只需在子列表中的选项添加四个空格即可：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1. </span>第一项：</span><br><span class="line"><span class="bullet">    - </span>第一项嵌套的第一个元素</span><br><span class="line"><span class="bullet">    - </span>第一项嵌套的第二个元素</span><br><span class="line"><span class="bullet">2. </span>第二项：</span><br><span class="line"><span class="bullet">    - </span>第二项嵌套的第一个元素</span><br><span class="line"><span class="bullet">    - </span>第二项嵌套的第二个元素</span><br></pre></td></tr></table></figure>
-<ol>
-<li>第一项：<ul>
-<li>第一项嵌套的第一个元素</li>
-<li>第一项嵌套的第二个元素</li>
-</ul>
-</li>
-<li>第二项：<ul>
-<li>第二项嵌套的第一个元素</li>
-<li>第二项嵌套的第二个元素</li>
-</ul>
-</li>
+<h1 id="I2C-基本读写过程"><a href="#I2C-基本读写过程" class="headerlink" title="I2C 基本读写过程"></a>I2C 基本读写过程</h1><p><img src="/images/2.png" alt=""></p>
+<h2 id="写数据"><a href="#写数据" class="headerlink" title="写数据"></a>写数据</h2><p>若配置的方向传输位为“写数据”方向， 即第一幅图的情况， 广播完地址，接收到应答信号后， 主机开始正式向从机传输数据(DATA)，数据包的大小为 8 位，主机每发送完一个字节数据，都要等待从机的应答信号(ACK)，重复这个过程，可以向从机传输 N 个数据，这个 N 没有大小限制。当数据传输结束时，主机向从机发送一个停止传输信号(P)，表示不再传输数据。</p>
+<hr>
+<h2 id="读数据"><a href="#读数据" class="headerlink" title="读数据"></a>读数据</h2><p>若配置的方向传输位为“读数据”方向， 即第二幅图的情况， 广播完地址，接收到应答信号后， 从机开始向主机返回数据(DATA)，数据包大小也为 8 位，从机每发送完一个数据，都会等待主机的应答信号(ACK)，重复这个过程，可以返回 N 个数据，这个 N 也没有大小限制。当主机希望停止接收数据时，就向从机返回一个非应答信号(NACK)，则从机自动停止数据传输。</p>
+<hr>
+<h2 id="读和写数据"><a href="#读和写数据" class="headerlink" title="读和写数据"></a>读和写数据</h2><p>除了基本的读写， I2C 通讯更常用的是复合格式，即第三幅图的情况，该传输过程有两次起始信号(S)。一般在第一次传输中，主机通过 SLAVE_ADDRESS 寻找到从设备后，发送一段“数据”，这段数据通常用于表示从设备内部的寄存器或存储器地址(注意区分它与 SLAVE_ADDRESS 的区别)；在第二次的传输中，对该地址的内容进行读或写。也就是说，第一次通讯是告诉从机读写地址，第二次则是读写的实际内容。</p>
+<h1 id="协议层"><a href="#协议层" class="headerlink" title="协议层"></a>协议层</h1><h2 id="起始和停止信号"><a href="#起始和停止信号" class="headerlink" title="起始和停止信号"></a>起始和停止信号</h2><p>起始(S)和停止(P)信号是两种特殊的状态。当 SCL 线是高电平时 SDA 线从高电平向低电平切换，这个情况表示通讯的起始。当 SCL 是高电平时 SDA线由低电平向高电平切换，表示通讯的停止。起始和停止信号一般由主机产生。<br><img src="/images/3.png" alt=""></p>
+<h2 id="数据有效性"><a href="#数据有效性" class="headerlink" title="数据有效性"></a>数据有效性</h2><p>I2C 使用 SDA 信号线来传输数据，使用 SCL信号线进行数据同步。 SDA 数据线在 SCL的每个时钟周期传输一位数据。传输时， SCL为高电平的时候 SDA表示的数据有效，即此时的 SDA为高电平时表示数据“1”，为低电平时表示数据“0”。当 SCL为低电平时， SDA的数据无效，一般在这个时候 SDA 进行电平切换，为下一次表示数据做好准备。<br><img src="/images/4.png" alt=""><br><img src="/images/5.png" alt=""></p>
+<p>##地址及数据方向<br>I2C 总线上的每个设备都有自己的独立地址，主机发起通讯时，通过 SDA 信号线发送<br>设备地址(SLAVE_ADDRESS)来查找从机。 I2C 协议规定设备地址可以是 7 位或 10 位，实际中 7 位的地址应用比较广泛。紧跟设备地址的一个数据位用来表示数据传输方向，它是数据方向位(R/W)，第 8 位或第 11 位。数据方向位为“1”时表示主机由从机读数据，该位为“0”时表示主机向从机写数据。<br><img src="/images/6.png" alt=""><br>读数据方向时，主机会释放对 SDA 信号线的控制，由从机控制 SDA 信号线，主机接收信号，写数据方向时， SDA 由主机控制，从机接收信号。</p>
+<h2 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h2><p>IIC总线协议规定，每传送一个字节数据<strong>(含地址及命令)</strong>后，都要有一个应答信号，以确定数据传送是否被对方收到。应答信号由接受设备产生，在SCL信号为高电平期间，接受设备将SDA拉为低电平，表示数据传送正确，产生应答。响应包括“应答(ACK)”和“非应答(NACK)”两种信号。作为数据接收端时，当设备(无论主从机)接收到 I2C 传输的一个字节数据或地址后，若希望对方继续发送数据，则需要向对方发送“应答(ACK)”信号，发送方会继续发送下一个数据；若接收端希望结束数据传输，则向对方发送“非应答(NACK)”信号，发送方接收到该信号后会产生一个停止信号，结束信号传输<br><img src="/images/7.png" alt=""><br><img src="/images/8.png" alt=""><br><strong>*传输时主机产生时钟，在第 9 个时钟时，数据发送端会释放 SDA 的控制权，由数据接收端控制 SDA，若 SDA 为高电平，表示非应答信号(NACK)，低电平表示应答信号(ACK)。 *</strong><br><img src="/images/9.png" alt=""></p>
+<h1 id="stm321编程要点"><a href="#stm321编程要点" class="headerlink" title="stm321编程要点"></a>stm321编程要点</h1><ol>
+<li>配置通讯使用的目标引脚为开漏模式；</li>
+<li>使能 I2C 外设的时钟；</li>
+<li>配置 I2C 外设的模式、地址、速率等参数并使能 I2C 外设；</li>
+<li>编写基本 I2C 按字节收发的函数；</li>
+<li>编写读写内容的函数；</li>
+<li>编写测试程序，对读写数据进行校验。 </li>
 </ol>
-
+<p>软件模拟IIC</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//初始化IIC</span></span><br><span class="line"><span class="built_in">void</span> IIC_Init(<span class="built_in">void</span>)</span><br><span class="line">&#123;					     </span><br><span class="line">	GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">	RCC_APB2PeriphClockCmd(	RCC_APB2Periph_GPIOB, ENABLE );	<span class="comment">//使能GPIOB时钟</span></span><br><span class="line">	   </span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_7;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP ;   <span class="comment">//推挽输出</span></span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">	GPIO_Init(GPIOB, &amp;GPIO_InitStructure);</span><br><span class="line">	GPIO_SetBits(GPIOB,GPIO_Pin_6|GPIO_Pin_7); 	<span class="comment">//PB6,PB7 输出高，空闲状态</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//产生IIC起始信号</span></span><br><span class="line"><span class="built_in">void</span> IIC_Start(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	SDA_OUT();     <span class="comment">//sda线输出</span></span><br><span class="line">	IIC_SDA=<span class="number">1</span>;	  	  </span><br><span class="line">	IIC_SCL=<span class="number">1</span>;</span><br><span class="line">	delay_us(<span class="number">4</span>);</span><br><span class="line"> 	IIC_SDA=<span class="number">0</span>;    <span class="comment">//START:when CLK is high,DATA change form high to low </span></span><br><span class="line">	delay_us(<span class="number">4</span>);</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;    <span class="comment">//钳住I2C总线，准备发送或接收数据 </span></span><br><span class="line">&#125;	  </span><br><span class="line"><span class="comment">//产生IIC停止信号</span></span><br><span class="line"><span class="built_in">void</span> IIC_Stop(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	SDA_OUT();    <span class="comment">//sda线输出</span></span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">	IIC_SDA=<span class="number">0</span>;    <span class="comment">//STOP:when CLK is high DATA change form low to high</span></span><br><span class="line"> 	delay_us(<span class="number">4</span>);</span><br><span class="line">	IIC_SCL=<span class="number">1</span>; </span><br><span class="line">	IIC_SDA=<span class="number">1</span>;    <span class="comment">//发送I2C总线结束信号</span></span><br><span class="line">	delay_us(<span class="number">4</span>);							   	</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//发送数据后，等待应答信号到来</span></span><br><span class="line"><span class="comment">//返回值：1，接收应答失败，IIC直接退出</span></span><br><span class="line"><span class="comment">//        0，接收应答成功，什么都不做</span></span><br><span class="line">u8 IIC_Wait_Ack(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	u8 ucErrTime=<span class="number">0</span>;</span><br><span class="line">	SDA_IN();      <span class="comment">//SDA设置为输入  </span></span><br><span class="line">	IIC_SDA=<span class="number">1</span>;delay_us(<span class="number">1</span>);	   </span><br><span class="line">	IIC_SCL=<span class="number">1</span>;delay_us(<span class="number">1</span>);	 </span><br><span class="line">	<span class="keyword">while</span>(READ_SDA)</span><br><span class="line">	&#123;</span><br><span class="line">		ucErrTime++;</span><br><span class="line">		<span class="keyword">if</span>(ucErrTime&gt;<span class="number">250</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			IIC_Stop();</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;    <span class="comment">//时钟输出0 	   </span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">//产生ACK应答</span></span><br><span class="line"><span class="built_in">void</span> IIC_Ack(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">	SDA_OUT();</span><br><span class="line">	IIC_SDA=<span class="number">0</span>;</span><br><span class="line">	delay_us(<span class="number">2</span>);</span><br><span class="line">	IIC_SCL=<span class="number">1</span>;</span><br><span class="line">	delay_us(<span class="number">2</span>);</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//不产生ACK应答		    </span></span><br><span class="line"><span class="built_in">void</span> IIC_NAck(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">	SDA_OUT();</span><br><span class="line">	IIC_SDA=<span class="number">1</span>;</span><br><span class="line">	delay_us(<span class="number">2</span>);</span><br><span class="line">	IIC_SCL=<span class="number">1</span>;</span><br><span class="line">	delay_us(<span class="number">2</span>);</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">&#125;					 				     </span><br><span class="line"><span class="comment">//IIC发送一个字节</span></span><br><span class="line"><span class="comment">//返回从机有无应答</span></span><br><span class="line"><span class="comment">//1，有应答</span></span><br><span class="line"><span class="comment">//0，无应答			  </span></span><br><span class="line"><span class="built_in">void</span> IIC_Send_Byte(u8 txd)   <span class="comment">//结合起始、应答、结束信号才能传输数据</span></span><br><span class="line">&#123;                        </span><br><span class="line">    u8 t;   </span><br><span class="line">	SDA_OUT(); 	    </span><br><span class="line">    IIC_SCL=<span class="number">0</span>;            <span class="comment">//拉低时钟开始数据传输</span></span><br><span class="line">    <span class="keyword">for</span>(t=<span class="number">0</span>;t&lt;<span class="number">8</span>;t++)</span><br><span class="line">    &#123;              </span><br><span class="line">        <span class="comment">//IIC_SDA=(txd&amp;0x80)&gt;&gt;7;</span></span><br><span class="line">		<span class="keyword">if</span>((txd&amp;<span class="number">0x80</span>)&gt;&gt;<span class="number">7</span>)</span><br><span class="line">			IIC_SDA=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			IIC_SDA=<span class="number">0</span>;</span><br><span class="line">		txd&lt;&lt;=<span class="number">1</span>; 	  </span><br><span class="line">		delay_us(<span class="number">2</span>);       <span class="comment">//对TEA5767这三个延时都是必须的</span></span><br><span class="line">		IIC_SCL=<span class="number">1</span>;</span><br><span class="line">		delay_us(<span class="number">2</span>); </span><br><span class="line">		IIC_SCL=<span class="number">0</span>;	</span><br><span class="line">		delay_us(<span class="number">2</span>);</span><br><span class="line">    &#125;	 </span><br><span class="line">&#125; 	    </span><br><span class="line"><span class="comment">//读1个字节，ack=1时，发送ACK，ack=0，发送nACK   </span></span><br><span class="line">u8 IIC_Read_Byte(unsigned char ack)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned char i,receive=<span class="number">0</span>;</span><br><span class="line">	SDA_IN();        <span class="comment">//SDA设置为输入</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">8</span>;i++ )</span><br><span class="line">	&#123;</span><br><span class="line">        IIC_SCL=<span class="number">0</span>; </span><br><span class="line">        delay_us(<span class="number">2</span>);</span><br><span class="line">		IIC_SCL=<span class="number">1</span>;</span><br><span class="line">        receive&lt;&lt;=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(READ_SDA)receive++;   </span><br><span class="line">		delay_us(<span class="number">1</span>); </span><br><span class="line">    &#125;					 </span><br><span class="line">    <span class="keyword">if</span> (!ack)</span><br><span class="line">        IIC_NAck();        <span class="comment">//发送nACK</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        IIC_Ack();         <span class="comment">//发送ACK   </span></span><br><span class="line">    <span class="keyword">return</span> receive;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -517,7 +447,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/makedown/" rel="tag"># makedown</a>
+            <a href="/tags/IIC/" rel="tag"># IIC</a>
           
         </div>
       
@@ -530,14 +460,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2020/06/16/lua%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" rel="next" title="Lua 面向对象">
+                <i class="fa fa-chevron-left"></i> Lua 面向对象
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/06/10/makefile/" rel="prev" title="Makefile基本语法">
-                Makefile基本语法 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/06/19/UART/" rel="prev" title="UART原理">
+                UART原理 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -686,7 +620,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#发布文章"><span class="nav-number">1.</span> <span class="nav-text">发布文章</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本语法"><span class="nav-number">2.</span> <span class="nav-text">基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分级标题"><span class="nav-number">2.1.</span> <span class="nav-text">分级标题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#斜体和粗体"><span class="nav-number">2.2.</span> <span class="nav-text">斜体和粗体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表格"><span class="nav-number">2.3.</span> <span class="nav-text">表格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">2.4.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注释"><span class="nav-number">2.5.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转义字符"><span class="nav-number">2.6.</span> <span class="nav-text">转义字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入图片"><span class="nav-number">2.7.</span> <span class="nav-text">插入图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#超链接"><span class="nav-number">2.8.</span> <span class="nav-text">超链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分割线"><span class="nav-number">2.9.</span> <span class="nav-text">分割线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效果："><span class="nav-number">2.10.</span> <span class="nav-text">效果：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用"><span class="nav-number">2.11.</span> <span class="nav-text">引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表"><span class="nav-number">2.12.</span> <span class="nav-text">列表</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#物理层"><span class="nav-number">1.</span> <span class="nav-text">物理层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#I2C-基本读写过程"><span class="nav-number">2.</span> <span class="nav-text">I2C 基本读写过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#写数据"><span class="nav-number">2.1.</span> <span class="nav-text">写数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读数据"><span class="nav-number">2.2.</span> <span class="nav-text">读数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读和写数据"><span class="nav-number">2.3.</span> <span class="nav-text">读和写数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#协议层"><span class="nav-number">3.</span> <span class="nav-text">协议层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#起始和停止信号"><span class="nav-number">3.1.</span> <span class="nav-text">起始和停止信号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据有效性"><span class="nav-number">3.2.</span> <span class="nav-text">数据有效性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应"><span class="nav-number">3.3.</span> <span class="nav-text">响应</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#stm321编程要点"><span class="nav-number">4.</span> <span class="nav-text">stm321编程要点</span></a></li></ol></div>
             
 
           </div>

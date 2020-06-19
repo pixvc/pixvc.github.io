@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="SPI," />
 
 
 
@@ -79,11 +79,19 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="邹菜鸡">
-<meta property="og:url" content="https://pixvc.github.io/page/2/index.html">
+<meta name="description" content="SPI 协议是由摩托罗拉公司提出的通讯协议(Serial Peripheral Interface)，即串行外围设备接口，是一种高速全双工的通信总线。它被广泛地使用在 ADC、 LCD 等设备与 MCU 间，要求通讯速率较高的场合。 SPI接口具有如下优点：  支持全双工操作； 操作简单； 数据传输速率较高。  SPI接口具有如下缺点：  需要占用主机较多的口线（每个从机都需要一根片选线）； 只支">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SPI原理">
+<meta property="og:url" content="https://pixvc.github.io/2020/06/19/SPI/index.html">
 <meta property="og:site_name" content="邹菜鸡">
+<meta property="og:description" content="SPI 协议是由摩托罗拉公司提出的通讯协议(Serial Peripheral Interface)，即串行外围设备接口，是一种高速全双工的通信总线。它被广泛地使用在 ADC、 LCD 等设备与 MCU 间，要求通讯速率较高的场合。 SPI接口具有如下优点：  支持全双工操作； 操作简单； 数据传输速率较高。  SPI接口具有如下缺点：  需要占用主机较多的口线（每个从机都需要一根片选线）； 只支">
+<meta property="og:image" content="https://pixvc.github.io/images/13.png">
+<meta property="og:image" content="https://pixvc.github.io/images/12.png">
+<meta property="article:published_time" content="2020-06-19T03:35:47.673Z">
+<meta property="article:modified_time" content="2020-06-19T03:47:39.337Z">
+<meta property="article:tag" content="SPI">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pixvc.github.io/images/13.png">
 
 
 
@@ -113,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://pixvc.github.io/page/2/"/>
+  <link rel="canonical" href="https://pixvc.github.io/2020/06/19/SPI/"/>
 
 
 
 
 
-  <title>邹菜鸡</title>
+  <title>SPI原理 | 邹菜鸡</title>
   
 
 
@@ -138,8 +146,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -266,9 +273,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -281,7 +288,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://pixvc.github.io/2020/06/11/lua%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5/">
+    <link itemprop="mainEntityOfPage" href="https://pixvc.github.io/2020/06/19/SPI/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -298,9 +305,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/11/lua%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5/" itemprop="url">Lua循环</a></h1>
+          <h1 class="post-title" itemprop="name headline">SPI原理</h1>
         
 
         <div class="post-meta">
@@ -312,8 +317,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-11T21:14:58+08:00">
-                2020-06-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-19T11:35:47+08:00">
+                2020-06-19
               </time>
             
 
@@ -335,8 +340,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/lua%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">lua语言</span>
+                  <a href="/categories/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">通信协议</span>
                   </a>
                 </span>
 
@@ -372,19 +377,38 @@
       
 
       
-        
-          <h1 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h1><h2 id="数值for循环"><a href="#数值for循环" class="headerlink" title="数值for循环"></a>数值for循环</h2><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> var=<span class="built_in">exp1</span>,<span class="built_in">exp2</span>,exp3 <span class="built_in">do</span>  </span><br><span class="line">    &lt;执行体&gt;  </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>var 从 exp1 变化到 exp2，每次变化以 exp3 为步长递增 var，并执行一次 “执行体”。exp3 是可选的，如果不指定，<strong>默认为1。</strong></p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">(x)</span></span>  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"function"</span>)  </span><br><span class="line">    <span class="keyword">return</span> x*<span class="number">2</span>  </span><br><span class="line"><span class="keyword">end</span>  </span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>,f(<span class="number">5</span>) <span class="keyword">do</span> <span class="built_in">print</span>(i)  </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>for的三个表达式在循环开始前一次性求值，以后不再进行求值。比如上面的f(x)只会在循环开始前执行一次，其结果用在后面的循环中。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/06/11/lua%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+        <p>SPI 协议是由摩托罗拉公司提出的通讯协议(Serial Peripheral Interface)，即串行外围设备接口，是一种高速全双工的通信总线。它被广泛地使用在 ADC、 LCD 等设备与 MCU 间，要求通讯速率较高的场合。</p>
+<p>SPI接口具有如下优点：</p>
+<ul>
+<li>支持全双工操作；</li>
+<li>操作简单；</li>
+<li>数据传输速率较高。</li>
+</ul>
+<p>SPI接口具有如下缺点：</p>
+<ul>
+<li>需要占用主机较多的口线（每个从机都需要一根片选线）；</li>
+<li>只支持单个主机。</li>
+<li>没有指定的流控制，没有应答机制确认是否接收到数据。</li>
+</ul>
+<h1 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h1><p><img src="/images/13.png" alt=""><br>SPI 通讯使用 3 条总线及片选线， 3 条总线分别为 SCK、 MOSI、 MISO，片选线为 SS，它们的作用介绍如下： </p>
+<ol>
+<li>nSS(Slave Select)：片选信号线，用于选中SPI从设备。每个从设备独立拥有这条nSS信号线，占据主机的一个引脚。设备的其他总线是并联到SPI主机的，即无论多少个从设备，都共同使用这3条总线。当从设备上的nSS引脚被置拉低时表明该从设备被主机选中。</li>
+<li>SCK(Serial Clock)：时钟信号线，通讯数据同步用。时钟信号由通讯主机产生，它决定了SPI的通讯速率。</li>
+<li>MOSI(Master Ouput Slave Input)：主机(数据)输出/从设备(数据)输入引脚，即这条信号线上传输从主机到从机的数据。</li>
+<li>MISO(Master Input Slave Ouput)：主机(数据)输入/从设备(数据)输出引脚，即这条信号线上传输从机从到主机的数据主从机通过两条信号线来传输数据，那么自然是全双工通讯的了。之前的I2C通讯，数据只在一条SDA线上传输，主从机数据交互只能采用半双工。</li>
+</ol>
+<h1 id="协议层"><a href="#协议层" class="headerlink" title="协议层"></a>协议层</h1><p>与 I2C 的类似， SPI 协议定义了通讯的起始和停止信号、数据有效性、时钟同步等环节。</p>
+<h2 id="SPI-基本通讯过程"><a href="#SPI-基本通讯过程" class="headerlink" title="SPI 基本通讯过程"></a>SPI 基本通讯过程</h2><p> SPI 通讯的通讯时序<br><img src="/images/12.png" alt=""><br>这是一个主机的通讯时序。 NSS、 SCK、 MOSI 信号都由主机控制产生，而 MISO 的信号由从机产生，主机通过该信号线读取从机的数据。 MOSI 与 MISO 的信号只在 NSS 为低电平的时候才有效，在 SCK 的每个时钟周期 MOSI 和 MISO 传输一位数据。以上通讯流程中包含的各个信号分解如下：</p>
+<h2 id="通讯的起始和停止信号"><a href="#通讯的起始和停止信号" class="headerlink" title="通讯的起始和停止信号"></a>通讯的起始和停止信号</h2><p>标号①处， nSS信号由高电平变为低电平即为SPI通讯的起始信号，反过来，nSS信号由低电平变为高电平即为SPI通讯的结束信号。这个可比I2C简单得多了。当从机检测到自身的nSS引脚被拉低时就知道自己被主机选中，准备和主机进行通讯</p>
+<h2 id="数据有效性"><a href="#数据有效性" class="headerlink" title="数据有效性"></a>数据有效性</h2><p>SPI 使用 MOSI 及 MISO 信号线来传输数据，使用 SCK 信号线进行数据同步。 MOSI 及MISO 数据线在 SCK 的每个时钟周期传输一位数据，且数据输入输出是同时进行的。数据传输时， MSB 先行或 LSB 先行并没有作硬性规定，但要保证两个 SPI 通讯设备之间使用同样的协定，一般都会采用图中的 MSB 先行模式。<br>观察图中的②③④⑤标号处， MOSI 及 MISO 的数据在 SCK 的上升沿期间变化输出，在SCK 的下降沿时被采样。即在 SCK 的下降沿时刻， MOSI 及 MISO 的数据有效，高电平时表示数据“1”，为低电平时表示数据“0”。在其它时刻，数据无效， MOSI及 MISO 为下一次表示数据做准备。<br>SPI 每次数据传输可以 8 位或 16 位为单位，每次传输的单位数不受限制。 </p>
+<hr>
+<p>这里需要再提及的概念是时钟极性(CPOL)和时钟相位(CPHA)。<br>  时钟极性(CPOL)指通讯设备处于空闲状态(SPI开始通讯前、nSS线无效)时，SCK的状态。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">CPOL</span> = <span class="number">0</span>：SCK在空闲时为低电平</span><br><span class="line"><span class="attr">CPOL</span> = <span class="number">1</span>：SCK在空闲时为高电平</span><br></pre></td></tr></table></figure>
+<p>  时钟相位(CPHA)指数据的采样时刻位于SCK的偶数边沿采样还是奇数边沿采样。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">CPHA</span> = <span class="number">0</span>：在SCK的奇数边沿采样</span><br><span class="line"><span class="attr">CPHA</span> = <span class="number">1</span>：在SCK的偶数边沿采样</span><br></pre></td></tr></table></figure>
+<p>  那么这样说来，<strong>*SPI的采样时刻并非由上升沿/下降沿决定的</strong>。注意的是，在数据采样时刻，MOSI和MOSI的电平为有效电平，数据不能在这个时刻进行切换注意的是，在数据采样时刻，MOSI和MOSI的电平为有效电平，数据不能在这个时刻进行切换。在非采样时刻MOSI和MISO上的信号才能切换</p>
+<h1 id="编程要点"><a href="#编程要点" class="headerlink" title="编程要点"></a>编程要点</h1><p>(1) 初始化通讯使用的目标引脚及端口时钟；<br>(2) 使能 SPI 外设的时钟；<br>(3) 配置 SPI 外设的模式、地址、速率等参数并使能 SPI 外设；<br>(4) 编写基本 SPI 按字节收发的函数；<br>(5) 编写读写操作的的函数；<br>(6) 编写测试程序，对读写数据进行校验。 </p>
+
       
     </div>
     
@@ -399,389 +423,36 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://pixvc.github.io/2020/06/11/lua%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="邹菜鸡">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/11/lua%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" itemprop="url">lua数据类型</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-11T15:53:03+08:00">
-                2020-06-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/lua%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">lua语言</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/SPI/" rel="tag"># SPI</a>
           
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          <p>Lua 中有 8 个基本类型分别为：nil、boolean、number、string、userdata、function、thread 和 table。</p>
-<table>
-<thead>
-<tr>
-<th>数据类型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>nil</td>
-<td>这个最简单，只有值nil属于该类，表示一个无效值（在条件表达式中相当于false）。</td>
-</tr>
-<tr>
-<td>boolean</td>
-<td>包含两个值：false和true。</td>
-</tr>
-<tr>
-<td>number</td>
-<td>表示双精度类型的实浮点数</td>
-</tr>
-<tr>
-<td>string</td>
-<td>字符串由一对双引号或单引号来表示</td>
-</tr>
-<tr>
-<td>function</td>
-<td>由 C 或 Lua 编写的函数</td>
-</tr>
-<tr>
-<td>userdata</td>
-<td>表示任意存储在变量中的C数据结构</td>
-</tr>
-<tr>
-<td>thread</td>
-<td>表示执行的独立线路，用于执行协同程序</td>
-</tr>
-<tr>
-<td>table</td>
-<td>Lua 中的表（table）其实是一个”关联数组”（associative arrays），数组的索引可以是数字、字符串或表类型。在 Lua 里，table 的创建是通过”构造表达式”来完成，最简单构造表达式是{}，用来创建一个空表。</td>
-</tr>
-</tbody></table>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/06/11/lua%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/19/UART/" rel="next" title="UART原理">
+                <i class="fa fa-chevron-left"></i> UART原理
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://pixvc.github.io/2020/06/11/lua%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="邹菜鸡">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/11/lua%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" itemprop="url">lua基本语法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+          <div class="post-nav-prev post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-11T15:29:51+08:00">
-                2020-06-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/lua%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
-                    <span itemprop="name">lua语言</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <h1 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h1><h2 id="单行注释"><a href="#单行注释" class="headerlink" title="单行注释"></a>单行注释</h2><p>两个减号是单行注释<br><code>--</code></p>
-<h2 id="多行注释"><a href="#多行注释" class="headerlink" title="多行注释"></a>多行注释</h2><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--[[</span></span><br><span class="line"><span class="comment"> 多行注释</span></span><br><span class="line"><span class="comment"> 多行注释</span></span><br><span class="line"><span class="comment"> --]]</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h1><p> 以下列出了 Lua的保留关键字。保留关键字不能作为常量或变量或其他用户自定义标示符：</p>
-<table>
-<thead>
-<tr>
-<th>and</th>
-<th>break</th>
-<th>do</th>
-<th>else</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>elseif</td>
-<td>end</td>
-<td>false</td>
-<td>for</td>
-</tr>
-<tr>
-<td>function</td>
-<td>if</td>
-<td>in</td>
-<td>local</td>
-</tr>
-<tr>
-<td>nil</td>
-<td>not</td>
-<td>or</td>
-<td>repeat</td>
-</tr>
-<tr>
-<td>return</td>
-<td>then</td>
-<td>true</td>
-<td>until</td>
-</tr>
-<tr>
-<td>while</td>
-<td>goto</td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/06/11/lua%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -791,311 +462,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://pixvc.github.io/2020/06/10/makefile/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="邹菜鸡">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/10/makefile/" itemprop="url">Makefile基本语法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-10T16:09:16+08:00">
-                2020-06-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Makefile%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">Makefile基本语法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="什么是Makefile"><a href="#什么是Makefile" class="headerlink" title="什么是Makefile"></a>什么是Makefile</h1><p>使用 GCC 编译器在 Linux 进行 C 语言编译，通过在终端执行 gcc 命令来完成 C 文件的编译，如果我们的工程只有一两个 C 文件还好，需要输入的命令不多，当文件有几十、上百甚至上万个的时候用终端输入 GCC 命令的方法显然是不现实的。如果我们能够编写一个文件，这个文件描述了编译哪些源码文件、如何编译那就好了，每次需要编译工程的时只需要使用这个文件就行了。这种问题怎么可能难倒聪明的程序员，为此提出了一个解决大工程编译的工具： make，描述哪些文件需要编译、哪些需要重新编译的文件就叫做 Makefile，命令即可完成整个工程的自动编译，极大的提高了软件开发的效率。</p>
-<h1 id="Makefile语法"><a href="#Makefile语法" class="headerlink" title="Makefile语法"></a>Makefile语法</h1><h2 id="Makefile文件的创建和运行"><a href="#Makefile文件的创建和运行" class="headerlink" title="Makefile文件的创建和运行"></a>Makefile文件的创建和运行</h2><p>在工程目录下创建名为“Makefile”的文件，文件名一定要叫做“Makefile”！！！区分大小写</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">main: main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">  gcc -o main main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">main<span class="selector-class">.o</span>: main.c</span><br><span class="line">  gcc -c main.c</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-class">.o</span>: <span class="selector-tag">input</span>.c</span><br><span class="line">  gcc -c <span class="selector-tag">input</span>.c</span><br><span class="line">calcu<span class="selector-class">.o</span>: calcu.c</span><br><span class="line">  gcc -c calcu.c</span><br><span class="line"> </span><br><span class="line">clean:</span><br><span class="line">  rm *.o</span><br><span class="line">  rm main</span><br></pre></td></tr></table></figure>
-<p>上述代码中所有行首需要空出来的地方一定要<strong><em>使用“TAB”键！</em></strong>不要使用空格键！ 这是Makefile 的语法要求</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/06/10/makefile/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://pixvc.github.io/2020/06/10/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="邹菜鸡">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/10/hello-world/" itemprop="url">Markdown基本语法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-10T12:06:03+08:00">
-                2020-06-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Markdown/" itemprop="url" rel="index">
-                    <span itemprop="name">Markdown</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h1><p>在source/_posts 文件夹下创建.md文件<br>配置属性</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Markdown基本语法</span></span><br><span class="line"><span class="attr">data:</span> <span class="number">2019</span><span class="number">-6</span><span class="number">-10</span></span><br><span class="line"><span class="attr">categories:</span>    </span><br><span class="line"><span class="bullet">-</span> <span class="string">lua语言</span>    <span class="comment">##添加到lua语言分类，也也可以新建一个分类</span></span><br><span class="line"><span class="string">tags：</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">lua</span>        <span class="comment">#添加标签</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">编程</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
-<p>文章写完回到终端 hexo g 再 hexo d</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/06/10/hello-world/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-  </nav>
-
 
 
           </div>
@@ -1103,6 +474,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -1123,8 +498,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1200,6 +584,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#物理层"><span class="nav-number">1.</span> <span class="nav-text">物理层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#协议层"><span class="nav-number">2.</span> <span class="nav-text">协议层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SPI-基本通讯过程"><span class="nav-number">2.1.</span> <span class="nav-text">SPI 基本通讯过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通讯的起始和停止信号"><span class="nav-number">2.2.</span> <span class="nav-text">通讯的起始和停止信号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据有效性"><span class="nav-number">2.3.</span> <span class="nav-text">数据有效性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编程要点"><span class="nav-number">3.</span> <span class="nav-text">编程要点</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1347,6 +747,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
