@@ -88,7 +88,7 @@
 <meta property="og:image" content="https://pixvc.github.io/images/10.png">
 <meta property="og:image" content="https://pixvc.github.io/images/11.png">
 <meta property="article:published_time" content="2020-06-19T02:48:47.047Z">
-<meta property="article:modified_time" content="2020-06-19T03:41:12.214Z">
+<meta property="article:modified_time" content="2020-06-19T04:08:04.800Z">
 <meta property="article:tag" content="UART">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pixvc.github.io/images/10.png">
@@ -407,6 +407,14 @@
 <h3 id="4-数据校验"><a href="#4-数据校验" class="headerlink" title="4. 数据校验"></a>4. 数据校验</h3><p>在有效数据之后，有一个可选的数据校验位。由于数据通信相对更容易受到外部干扰导致传输数据出现偏差，可以在传输过程加上校验位来解决这个问题。校验方法有奇校验(odd)、偶校验(even)、 0 校验(space)、 1 校验(mark)以及无校验(noparity)。奇校验要求有效数据和校验位中“1”的个数为奇数，比如一个 8 位长的有效数据为：01101001，此时总共有4个“1”，为达到奇校验效果，校验位为“1”，最后传输的数据将是 8 位的有效数据加上 1 位的校验位总共 9 位。偶校验与奇校验要求刚好相反，要求帧数据和校验位中“1”的个数为偶数，比如数据帧： 11001010，此时数据帧“1”的个数为 4 个，所以偶校验位为“0”。0校验是不管有效数据中的内容是什么，校验位总为“0”， 1 校验是校验位总为“1”。</p>
 <hr>
 <p>在两个UART之间传输数据只需要两根线。数据从发送UART的Tx引脚流向接收UART的Rx引脚：<br><img src="/images/11.png" alt=""></p>
+<h1 id="编程要点"><a href="#编程要点" class="headerlink" title="编程要点"></a>编程要点</h1><ol>
+<li>使能 RX 和 TX 引脚 GPIO 时钟和 USART 时钟；</li>
+<li>初始化 GPIO，并将 GPIO 复用到 USART 上；</li>
+<li>配置 USART 参数；</li>
+<li>配置中断控制器并使能 USART 接收中断；</li>
+<li>使能 USART；</li>
+<li>在 USART 接收中断服务函数实现数据接收和发送。</li>
+</ol>
 
       
     </div>
@@ -597,7 +605,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#异步通信与同步通信区别"><span class="nav-number">1.</span> <span class="nav-text">异步通信与同步通信区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#异步通信："><span class="nav-number">1.1.</span> <span class="nav-text">异步通信：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步通信："><span class="nav-number">1.2.</span> <span class="nav-text">同步通信：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#USART和UART区别"><span class="nav-number">2.</span> <span class="nav-text">USART和UART区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#协议层"><span class="nav-number">3.</span> <span class="nav-text">协议层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#串口数据包的基本组成"><span class="nav-number">3.1.</span> <span class="nav-text">串口数据包的基本组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理理解"><span class="nav-number">3.2.</span> <span class="nav-text">原理理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-波特率"><span class="nav-number">3.2.1.</span> <span class="nav-text">1. 波特率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-通讯的起始和停止信号"><span class="nav-number">3.2.2.</span> <span class="nav-text">2. 通讯的起始和停止信号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-有效数据"><span class="nav-number">3.2.3.</span> <span class="nav-text">3. 有效数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-数据校验"><span class="nav-number">3.2.4.</span> <span class="nav-text">4. 数据校验</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#异步通信与同步通信区别"><span class="nav-number">1.</span> <span class="nav-text">异步通信与同步通信区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#异步通信："><span class="nav-number">1.1.</span> <span class="nav-text">异步通信：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步通信："><span class="nav-number">1.2.</span> <span class="nav-text">同步通信：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#USART和UART区别"><span class="nav-number">2.</span> <span class="nav-text">USART和UART区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#协议层"><span class="nav-number">3.</span> <span class="nav-text">协议层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#串口数据包的基本组成"><span class="nav-number">3.1.</span> <span class="nav-text">串口数据包的基本组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理理解"><span class="nav-number">3.2.</span> <span class="nav-text">原理理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-波特率"><span class="nav-number">3.2.1.</span> <span class="nav-text">1. 波特率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-通讯的起始和停止信号"><span class="nav-number">3.2.2.</span> <span class="nav-text">2. 通讯的起始和停止信号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-有效数据"><span class="nav-number">3.2.3.</span> <span class="nav-text">3. 有效数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-数据校验"><span class="nav-number">3.2.4.</span> <span class="nav-text">4. 数据校验</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编程要点"><span class="nav-number">4.</span> <span class="nav-text">编程要点</span></a></li></ol></div>
             
 
           </div>
