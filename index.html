@@ -80,9 +80,9 @@
 
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="邹菜鸡">
+<meta property="og:title" content="周菜鸡">
 <meta property="og:url" content="https://pixvc.github.io/index.html">
-<meta property="og:site_name" content="邹菜鸡">
+<meta property="og:site_name" content="周菜鸡">
 <meta name="twitter:card" content="summary">
 
 
@@ -119,7 +119,7 @@
 
 
 
-  <title>邹菜鸡</title>
+  <title>周菜鸡</title>
   
 
 
@@ -150,7 +150,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">邹菜鸡</span>
+        <span class="site-title">周菜鸡</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -290,7 +290,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="邹菜鸡">
+      <meta itemprop="name" content="周菜鸡">
     </span>
 
     
@@ -373,8 +373,7 @@
 
       
         
-          
-            <p>SPI 协议是由摩托罗拉公司提出的通讯协议(Serial Peripheral Interface)，即串行外围设备接口，是一种高速全双工的通信总线。它被广泛地使用在 ADC、 LCD 等设备与 MCU 间，要求通讯速率较高的场合。</p>
+          <p>SPI 协议是由摩托罗拉公司提出的通讯协议(Serial Peripheral Interface)，即串行外围设备接口，是一种高速全双工的通信总线。它被广泛地使用在 ADC、 LCD 等设备与 MCU 间，要求通讯速率较高的场合。</p>
 <p>SPI接口具有如下优点：</p>
 <ul>
 <li>支持全双工操作；</li>
@@ -387,26 +386,14 @@
 <li>只支持单个主机。</li>
 <li>没有指定的流控制，没有应答机制确认是否接收到数据。</li>
 </ul>
-<h1 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h1><p><img src="/images/13.png" alt=""><br>SPI 通讯使用 3 条总线及片选线， 3 条总线分别为 SCK、 MOSI、 MISO，片选线为 SS，它们的作用介绍如下： </p>
-<ol>
-<li>nSS(Slave Select)：片选信号线，用于选中SPI从设备。每个从设备独立拥有这条nSS信号线，占据主机的一个引脚。设备的其他总线是并联到SPI主机的，即无论多少个从设备，都共同使用这3条总线。当从设备上的nSS引脚被置拉低时表明该从设备被主机选中。</li>
-<li>SCK(Serial Clock)：时钟信号线，通讯数据同步用。时钟信号由通讯主机产生，它决定了SPI的通讯速率。</li>
-<li>MOSI(Master Ouput Slave Input)：主机(数据)输出/从设备(数据)输入引脚，即这条信号线上传输从主机到从机的数据。</li>
-<li>MISO(Master Input Slave Ouput)：主机(数据)输入/从设备(数据)输出引脚，即这条信号线上传输从机从到主机的数据主从机通过两条信号线来传输数据，那么自然是全双工通讯的了。之前的I2C通讯，数据只在一条SDA线上传输，主从机数据交互只能采用半双工。</li>
-</ol>
-<h1 id="协议层"><a href="#协议层" class="headerlink" title="协议层"></a>协议层</h1><p>与 I2C 的类似， SPI 协议定义了通讯的起始和停止信号、数据有效性、时钟同步等环节。</p>
-<h2 id="SPI-基本通讯过程"><a href="#SPI-基本通讯过程" class="headerlink" title="SPI 基本通讯过程"></a>SPI 基本通讯过程</h2><p> SPI 通讯的通讯时序<br><img src="/images/12.png" alt=""><br>这是一个主机的通讯时序。 NSS、 SCK、 MOSI 信号都由主机控制产生，而 MISO 的信号由从机产生，主机通过该信号线读取从机的数据。 MOSI 与 MISO 的信号只在 NSS 为低电平的时候才有效，在 SCK 的每个时钟周期 MOSI 和 MISO 传输一位数据。以上通讯流程中包含的各个信号分解如下：</p>
-<h2 id="通讯的起始和停止信号"><a href="#通讯的起始和停止信号" class="headerlink" title="通讯的起始和停止信号"></a>通讯的起始和停止信号</h2><p>标号①处， nSS信号由高电平变为低电平即为SPI通讯的起始信号，反过来，nSS信号由低电平变为高电平即为SPI通讯的结束信号。这个可比I2C简单得多了。当从机检测到自身的nSS引脚被拉低时就知道自己被主机选中，准备和主机进行通讯</p>
-<h2 id="数据有效性"><a href="#数据有效性" class="headerlink" title="数据有效性"></a>数据有效性</h2><p>SPI 使用 MOSI 及 MISO 信号线来传输数据，使用 SCK 信号线进行数据同步。 MOSI 及MISO 数据线在 SCK 的每个时钟周期传输一位数据，且数据输入输出是同时进行的。数据传输时， MSB 先行或 LSB 先行并没有作硬性规定，但要保证两个 SPI 通讯设备之间使用同样的协定，一般都会采用图中的 MSB 先行模式。<br>观察图中的②③④⑤标号处， MOSI 及 MISO 的数据在 SCK 的上升沿期间变化输出，在SCK 的下降沿时被采样。即在 SCK 的下降沿时刻， MOSI 及 MISO 的数据有效，高电平时表示数据“1”，为低电平时表示数据“0”。在其它时刻，数据无效， MOSI及 MISO 为下一次表示数据做准备。<br>SPI 每次数据传输可以 8 位或 16 位为单位，每次传输的单位数不受限制。 </p>
-<hr>
-<p>这里需要再提及的概念是时钟极性(CPOL)和时钟相位(CPHA)。<br>  时钟极性(CPOL)指通讯设备处于空闲状态(SPI开始通讯前、nSS线无效)时，SCK的状态。</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">CPOL</span> = <span class="number">0</span>：SCK在空闲时为低电平</span><br><span class="line"><span class="attr">CPOL</span> = <span class="number">1</span>：SCK在空闲时为高电平</span><br></pre></td></tr></table></figure>
-<p>  时钟相位(CPHA)指数据的采样时刻位于SCK的偶数边沿采样还是奇数边沿采样。</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">CPHA</span> = <span class="number">0</span>：在SCK的奇数边沿采样</span><br><span class="line"><span class="attr">CPHA</span> = <span class="number">1</span>：在SCK的偶数边沿采样</span><br></pre></td></tr></table></figure>
-<p>  那么这样说来，<strong>*SPI的采样时刻并非由上升沿/下降沿决定的</strong>。注意的是，在数据采样时刻，MOSI和MOSI的电平为有效电平，数据不能在这个时刻进行切换注意的是，在数据采样时刻，MOSI和MOSI的电平为有效电平，数据不能在这个时刻进行切换。在非采样时刻MOSI和MISO上的信号才能切换</p>
-<h1 id="编程要点"><a href="#编程要点" class="headerlink" title="编程要点"></a>编程要点</h1><p>(1) 初始化通讯使用的目标引脚及端口时钟；<br>(2) 使能 SPI 外设的时钟；<br>(3) 配置 SPI 外设的模式、地址、速率等参数并使能 SPI 外设；<br>(4) 编写基本 SPI 按字节收发的函数；<br>(5) 编写读写操作的的函数；<br>(6) 编写测试程序，对读写数据进行校验。 </p>
-
-          
+<h1 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h1><p><img src="/images/13.png" alt=""></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/06/19/SPI/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -462,7 +449,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="邹菜鸡">
+      <meta itemprop="name" content="周菜鸡">
     </span>
 
     
@@ -622,7 +609,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="邹菜鸡">
+      <meta itemprop="name" content="周菜鸡">
     </span>
 
     
@@ -782,7 +769,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="邹菜鸡">
+      <meta itemprop="name" content="周菜鸡">
     </span>
 
     
@@ -928,7 +915,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="邹菜鸡">
+      <meta itemprop="name" content="周菜鸡">
     </span>
 
     
@@ -1110,7 +1097,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="邹菜鸡">
+      <meta itemprop="name" content="周菜鸡">
     </span>
 
     
@@ -1256,7 +1243,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="邹菜鸡">
+      <meta itemprop="name" content="周菜鸡">
     </span>
 
     
@@ -1403,7 +1390,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="邹菜鸡">
+      <meta itemprop="name" content="周菜鸡">
     </span>
 
     
@@ -1554,7 +1541,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="邹菜鸡">
+      <meta itemprop="name" content="周菜鸡">
     </span>
 
     
@@ -1700,7 +1687,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="邹菜鸡">
+      <meta itemprop="name" content="周菜鸡">
     </span>
 
     

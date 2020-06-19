@@ -865,7 +865,10 @@
 <li>只支持单个主机。</li>
 <li>没有指定的流控制，没有应答机制确认是否接收到数据。</li>
 </ul>
-<h1 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h1><p><img src="/images/13.png" alt=""><br>SPI 通讯使用 3 条总线及片选线， 3 条总线分别为 SCK、 MOSI、 MISO，片选线为 SS，它们的作用介绍如下： </p>
+<h1 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h1><p><img src="/images/13.png" alt=""></p>
+<a id="more"></a>
+
+<p>SPI 通讯使用 3 条总线及片选线， 3 条总线分别为 SCK、 MOSI、 MISO，片选线为 SS，它们的作用介绍如下： </p>
 <ol>
 <li>nSS(Slave Select)：片选信号线，用于选中SPI从设备。每个从设备独立拥有这条nSS信号线，占据主机的一个引脚。设备的其他总线是并联到SPI主机的，即无论多少个从设备，都共同使用这3条总线。当从设备上的nSS引脚被置拉低时表明该从设备被主机选中。</li>
 <li>SCK(Serial Clock)：时钟信号线，通讯数据同步用。时钟信号由通讯主机产生，它决定了SPI的通讯速率。</li>
