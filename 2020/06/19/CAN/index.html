@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="CAN," />
 
 
 
@@ -79,11 +79,29 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="周菜鸡">
-<meta property="og:url" content="https://pixvc.github.io/archives/2020/06/page/2/index.html">
+<meta name="description" content="CANCAN 通讯并不是以时钟信号来进行同步的，它是一种异步通讯， 只具有 CAN_High 和 CAN_Low 两条信号线，共同构成一组差分信号线，以差分信号的形式进行通讯。 由于 CAN 总线协议的物理层只有 1 对差分线，在一个时刻只能表示一个信号，所以对通讯节点来说， CAN 通讯是半双工的，收发数据需要分时进行。在 CAN 的通讯网络中，因为共用总线，在整个网络中同一时刻只能有一个通讯节">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CAN原理">
+<meta property="og:url" content="https://pixvc.github.io/2020/06/19/CAN/index.html">
 <meta property="og:site_name" content="周菜鸡">
+<meta property="og:description" content="CANCAN 通讯并不是以时钟信号来进行同步的，它是一种异步通讯， 只具有 CAN_High 和 CAN_Low 两条信号线，共同构成一组差分信号线，以差分信号的形式进行通讯。 由于 CAN 总线协议的物理层只有 1 对差分线，在一个时刻只能表示一个信号，所以对通讯节点来说， CAN 通讯是半双工的，收发数据需要分时进行。在 CAN 的通讯网络中，因为共用总线，在整个网络中同一时刻只能有一个通讯节">
+<meta property="og:image" content="https://pixvc.github.io/images/14.png">
+<meta property="og:image" content="https://pixvc.github.io/images/15.png">
+<meta property="og:image" content="https://pixvc.github.io/images/16.png">
+<meta property="og:image" content="https://pixvc.github.io/images/17.png">
+<meta property="og:image" content="https://pixvc.github.io/images/18.png">
+<meta property="og:image" content="https://pixvc.github.io/images/19.png">
+<meta property="og:image" content="https://pixvc.github.io/images/20.png">
+<meta property="og:image" content="https://pixvc.github.io/images/21.png">
+<meta property="og:image" content="https://pixvc.github.io/images/22.png">
+<meta property="og:image" content="https://pixvc.github.io/images/23.png">
+<meta property="og:image" content="https://pixvc.github.io/images/24.png">
+<meta property="og:image" content="https://pixvc.github.io/images/25.png">
+<meta property="article:published_time" content="2020-06-19T05:55:51.879Z">
+<meta property="article:modified_time" content="2020-06-19T06:45:35.935Z">
+<meta property="article:tag" content="CAN">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pixvc.github.io/images/14.png">
 
 
 
@@ -113,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="https://pixvc.github.io/archives/2020/06/page/2/"/>
+  <link rel="canonical" href="https://pixvc.github.io/2020/06/19/CAN/"/>
 
 
 
 
 
-  <title>归档 | 周菜鸡</title>
+  <title>CAN原理 | 周菜鸡</title>
   
 
 
@@ -138,7 +156,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -266,263 +284,209 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://pixvc.github.io/2020/06/19/CAN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="周菜鸡">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">CAN原理</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-19T13:55:51+08:00">
+                2020-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 16 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">通信协议</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2020">2020</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/06/12/Lua%E5%87%BD%E6%95%B0/" itemprop="url">
-              
-                <span itemprop="name">lua函数</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-06-12T10:44:49+08:00"
-              content="2020-06-12" >
-          06-12
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/06/11/lua%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5/" itemprop="url">
-              
-                <span itemprop="name">Lua循环</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-06-11T21:14:58+08:00"
-              content="2020-06-11" >
-          06-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/06/11/lua%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" itemprop="url">
-              
-                <span itemprop="name">lua数据类型</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-06-11T15:53:03+08:00"
-              content="2020-06-11" >
-          06-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>CAN<br>CAN 通讯并不是以时钟信号来进行同步的，它是一种异步通讯， 只具有 CAN_High 和 CAN_Low 两条信号线，共同构成一组差分信号线，以差分信号的形式进行通讯。 由于 CAN 总线协议的物理层只有 1 对差分线，在一个时刻只能表示一个信号，所以对通讯节点来说， CAN 通讯是半双工的，收发数据需要分时进行。在 CAN 的通讯网络中，<strong><em>因为共用总线，在整个网络中同一时刻只能有一个通讯节点发送信号，其余的节点在该时刻都只能接收。</em></strong></p>
+<h1 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h1><h2 id="闭环总线网络"><a href="#闭环总线网络" class="headerlink" title="闭环总线网络"></a>闭环总线网络</h2><p>CAN 物理层的形式主要有两种， 图 42-1 中的 CAN 通讯网络是一种遵循 ISO11898 标准的高速、短距离“闭环网络”，它的总线最大长度为 40m，通信速度最高为 1Mbps，总线的两端各要求有一个“120 欧”的电阻。<br><img src="/images/14.png" alt=""> </p>
+<a id="more"></a>
+<h2 id="开环总线网络"><a href="#开环总线网络" class="headerlink" title="开环总线网络"></a>开环总线网络</h2><p>图为遵循 ISO11519-2 标准的低速、远距离“开环网络”，它的最大传输距<br>离为 1km，最高通讯速率为 125kbps，两根总线是独立的、不形成闭环，要求每根总线上各串联有一个“2.2 千欧”的电阻。<br><img src="/images/15.png" alt=""></p>
+<h2 id="通讯节点"><a href="#通讯节点" class="headerlink" title="通讯节点"></a>通讯节点</h2><p>从 CAN 通讯网络图可了解到， CAN 总线上可以挂载多个通讯节点，节点之间的信号经过总线传输，实现节点间通讯。由于 CAN 通讯协议不对节点进行地址编码，而是对数据内容进行编码的，所以网络中的节点个数理论上不受限制，只要总线的负载足够即可，可以通过中继器增强负载。<br>CAN 通讯节点由一个 CAN 控制器及 CAN 收发器组成，控制器与收发器之间通过CAN_Tx 及 CAN_Rx 信号线相连，收发器与 CAN 总线之间使用 CAN_High 及 CAN_Low信号线相连。其中 CAN_Tx 及 CAN_Rx 使用普通的类似 TTL 逻辑信号，而 CAN_High 及CAN_Low 是一对差分信号线。</p>
+<hr>
+<h3 id="收发器和控制器的作用"><a href="#收发器和控制器的作用" class="headerlink" title="收发器和控制器的作用"></a>收发器和控制器的作用</h3><p>当 CAN 节点需要发送数据时， 控制器把要发送的二进制编码通过 CAN_Tx 线发送到收发器，然后由收发器把这个普通的逻辑电平信号转化成差分信号，通过差分线CAN_High 和 CAN_Low 线输出到 CAN 总线网络。而通过收发器接收总线上的数据到控制器时，则是相反的过程，收发器把总线上收到的 CAN_High 及 CAN_Low 信号转化成普通的逻辑电平信号，通过 CAN_Rx 输出到控制器中。<br>例如， STM32 的 CAN 片上外设就是通讯节点中的控制器，为了构成完整的节点，还<br>要给它外接一个收发器，使用型号为 TJA1050 的芯片作为 CAN 收发器。CAN 控制器与 CAN 收发器的关系如同 TTL 串口与 MAX3232 电平转换芯片的关系，MAX3232 芯片把 TTL 电平的串口信号转换成 RS-232 电平的串口信号， CAN 收发器的作用则是把 CAN 控制器的 TTL 电平信号转换成差分信号(或者相反)。 </p>
+<hr>
+<h3 id="差分信号"><a href="#差分信号" class="headerlink" title="差分信号"></a>差分信号</h3><p>差分信号又称差模信号，与传统使用单根信号线电压表示逻辑的方式有区别，使用差<br>分信号传输时，需要两根信号线，这两个信号线的振幅相等，相位相反，通过两根信号线的电压差值来表示逻辑 0 和逻辑 1。<br>我们用一个方法对差分信号做一下比喻，差分信号就好比是跷跷板上的两个人，当一个人被跷上去的时候，另一个人被跷下来了 - 但是他们的平均位置是不变的。继续跷跷板的类推，正值可以表示左边的人比右边的人高，而负值表示右边的人比左边的人高。0 表示两个人都是同一水平。<br><img src="/images/16.png" alt=""></p>
+<p>相对于单信号线传输的方式，使用差分信号传输具有如下优点：<br>*抗干扰能力强，当外界存在噪声干扰时，几乎会同时耦合到两条信号线上，而接<br>收端只关心两个信号的差值，所以外界的共模噪声可以被完全抵消。</p>
+<ul>
+<li>能有效抑制它对外部的电磁干扰，同样的道理，由于两根信号的极性相反，他们<br>对外辐射的电磁场可以相互抵消，耦合的越紧密，泄放到外界的电磁能量越少。</li>
+<li>时序定位精确，由于差分信号的开关变化是位于两个信号的交点，而不像普通单<br>端信号依靠高低两个阈值电压判断，因而受工艺，温度的影响小，能降低时序上<br>的误差，同时也更适合于低幅度信号的电路。 </li>
+</ul>
+<h4 id="CAN-协议中的差分信号"><a href="#CAN-协议中的差分信号" class="headerlink" title="CAN 协议中的差分信号"></a>CAN 协议中的差分信号</h4><p>CAN 协议中对它使用的 CAN_High 及 CAN_Low 表示的差分信号做了规定，。以高速 CAN 协议为例，当表示逻辑 1 时(隐性电平)， CAN_High 和 CAN_Low线上的电压均为 2.5v，即它们的电压差 VH-VL=0V；而表示逻辑 0 时(显性电平)，CAN_High 的电平为 3.5V， CAN_Low 线的电平为 1.5V，即它们的电压差为 VH-VL=2V。例如，当 CAN 收发器从 CAN_Tx 线接收到来自 CAN 控制器的低电平信号时(逻辑 0)，它会使 CAN_High 输出 3.5V，同时 CAN_Low 输出 1.5V，从而输出显性电平表示逻辑 0。<br><img src="/images/17.png" alt=""><br><img src="/images/18.png" alt=""></p>
+<p><strong>* 在 CAN 总线中，必须使它处于隐性电平(逻辑 1)或显性电平(逻辑 0)中的其中一个状态。假如有两个 CAN 通讯节点，在同一时间，一个输出隐性电平，另一个输出显性电平，类似 I2C 总线的“线与”特性将使它处于显性电平状态，显性电平的名字就是这样来的， 即可以认为显性具有优先的意味.*</strong></p>
+<hr>
+<h1 id="协议层"><a href="#协议层" class="headerlink" title="协议层"></a>协议层</h1><p>什么是报文;CAN 使用的是两条差分信号线，只能表达一个信号，简洁的物理层决定了 CAN 必然要配上一套更复杂的协议，如何用一个信号通道实现同样、甚至更强大的功能呢？ CAN协议给出的解决方案是对数据、操作命令(如读/写)以及同步信号进行打包，打包后的这些内容称为报文。 </p>
+<p>为了更有效地控制通讯， CAN 一共规定了 5 种类型的帧:<br>数据帧、要控帧、错误帧、过载帧、帧间隔</p>
+<h2 id="数据帧"><a href="#数据帧" class="headerlink" title="数据帧"></a>数据帧</h2><p><img src="/images/19.png" alt=""></p>
+<ul>
+<li><p>帧起始<br>帧起始，也叫SOF。它用显性位表示，也就是0；它告诉我们，两个线上有电压差了，也就是有数据了。这个帧起始看起来只有一位，其实不简单了。为了让所有的分站都同步于发送报文的发送站，好接收数据，有很多要考虑的地方。</p>
+</li>
+<li><p>仲裁场<br>这个仲裁很抽象，其实在这里就是为了解决一个问题。如果2 个或2 个以上的单元同时开始传送报文，那么就会有总线访问冲突，那么仲裁机制就是用来根据标识符优先级来一个一个的去掉低级别的数据。我们可以详细的描述这场生动的争抢总线的战斗。当总线处于空闲状态时呈隐性电平，此时任何节点都可以向总线发送显性电平作为帧的开始。2 个或2 个以上的节点同时发送开始争抢总线，但是总线只能被一个人抢走。这时候到底怎么决定谁留下，谁滚蛋呢。我们开始思索，我们以前定义了标识符，标识符有优先级，它越小，它优先级越高。</p>
+</li>
+<li><p>控制段<br>在控制段中的 r1 和 r0 为保留位，默认设置为显性位。它最主要的是 DLC 段(DataLength Code)，译为数据长度码，它由 4 个数据位组成，用于表示本报文中的数据段含有多少个字节， DLC 段表示的数字为 0~8。</p>
+</li>
+<li><p>数据段<br>数据段为数据帧的核心内容，它是节点要发送的原始信息，由 0~8 个字节组成， MSB先行。</p>
+</li>
+<li><p>CRC 段<br>为了保证报文的正确传输， CAN 的报文包含了一段 15 位的 CRC 校验码，一旦接收节点算出的 CRC 码跟接收到的 CRC 码不同， 则它会向发送节点反馈出错信息，利用错误帧请求它重新发送。 CRC 部分的计算一般由 CAN 控制器硬件完成，出错时的处理则由软件控制最大重发数。在 CRC 校验码之后，有一个 CRC 界定符，它为隐性位，主要作用是把 CRC 校验码与后面的 ACK 段间隔起来。</p>
+</li>
+<li><p>ACK 段<br>ACK 段包括一个 ACK 槽位，和 ACK 界定符位。类似 I2C 总线，在 ACK 槽位中，发送节点发送的是隐性位，而接收节点则在这一位中发送显性位以示应答。在 ACK 槽和帧结束之间由 ACK 界定符间隔开。</p>
+</li>
+<li><p>帧结束<br>EOF 段(End Of Frame)，译为帧结束，帧结束段由发送节点发送的 7 个隐性位表示结束。 </p>
+</li>
+</ul>
+<h2 id="远程帧："><a href="#远程帧：" class="headerlink" title="远程帧："></a>远程帧：</h2><p>通过发送远程帧，作为数据接收器的节点可以发起各自数据源的数据传送请求，即向数据发送器请求发送具有相同ID的数据帧。远程帧没有数据段。<br><img src="/images/20.png" alt=""></p>
+<h2 id="错误帧："><a href="#错误帧：" class="headerlink" title="错误帧："></a>错误帧：</h2><p>错误类型：应答错误，填充错误，CRC错误，格式错误<br>错误帧由错误标志的叠加和结束符组成。错误标志有主动（积极）错误标志和被动（消极）错误标志。主动（积极）错误标志为6个显性位，被动（消极）错误标志为6个隐性位。<br>错误积极节点：如果检测到一个错误条件，就会发送积极错误标志。这将引起其它节点检测到填充错误，并开始发送错误标志。因此错误标志叠加在6~12位之间。节点发送完错误标志之后就发送一个隐性位，并监控总线，直到总线上出现一个隐性位，然后再发送7个隐性位。这样一个错误帧就发送完毕了。<br>消极错误节点：如果检测到一个错误条件，会试图发送一个消极错误标志进行指示。这个消极错误节点会一直等待6个具有相同极性的连续位，等待从消极错误标志起始开始，当检测到6个相同极性的连续位时，消极错误标志发送完成。<br><img src="/images/21.png" alt=""></p>
+<h2 id="过载帧："><a href="#过载帧：" class="headerlink" title="过载帧："></a>过载帧：</h2><p>过载条件：接收器要求延迟下一次数据帧或远程帧的到达；在帧间隔间歇场的第一位和第二位检测到显性位；如果CAN节点在错误界定符或过载界定符的第8位采样到一个显性位，则节点会发送一个过载帧，错误计数器不会增加。<br><img src="/images/22.png" alt=""></p>
+<h2 id="帧间空间："><a href="#帧间空间：" class="headerlink" title="帧间空间："></a>帧间空间：</h2><p>数据帧和远程帧的前面必然有帧间空间。对于主动错误节点和被动错误节点，帧间空间的结构稍有不同。对于主动错误节点，帧空间由3个显性位的间歇字段和总线空闲组成。在间歇字段不允许发送数据帧和远程帧。总线空闲的长度任意，当有显性位时就被认为是帧起始。被动错误标志除了上边两部分外，在间歇字段后还有8个显性位的挂起传输。在挂起传输阶段被动错误节点不可以发送数据帧与远程帧。<br><img src="/images/23.png" alt=""></p>
+<h1 id="MCU-CAN数据流向分析"><a href="#MCU-CAN数据流向分析" class="headerlink" title="MCU-CAN数据流向分析"></a>MCU-CAN数据流向分析</h1><p>1、记录仪CAN收发器接收到数据首先送入过滤器（CAN收发器有28组过滤器，每组包含2个32位寄存器，可以设置成2个CAN ID或掩码后的一组CAN ID，一般情况当采集CAN ID超出56时，将采用掩码方式。目前记录仪已经最多采集300多个CAN ID，已经无法精准过滤）；<br>2、经过滤器（过滤掉一部分CAN ID）送入预置的一个FIFO（一路CAN自带2个FIFO缓冲区，可分别缓存一帧完整报文）；<br>3、当缓存一帧完整报文后，FIFO将产生一个中断（实测亚毫秒级）报告给MCU，通过MCU中断程序将FIFO中的CAN报文转存至用户RAM。MCU处理中断的能力在微秒级，足以保证，在FIFO环节数据不丢失。<br>4、用户RAM（256B或根据压力测试自由分配）当前可以缓存20组CANID 及数据。用户进程（时间片1ms）有充足的时间将RAM中缓存的CAN数据交给用户程序处理，保证在应用环节数据不丢失。<br><img src="/images/24.png" alt=""><br><img src="/images/25.png" alt=""></p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/06/11/lua%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" itemprop="url">
-              
-                <span itemprop="name">lua基本语法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-06-11T15:29:51+08:00"
-              content="2020-06-11" >
-          06-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/06/10/makefile/" itemprop="url">
-              
-                <span itemprop="name">Makefile基本语法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-06-10T16:09:16+08:00"
-              content="2020-06-10" >
-          06-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/06/10/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Markdown基本语法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-06-10T12:06:03+08:00"
-              content="2020-06-10" >
-          06-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CAN/" rel="tag"># CAN</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/19/SPI/" rel="next" title="SPI原理">
+                <i class="fa fa-chevron-left"></i> SPI原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2020/06/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/archives/2020/06/">1</a><span class="page-number current">2</span>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -530,6 +494,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -550,8 +518,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -627,6 +604,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#物理层"><span class="nav-number">1.</span> <span class="nav-text">物理层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#闭环总线网络"><span class="nav-number">1.1.</span> <span class="nav-text">闭环总线网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开环总线网络"><span class="nav-number">1.2.</span> <span class="nav-text">开环总线网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通讯节点"><span class="nav-number">1.3.</span> <span class="nav-text">通讯节点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#收发器和控制器的作用"><span class="nav-number">1.3.1.</span> <span class="nav-text">收发器和控制器的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#差分信号"><span class="nav-number">1.3.2.</span> <span class="nav-text">差分信号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CAN-协议中的差分信号"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">CAN 协议中的差分信号</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#协议层"><span class="nav-number">2.</span> <span class="nav-text">协议层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据帧"><span class="nav-number">2.1.</span> <span class="nav-text">数据帧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#远程帧："><span class="nav-number">2.2.</span> <span class="nav-text">远程帧：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误帧："><span class="nav-number">2.3.</span> <span class="nav-text">错误帧：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过载帧："><span class="nav-number">2.4.</span> <span class="nav-text">过载帧：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#帧间空间："><span class="nav-number">2.5.</span> <span class="nav-text">帧间空间：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MCU-CAN数据流向分析"><span class="nav-number">3.</span> <span class="nav-text">MCU-CAN数据流向分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -774,6 +767,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
