@@ -1,6 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>IIC原理</title>
+    <url>/2020/06/19/IIC/</url>
+    <content><![CDATA[<p><strong><em>STM32的硬件IIC非常复杂，更重要的是它并不稳定，故推荐使用软件模拟IIC</em></strong></p>
+<hr>
+<p>IIC优点：</p>
+<ul>
+<li>仅用两根线就完成了数据传输</li>
+<li>采用器件地址的硬件设置方法，通过软件寻址避免了像SPI那样的器件片选线寻址，显著地简化了微控制器和外围器件之间的连接，连接在同一条总线上</li>
+<li>要求被寻址的设备发回应答信息，这样可以提供相对可靠的系统</li>
+</ul>
+<p>IIC缺点：</p>
+<ul>
+<li>仅能实现半双工通信</li>
+<li>传输速率也相对有限</li>
+<li>易受干扰，并且不检查错误</li>
+</ul>
+<h1 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h1><p><img src="/images/1.png" alt=""></p>
+<a id="more"></a>
+
+<p>它的物理层有如下特点：</p>
+<ol>
+<li>它是一个支持设备的总线。“总线”指多个设备共用的信号线。在一个 I2C 通讯总线<br>中，可连接多个 I2C 通讯设备，支持多个通讯主机及多个通讯从机。</li>
+<li>一个 I2C 总线只使用两条总线线路，一条双向串行数据线(SDA) ，一条串行时钟线(SCL)。数据线即用来表示数据，时钟线用于数据收发同步。</li>
+<li>每个连接到总线的设备都有一个独立的地址，主机可以利用这个地址进行不同设备之间的访问。</li>
+<li>总线通过上拉电阻接到电源。当 I2C 设备空闲时，会输出高阻态，而当所有设备都空闲，都输出高阻态时，由上拉电阻把总线拉成高电平。</li>
+<li>多个主机同时使用总线时，为了防止数据冲突，会利用仲裁方式决定由哪个设备占用总线。</li>
+<li>具有三种传输模式：标准模式传输速率为 100kbit/s ，快速模式为 400kbit/s ，高速模式下可达 3.4Mbit/s，但目前大多 I2C 设备尚不支持高速模式。</li>
+<li>连接到相同总线的 IC 数量受到总线的最大电容 400pF 限制 。 </li>
+</ol>
+<h1 id="I2C-基本读写过程"><a href="#I2C-基本读写过程" class="headerlink" title="I2C 基本读写过程"></a>I2C 基本读写过程</h1><p><img src="/images/2.png" alt=""></p>
+<h2 id="写数据"><a href="#写数据" class="headerlink" title="写数据"></a>写数据</h2><p>若配置的方向传输位为“写数据”方向， 即第一幅图的情况， 广播完地址，接收到应答信号后， 主机开始正式向从机传输数据(DATA)，数据包的大小为 8 位，主机每发送完一个字节数据，都要等待从机的应答信号(ACK)，重复这个过程，可以向从机传输 N 个数据，这个 N 没有大小限制。当数据传输结束时，主机向从机发送一个停止传输信号(P)，表示不再传输数据。</p>
+<hr>
+<h2 id="读数据"><a href="#读数据" class="headerlink" title="读数据"></a>读数据</h2><p>若配置的方向传输位为“读数据”方向， 即第二幅图的情况， 广播完地址，接收到应答信号后， 从机开始向主机返回数据(DATA)，数据包大小也为 8 位，从机每发送完一个数据，都会等待主机的应答信号(ACK)，重复这个过程，可以返回 N 个数据，这个 N 也没有大小限制。当主机希望停止接收数据时，就向从机返回一个非应答信号(NACK)，则从机自动停止数据传输。</p>
+<hr>
+<h2 id="读和写数据"><a href="#读和写数据" class="headerlink" title="读和写数据"></a>读和写数据</h2><p>除了基本的读写， I2C 通讯更常用的是复合格式，即第三幅图的情况，该传输过程有两次起始信号(S)。一般在第一次传输中，主机通过 SLAVE_ADDRESS 寻找到从设备后，发送一段“数据”，这段数据通常用于表示从设备内部的寄存器或存储器地址(注意区分它与 SLAVE_ADDRESS 的区别)；在第二次的传输中，对该地址的内容进行读或写。也就是说，第一次通讯是告诉从机读写地址，第二次则是读写的实际内容。</p>
+<h1 id="协议层"><a href="#协议层" class="headerlink" title="协议层"></a>协议层</h1><h2 id="起始和停止信号"><a href="#起始和停止信号" class="headerlink" title="起始和停止信号"></a>起始和停止信号</h2><p>起始(S)和停止(P)信号是两种特殊的状态。当 SCL 线是高电平时 SDA 线从高电平向低电平切换，这个情况表示通讯的起始。当 SCL 是高电平时 SDA线由低电平向高电平切换，表示通讯的停止。起始和停止信号一般由主机产生。<br><img src="/images/3.png" alt=""></p>
+<h2 id="数据有效性"><a href="#数据有效性" class="headerlink" title="数据有效性"></a>数据有效性</h2><p>I2C 使用 SDA 信号线来传输数据，使用 SCL信号线进行数据同步。 SDA 数据线在 SCL的每个时钟周期传输一位数据。传输时， SCL为高电平的时候 SDA表示的数据有效，即此时的 SDA为高电平时表示数据“1”，为低电平时表示数据“0”。当 SCL为低电平时， SDA的数据无效，一般在这个时候 SDA 进行电平切换，为下一次表示数据做好准备。<br><img src="/images/4.png" alt=""><br><img src="/images/5.png" alt=""></p>
+<p>##地址及数据方向<br>I2C 总线上的每个设备都有自己的独立地址，主机发起通讯时，通过 SDA 信号线发送<br>设备地址(SLAVE_ADDRESS)来查找从机。 I2C 协议规定设备地址可以是 7 位或 10 位，实际中 7 位的地址应用比较广泛。紧跟设备地址的一个数据位用来表示数据传输方向，它是数据方向位(R/W)，第 8 位或第 11 位。数据方向位为“1”时表示主机由从机读数据，该位为“0”时表示主机向从机写数据。<br><img src="/images/6.png" alt=""><br>读数据方向时，主机会释放对 SDA 信号线的控制，由从机控制 SDA 信号线，主机接收信号，写数据方向时， SDA 由主机控制，从机接收信号。</p>
+<h2 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h2><p>IIC总线协议规定，每传送一个字节数据<strong>(含地址及命令)</strong>后，都要有一个应答信号，以确定数据传送是否被对方收到。应答信号由接受设备产生，在SCL信号为高电平期间，接受设备将SDA拉为低电平，表示数据传送正确，产生应答。响应包括“应答(ACK)”和“非应答(NACK)”两种信号。作为数据接收端时，当设备(无论主从机)接收到 I2C 传输的一个字节数据或地址后，若希望对方继续发送数据，则需要向对方发送“应答(ACK)”信号，发送方会继续发送下一个数据；若接收端希望结束数据传输，则向对方发送“非应答(NACK)”信号，发送方接收到该信号后会产生一个停止信号，结束信号传输<br><img src="/images/7.png" alt=""><br><img src="/images/8.png" alt=""><br><strong>*传输时主机产生时钟，在第 9 个时钟时，数据发送端会释放 SDA 的控制权，由数据接收端控制 SDA，若 SDA 为高电平，表示非应答信号(NACK)，低电平表示应答信号(ACK)。 *</strong><br><img src="/images/9.png" alt=""></p>
+<h1 id="stm321编程要点"><a href="#stm321编程要点" class="headerlink" title="stm321编程要点"></a>stm321编程要点</h1><ol>
+<li>配置通讯使用的目标引脚为开漏模式；</li>
+<li>使能 I2C 外设的时钟；</li>
+<li>配置 I2C 外设的模式、地址、速率等参数并使能 I2C 外设；</li>
+<li>编写基本 I2C 按字节收发的函数；</li>
+<li>编写读写内容的函数；</li>
+<li>编写测试程序，对读写数据进行校验。 </li>
+</ol>
+<p>软件模拟IIC</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//初始化IIC</span></span><br><span class="line"><span class="built_in">void</span> IIC_Init(<span class="built_in">void</span>)</span><br><span class="line">&#123;					     </span><br><span class="line">	GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">	RCC_APB2PeriphClockCmd(	RCC_APB2Periph_GPIOB, ENABLE );	<span class="comment">//使能GPIOB时钟</span></span><br><span class="line">	   </span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_7;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP ;   <span class="comment">//推挽输出</span></span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">	GPIO_Init(GPIOB, &amp;GPIO_InitStructure);</span><br><span class="line">	GPIO_SetBits(GPIOB,GPIO_Pin_6|GPIO_Pin_7); 	<span class="comment">//PB6,PB7 输出高，空闲状态</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//产生IIC起始信号</span></span><br><span class="line"><span class="built_in">void</span> IIC_Start(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	SDA_OUT();     <span class="comment">//sda线输出</span></span><br><span class="line">	IIC_SDA=<span class="number">1</span>;	  	  </span><br><span class="line">	IIC_SCL=<span class="number">1</span>;</span><br><span class="line">	delay_us(<span class="number">4</span>);</span><br><span class="line"> 	IIC_SDA=<span class="number">0</span>;    <span class="comment">//START:when CLK is high,DATA change form high to low </span></span><br><span class="line">	delay_us(<span class="number">4</span>);</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;    <span class="comment">//钳住I2C总线，准备发送或接收数据 </span></span><br><span class="line">&#125;	  </span><br><span class="line"><span class="comment">//产生IIC停止信号</span></span><br><span class="line"><span class="built_in">void</span> IIC_Stop(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	SDA_OUT();    <span class="comment">//sda线输出</span></span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">	IIC_SDA=<span class="number">0</span>;    <span class="comment">//STOP:when CLK is high DATA change form low to high</span></span><br><span class="line"> 	delay_us(<span class="number">4</span>);</span><br><span class="line">	IIC_SCL=<span class="number">1</span>; </span><br><span class="line">	IIC_SDA=<span class="number">1</span>;    <span class="comment">//发送I2C总线结束信号</span></span><br><span class="line">	delay_us(<span class="number">4</span>);							   	</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//发送数据后，等待应答信号到来</span></span><br><span class="line"><span class="comment">//返回值：1，接收应答失败，IIC直接退出</span></span><br><span class="line"><span class="comment">//        0，接收应答成功，什么都不做</span></span><br><span class="line">u8 IIC_Wait_Ack(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	u8 ucErrTime=<span class="number">0</span>;</span><br><span class="line">	SDA_IN();      <span class="comment">//SDA设置为输入  </span></span><br><span class="line">	IIC_SDA=<span class="number">1</span>;delay_us(<span class="number">1</span>);	   </span><br><span class="line">	IIC_SCL=<span class="number">1</span>;delay_us(<span class="number">1</span>);	 </span><br><span class="line">	<span class="keyword">while</span>(READ_SDA)</span><br><span class="line">	&#123;</span><br><span class="line">		ucErrTime++;</span><br><span class="line">		<span class="keyword">if</span>(ucErrTime&gt;<span class="number">250</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			IIC_Stop();</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;    <span class="comment">//时钟输出0 	   </span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">//产生ACK应答</span></span><br><span class="line"><span class="built_in">void</span> IIC_Ack(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">	SDA_OUT();</span><br><span class="line">	IIC_SDA=<span class="number">0</span>;</span><br><span class="line">	delay_us(<span class="number">2</span>);</span><br><span class="line">	IIC_SCL=<span class="number">1</span>;</span><br><span class="line">	delay_us(<span class="number">2</span>);</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//不产生ACK应答		    </span></span><br><span class="line"><span class="built_in">void</span> IIC_NAck(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">	SDA_OUT();</span><br><span class="line">	IIC_SDA=<span class="number">1</span>;</span><br><span class="line">	delay_us(<span class="number">2</span>);</span><br><span class="line">	IIC_SCL=<span class="number">1</span>;</span><br><span class="line">	delay_us(<span class="number">2</span>);</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">&#125;					 				     </span><br><span class="line"><span class="comment">//IIC发送一个字节</span></span><br><span class="line"><span class="comment">//返回从机有无应答</span></span><br><span class="line"><span class="comment">//1，有应答</span></span><br><span class="line"><span class="comment">//0，无应答			  </span></span><br><span class="line"><span class="built_in">void</span> IIC_Send_Byte(u8 txd)   <span class="comment">//结合起始、应答、结束信号才能传输数据</span></span><br><span class="line">&#123;                        </span><br><span class="line">    u8 t;   </span><br><span class="line">	SDA_OUT(); 	    </span><br><span class="line">    IIC_SCL=<span class="number">0</span>;            <span class="comment">//拉低时钟开始数据传输</span></span><br><span class="line">    <span class="keyword">for</span>(t=<span class="number">0</span>;t&lt;<span class="number">8</span>;t++)</span><br><span class="line">    &#123;              </span><br><span class="line">        <span class="comment">//IIC_SDA=(txd&amp;0x80)&gt;&gt;7;</span></span><br><span class="line">		<span class="keyword">if</span>((txd&amp;<span class="number">0x80</span>)&gt;&gt;<span class="number">7</span>)</span><br><span class="line">			IIC_SDA=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			IIC_SDA=<span class="number">0</span>;</span><br><span class="line">		txd&lt;&lt;=<span class="number">1</span>; 	  </span><br><span class="line">		delay_us(<span class="number">2</span>);       <span class="comment">//对TEA5767这三个延时都是必须的</span></span><br><span class="line">		IIC_SCL=<span class="number">1</span>;</span><br><span class="line">		delay_us(<span class="number">2</span>); </span><br><span class="line">		IIC_SCL=<span class="number">0</span>;	</span><br><span class="line">		delay_us(<span class="number">2</span>);</span><br><span class="line">    &#125;	 </span><br><span class="line">&#125; 	    </span><br><span class="line"><span class="comment">//读1个字节，ack=1时，发送ACK，ack=0，发送nACK   </span></span><br><span class="line">u8 IIC_Read_Byte(unsigned char ack)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned char i,receive=<span class="number">0</span>;</span><br><span class="line">	SDA_IN();        <span class="comment">//SDA设置为输入</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">8</span>;i++ )</span><br><span class="line">	&#123;</span><br><span class="line">        IIC_SCL=<span class="number">0</span>; </span><br><span class="line">        delay_us(<span class="number">2</span>);</span><br><span class="line">		IIC_SCL=<span class="number">1</span>;</span><br><span class="line">        receive&lt;&lt;=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(READ_SDA)receive++;   </span><br><span class="line">		delay_us(<span class="number">1</span>); </span><br><span class="line">    &#125;					 </span><br><span class="line">    <span class="keyword">if</span> (!ack)</span><br><span class="line">        IIC_NAck();        <span class="comment">//发送nACK</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        IIC_Ack();         <span class="comment">//发送ACK   </span></span><br><span class="line">    <span class="keyword">return</span> receive;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>通信协议</category>
+      </categories>
+      <tags>
+        <tag>IIC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>lua函数</title>
+    <url>/2020/06/12/Lua%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<p>函数定义</p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line">optional_function_scope <span class="function"><span class="keyword">function</span> <span class="title">function_name</span><span class="params">( argument1, argument2, argument3<span class="rest_arg">..., argumentn</span>)</span></span></span><br><span class="line"><span class="function">    <span class="title">function_body</span></span></span><br><span class="line"><span class="function">    <span class="title">return</span> <span class="title">result_params_comma_separated</span></span></span><br><span class="line"><span class="function"><span class="title">end</span></span></span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>解析：</p>
+<ul>
+<li>optional_function_scope: 该参数是可选的制定函数是全局函数还是局部函数，未设置该参数默认为全局函数，如果你需要设置函数为局部函数需要使用关键字 local。</li>
+<li>function_name: 指定函数名称。</li>
+<li>argument1, argument2, argument3…, argumentn: 函数参数，多个参数以逗号隔开，函数也可以不带参数。</li>
+<li>function_body: 函数体，函数中需要执行的代码语句块。</li>
+<li>result_params_comma_separated: 函数返回值，Lua语言函数可以返回多个值，每个值以逗号隔开。</li>
+</ul>
+<hr>
+<h2 id="多返回值"><a href="#多返回值" class="headerlink" title="多返回值"></a>多返回值</h2><p>Lua函数可以返回多个结果值，在return后列出要返回的值的列表即可返回多值</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">maximum</span> <span class="params">(a)</span></span></span><br><span class="line">    <span class="keyword">local</span> mi = <span class="number">1</span>             <span class="comment">-- 最大值索引</span></span><br><span class="line">    <span class="keyword">local</span> m = a[mi]          <span class="comment">-- 最大值</span></span><br><span class="line">    <span class="keyword">for</span> i,val <span class="keyword">in</span> <span class="built_in">ipairs</span>(a) <span class="keyword">do</span></span><br><span class="line">       <span class="keyword">if</span> val &gt; m <span class="keyword">then</span></span><br><span class="line">           mi = i</span><br><span class="line">           m = val</span><br><span class="line">       <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> m, mi</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(maximum(&#123;<span class="number">8</span>,<span class="number">10</span>,<span class="number">23</span>,<span class="number">12</span>,<span class="number">5</span>&#125;))</span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line"><span class="number">23</span> <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h2><p>Lua 函数可以接受可变数目的参数，和 C 语言类似，在函数参数列表中使用三点 … 表示函数有可变的参数</p>
+<figure class="highlight nimrod"><table><tr><td class="code"><pre><span class="line">function add(...)  </span><br><span class="line">local s = <span class="number">0</span>  </span><br><span class="line">  <span class="keyword">for</span> i, v <span class="keyword">in</span> ipairs<span class="meta">&#123;...&#125;</span> <span class="keyword">do</span>   --&gt; <span class="meta">&#123;...&#125;</span> 表示一个由所有变长参数构成的数组  </span><br><span class="line">    s = s + v  </span><br><span class="line">  <span class="keyword">end</span>  </span><br><span class="line">  <span class="keyword">return</span> s  </span><br><span class="line"><span class="keyword">end</span>  </span><br><span class="line">print(add(<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>))  ---&gt;<span class="number">25</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight nimrod"><table><tr><td class="code"><pre><span class="line">function average(...)</span><br><span class="line">   <span class="literal">result</span> = <span class="number">0</span></span><br><span class="line">   local arg=<span class="meta">&#123;...&#125;</span>    --&gt; arg 为一个表，局部变量</span><br><span class="line">   <span class="keyword">for</span> i,v <span class="keyword">in</span> ipairs(arg) <span class="keyword">do</span></span><br><span class="line">      <span class="literal">result</span> = <span class="literal">result</span> + v</span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   print(<span class="string">"总共传入 "</span> .. <span class="comment">#arg .. " 个数")</span></span><br><span class="line">   <span class="keyword">return</span> <span class="literal">result</span>/<span class="comment">#arg</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">"平均值为"</span>,average(<span class="number">10</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>))</span><br></pre></td></tr></table></figure>
+
+
+<p>有时候我们可能需要几个固定参数加上可变参数，固定参数必须放在变长参数之前:</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fwrite</span><span class="params">(fmt, ...)</span></span>  <span class="comment">---&gt; 固定的参数fmt</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">io</span>.<span class="built_in">write</span>(<span class="built_in">string</span>.<span class="built_in">format</span>(fmt, ...))    </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">fwrite(<span class="string">"runoob\n"</span>)       <span class="comment">---&gt;fmt = "runoob", 没有变长参数。  </span></span><br><span class="line">fwrite(<span class="string">"%d%d\n"</span>, <span class="number">1</span>, <span class="number">2</span>)   <span class="comment">---&gt;fmt = "%d%d", 变长参数为 1 和 2</span></span><br><span class="line"></span><br><span class="line">输出结果：</span><br><span class="line">runoob</span><br><span class="line"><span class="number">12</span></span><br></pre></td></tr></table></figure>
+
+<p>通常在遍历变长参数的时候只需要使用 {…}，然而变长参数可能会包含一些 nil，那么就可以用 select 函数来访问变长参数了：select(‘#’, …) 或者 select(n, …)</p>
+<p>select(‘#’, …) 返回可变参数的长度<br>select(n, …) 用于返回 n 到 select(‘#’,…) 的参数</p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">do</span>  </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(<span class="rest_arg">...)  </span></span></span></span><br><span class="line"><span class="function"><span class="params"><span class="rest_arg">        for</span> i = 1, select(<span class="string">'#'</span>, <span class="rest_arg">...) do</span>  --&gt;获取参数总数</span></span></span><br><span class="line"><span class="function"><span class="params">            local arg = select(i, <span class="rest_arg">...); --&gt;读取参数</span></span></span></span><br><span class="line"><span class="function"><span class="params"><span class="rest_arg">            print</span>(<span class="string">"arg"</span>, arg)</span></span>;  </span><br><span class="line">        end  </span><br><span class="line">    end  </span><br><span class="line"> </span><br><span class="line">    foo(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>);  </span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>lua语言</category>
+      </categories>
+      <tags>
+        <tag>lua</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SPI原理</title>
+    <url>/2020/06/19/SPI/</url>
+    <content><![CDATA[<p>SPI 协议是由摩托罗拉公司提出的通讯协议(Serial Peripheral Interface)，即串行外围设备接口，是一种高速全双工的通信总线。它被广泛地使用在 ADC、 LCD 等设备与 MCU 间，要求通讯速率较高的场合。</p>
+<p>SPI接口具有如下优点：</p>
+<ul>
+<li>支持全双工操作；</li>
+<li>操作简单；</li>
+<li>数据传输速率较高。</li>
+</ul>
+<p>SPI接口具有如下缺点：</p>
+<ul>
+<li>需要占用主机较多的口线（每个从机都需要一根片选线）；</li>
+<li>只支持单个主机。</li>
+<li>没有指定的流控制，没有应答机制确认是否接收到数据。</li>
+</ul>
+<h1 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h1><p><img src="/images/13.png" alt=""></p>
+<a id="more"></a>
+
+<p>SPI 通讯使用 3 条总线及片选线， 3 条总线分别为 SCK、 MOSI、 MISO，片选线为 SS，它们的作用介绍如下： </p>
+<ol>
+<li>nSS(Slave Select)：片选信号线，用于选中SPI从设备。每个从设备独立拥有这条nSS信号线，占据主机的一个引脚。设备的其他总线是并联到SPI主机的，即无论多少个从设备，都共同使用这3条总线。当从设备上的nSS引脚被置拉低时表明该从设备被主机选中。</li>
+<li>SCK(Serial Clock)：时钟信号线，通讯数据同步用。时钟信号由通讯主机产生，它决定了SPI的通讯速率。</li>
+<li>MOSI(Master Ouput Slave Input)：主机(数据)输出/从设备(数据)输入引脚，即这条信号线上传输从主机到从机的数据。</li>
+<li>MISO(Master Input Slave Ouput)：主机(数据)输入/从设备(数据)输出引脚，即这条信号线上传输从机从到主机的数据主从机通过两条信号线来传输数据，那么自然是全双工通讯的了。之前的I2C通讯，数据只在一条SDA线上传输，主从机数据交互只能采用半双工。</li>
+</ol>
+<h1 id="协议层"><a href="#协议层" class="headerlink" title="协议层"></a>协议层</h1><p>与 I2C 的类似， SPI 协议定义了通讯的起始和停止信号、数据有效性、时钟同步等环节。</p>
+<h2 id="SPI-基本通讯过程"><a href="#SPI-基本通讯过程" class="headerlink" title="SPI 基本通讯过程"></a>SPI 基本通讯过程</h2><p> SPI 通讯的通讯时序<br><img src="/images/12.png" alt=""><br>这是一个主机的通讯时序。 NSS、 SCK、 MOSI 信号都由主机控制产生，而 MISO 的信号由从机产生，主机通过该信号线读取从机的数据。 MOSI 与 MISO 的信号只在 NSS 为低电平的时候才有效，在 SCK 的每个时钟周期 MOSI 和 MISO 传输一位数据。以上通讯流程中包含的各个信号分解如下：</p>
+<h2 id="通讯的起始和停止信号"><a href="#通讯的起始和停止信号" class="headerlink" title="通讯的起始和停止信号"></a>通讯的起始和停止信号</h2><p>标号①处， nSS信号由高电平变为低电平即为SPI通讯的起始信号，反过来，nSS信号由低电平变为高电平即为SPI通讯的结束信号。这个可比I2C简单得多了。当从机检测到自身的nSS引脚被拉低时就知道自己被主机选中，准备和主机进行通讯</p>
+<h2 id="数据有效性"><a href="#数据有效性" class="headerlink" title="数据有效性"></a>数据有效性</h2><p>SPI 使用 MOSI 及 MISO 信号线来传输数据，使用 SCK 信号线进行数据同步。 MOSI 及MISO 数据线在 SCK 的每个时钟周期传输一位数据，且数据输入输出是同时进行的。数据传输时， MSB 先行或 LSB 先行并没有作硬性规定，但要保证两个 SPI 通讯设备之间使用同样的协定，一般都会采用图中的 MSB 先行模式。<br>观察图中的②③④⑤标号处， MOSI 及 MISO 的数据在 SCK 的上升沿期间变化输出，在SCK 的下降沿时被采样。即在 SCK 的下降沿时刻， MOSI 及 MISO 的数据有效，高电平时表示数据“1”，为低电平时表示数据“0”。在其它时刻，数据无效， MOSI及 MISO 为下一次表示数据做准备。<br>SPI 每次数据传输可以 8 位或 16 位为单位，每次传输的单位数不受限制。 </p>
+<hr>
+<p>这里需要再提及的概念是时钟极性(CPOL)和时钟相位(CPHA)。<br>  时钟极性(CPOL)指通讯设备处于空闲状态(SPI开始通讯前、nSS线无效)时，SCK的状态。</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">CPOL</span> = <span class="number">0</span>：SCK在空闲时为低电平</span><br><span class="line"><span class="attr">CPOL</span> = <span class="number">1</span>：SCK在空闲时为高电平</span><br></pre></td></tr></table></figure>
+<p>  时钟相位(CPHA)指数据的采样时刻位于SCK的偶数边沿采样还是奇数边沿采样。</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">CPHA</span> = <span class="number">0</span>：在SCK的奇数边沿采样</span><br><span class="line"><span class="attr">CPHA</span> = <span class="number">1</span>：在SCK的偶数边沿采样</span><br></pre></td></tr></table></figure>
+<p>  那么这样说来，<strong>*SPI的采样时刻并非由上升沿/下降沿决定的</strong>。注意的是，在数据采样时刻，MOSI和MOSI的电平为有效电平，数据不能在这个时刻进行切换注意的是，在数据采样时刻，MOSI和MOSI的电平为有效电平，数据不能在这个时刻进行切换。在非采样时刻MOSI和MISO上的信号才能切换</p>
+<h1 id="编程要点"><a href="#编程要点" class="headerlink" title="编程要点"></a>编程要点</h1><p>(1) 初始化通讯使用的目标引脚及端口时钟；<br>(2) 使能 SPI 外设的时钟；<br>(3) 配置 SPI 外设的模式、地址、速率等参数并使能 SPI 外设；<br>(4) 编写基本 SPI 按字节收发的函数；<br>(5) 编写读写操作的的函数；<br>(6) 编写测试程序，对读写数据进行校验。 </p>
+]]></content>
+      <categories>
+        <category>通信协议</category>
+      </categories>
+      <tags>
+        <tag>SPI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>UART原理</title>
+    <url>/2020/06/19/UART/</url>
+    <content><![CDATA[<p>优点：</p>
+<ul>
+<li>只使用两根电线</li>
+<li>支持多个主服务器和多个从服务器</li>
+<li>ACK / NACK位确认每个帧都已成功传输</li>
+<li>硬件没有UART那么复杂</li>
+<li>众所周知且广泛使用的协议</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>数据传输速率比SPI慢</li>
+<li>数据帧的大小限制为8位</li>
+<li>实现比SPI更复杂的硬件</li>
+</ul>
+<h1 id="异步通信与同步通信区别"><a href="#异步通信与同步通信区别" class="headerlink" title="异步通信与同步通信区别"></a>异步通信与同步通信区别</h1><h2 id="异步通信："><a href="#异步通信：" class="headerlink" title="异步通信："></a>异步通信：</h2><p>异步通信中的接收方并不知道数据什么时候会到达，收发双方可以有各自自己的时钟。发送方发送的时间间隔可以不均，接收方是在数据的起始位和停止位的帮助下实现信息同步的。这种传输通常是很小的分组，比如一个字符为一组，为这个组配备起始位和结束位。所以这种传输方式的效率是比较低的，毕竟额外加入了很多的辅助位作为负载，常用在低速的传输中。<br>举个例子，我们的键盘按下一个按键，发出一个字符信号，异步传输机制就会为它加上前后的辅助同步信息，帮助接收方识别到我们按下了哪一个按键。因为我们敲击键盘的节奏不固定，所以异步是一种很适合的方式。</p>
+<a id="more"></a>
+
+<h2 id="同步通信："><a href="#同步通信：" class="headerlink" title="同步通信："></a>同步通信：</h2><p>  同步通信中双方使用频率一致的时钟，它的分组相比异步则大得多，称为一个数据帧，通过独特的bit串作为启停标识。发送方要以固定的节奏去发送数据，而接收方要时刻做好接收数据的准备，识别到前导码后马上要开始接收数据了。同步这种方式中因为分组很大，很长一段数据才会有额外的辅助位负载，所以效率更高，更加适合对速度要求高的传输，当然这种通信对时序的要求也更高。</p>
+<hr>
+<p>总结一下，异步传输其实是通过字符数据前后的开始和停止码进行再同步，弥补自己刚才注意不集中的不足；而同步方式则是一个规矩的好学生，时刻候命准备工作。异步是你扔出去一个内容，对方靠着内容前后他能嗅到的异样在人潮之中发现了它，把这个内容存下来；而同步是对方在时刻等着你发布号令，你告诉对方我要发送了哦，然后双方一拍即合。</p>
+<h1 id="USART和UART区别"><a href="#USART和UART区别" class="headerlink" title="USART和UART区别"></a>USART和UART区别</h1><p>UART它是在 USART 基础上裁剪掉了同步通信功能，只有异步通信。 简单区分同步和异步就是看通信时需不需要对外提供时钟输出，我们平时用的串口通信基本都是UART。</p>
+<h1 id="协议层"><a href="#协议层" class="headerlink" title="协议层"></a>协议层</h1><h2 id="串口数据包的基本组成"><a href="#串口数据包的基本组成" class="headerlink" title="串口数据包的基本组成"></a>串口数据包的基本组成</h2><p><img src="/images/10.png" alt=""></p>
+<h2 id="原理理解"><a href="#原理理解" class="headerlink" title="原理理解"></a>原理理解</h2><p>也就是双方必要约定一种暗号。<br>也许当时发送这个通信的小组是这样讨论的。<br>经理：我要用一根线就能传输数据，你来给我定个标准。<br>研发：好。<br>经理：只有一根线，我怎么知道数据什么时候开始呢。<br>研发：就一根线，默认是高电平，那就有一个起始位吧。当检测到有低电平的时候，就是开始有一个字节的数据发送了,起始位之后，先是字节的最低位,传送一个字节。<br>经理：可是，就一根线，过来的数据会不会有干扰，容易出错呀。<br>研发：行呀，那就在字节数据后再加一个校验位。可以作奇校验，偶校验，1校验，0校验，无校验。<br>经理：嗯 ，很不错。有起始位就应该有停止位，那我们就再加个停止位在后面吧。<br>经理：传输一串数据，对方要怎么知道数据的拆分呢，怎么按时间或频率去解读数据位，校验位呢。<br>研发：这样吧，双方约定一个波特率吧，定义一个每个位占用多长的时间，这样双方按这个波特率就可以处理了。这个波特率呢，是指1S钟可以传输多个位，也就知道一个位占用多长时间。这样就解决传输的问题了。（波特率：即单位时间内传输的符号个数；）<br>经理：那万一传输过程，数据快太，判断失误停不下来怎么办。<br>研发：那就把停止位可以调节为1个停止位或者2个停止位。这样就可以停下来了。<br>经理：嗯，听着不错。就这样办吧。</p>
+<p>于是，串口通信就这样出来了。<br>在串口的通信参数上，就有了波特率，数据位，停止位，校验位这几个参数来确保串口通信的正确性和稳定上。当然，这只是某个方面保证串口通信的正确性和稳定性，不代表设备间通信的正确性和稳定性。</p>
+<h3 id="1-波特率"><a href="#1-波特率" class="headerlink" title="1. 波特率"></a>1. 波特率</h3><p>异步通讯中由于没有时钟信号接口中是没有时钟信号的)，所以两个通讯设备之间需要约定好波特率，即每个码元的长度。常见的波特率为4800、 9600、 115200 等。波特率：即单位时间内传输的符号个数。</p>
+<h3 id="2-通讯的起始和停止信号"><a href="#2-通讯的起始和停止信号" class="headerlink" title="2. 通讯的起始和停止信号"></a>2. 通讯的起始和停止信号</h3><p>串口通讯的一个数据包从起始信号开始，直到停止信号结束。数据包的起始信号由一个逻辑 0 的数据位表示，而数据包的停止信号可由 0.5、 1、 1.5 或 2 个逻辑 1 的数据位表示，只要双方约定一致即可。</p>
+<h3 id="3-有效数据"><a href="#3-有效数据" class="headerlink" title="3. 有效数据"></a>3. 有效数据</h3><p>在数据包的起始位之后紧接着的就是要传输的主体数据内容，也称为有效数据，有效数据的长度常被约定为 5、 6、 7 或 8 位长。</p>
+<h3 id="4-数据校验"><a href="#4-数据校验" class="headerlink" title="4. 数据校验"></a>4. 数据校验</h3><p>在有效数据之后，有一个可选的数据校验位。由于数据通信相对更容易受到外部干扰导致传输数据出现偏差，可以在传输过程加上校验位来解决这个问题。校验方法有奇校验(odd)、偶校验(even)、 0 校验(space)、 1 校验(mark)以及无校验(noparity)。奇校验要求有效数据和校验位中“1”的个数为奇数，比如一个 8 位长的有效数据为：01101001，此时总共有4个“1”，为达到奇校验效果，校验位为“1”，最后传输的数据将是 8 位的有效数据加上 1 位的校验位总共 9 位。偶校验与奇校验要求刚好相反，要求帧数据和校验位中“1”的个数为偶数，比如数据帧： 11001010，此时数据帧“1”的个数为 4 个，所以偶校验位为“0”。0校验是不管有效数据中的内容是什么，校验位总为“0”， 1 校验是校验位总为“1”。</p>
+<hr>
+<p>在两个UART之间传输数据只需要两根线。数据从发送UART的Tx引脚流向接收UART的Rx引脚：<br><img src="/images/11.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>通信协议</category>
+      </categories>
+      <tags>
+        <tag>UART</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>c语言中对可变参数列表的简单理解</title>
+    <url>/2020/06/12/c%E8%AF%AD%E8%A8%80%E5%8F%AF%E5%8F%98%E6%95%B0%E7%9B%AE%E5%8F%82%E6%95%B0/</url>
+    <content><![CDATA[<p>C中变长实参头文件stdarg.h提供了一个数据类型va-list和三个宏（va-start、va-arg和va-end），用它们在被调用函数不知道参数个数和类型时对可变参数表进行测试，从而为访问可变参数提供了方便且有效的方法。va-list是一个char类型的指针，当被调用函数使用一个可变参数时，它声明一个类型为va-list的变量，该变量用来指向va-arg和va-end所需信息的位置。下面给出va_list、va-start、va-arg和va-end在C中的源码：<br><code>typedef char *  va_list;</code><br><code>#define va_start(ap,v)  ( ap = (va_list)&amp;v + _INTSIZEOF(v) )   //得到可变参数中第一个参数的首地址</code><br><code>#define va_arg(ap,type)    ( *(type *)((ap += _INTSIZEOF(type)) - _INTSIZEOF(type)) )    //将参数转换成需要的类型，并使ap指向下一个参数</code><br><code>#define va_end(ap)      ( ap = (va_list)0 )//功能就是把指针ap赋值为0，使它不指向内存的变量</code></p>
+<a id="more"></a>
+<hr>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdarg.h&gt;</span></span></span><br><span class="line"> <span class="comment">/*函数sum中首先定义了可变参数表指针vap，而后通过va_start ( vap, n )取得了参数表首地址（赋值给了vap），</span></span><br><span class="line"><span class="comment"> 其后的for循环则用来遍历可变参数表。*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> n,...)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i , sum = <span class="number">0</span>;</span><br><span class="line">	va_list vap;  <span class="comment">//声明va_list变量</span></span><br><span class="line">	va_start(vap , n);     <span class="comment">//指向可变参数表中的第一个参数</span></span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span> ; i &lt; n ; ++i)</span><br><span class="line">		sum += va_arg(vap , <span class="keyword">int</span>);     <span class="comment">//取出可变参数表中的参数，并修改参数指针vap使其增加以指向表中下一个参数</span></span><br><span class="line">	va_end(vap);    <span class="comment">//把指针vap赋值为0</span></span><br><span class="line">	<span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> m = sum(<span class="number">3</span> , <span class="number">45</span> , <span class="number">89</span> , <span class="number">72</span>);</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;m&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>函数原型声明，至少需要一个确定的参数，注意括号内的省略号</li>
+<li>在调用参数表之前，定义一个 va_list 类型的变量，(假设va_list 类型变量被定义为ap)；</li>
+<li>然后应该对ap进行初始化，让它指向可变参数表里面的第一个参数，这是通过 va_start 来实现的，第一个参数是 ap 本身，第二个参数是在变参表前面紧挨着的一个变量,即“…”之前的那个参数；</li>
+<li>然后是获取参数，调用va_arg，它的第一个参数是ap，第二个参数是要获取的参数的指定类型，然后返回这个指定类型的值，并且把ap的位置指向变参表的下一个变量位置；</li>
+<li>获取所有的参数之后，我们有必要将这个ap指针关掉，以免发生危险，方法是调用 va_end，他是输入的参数ap置为NULL，应该养成获取完参数表之后关闭指针的习惯。通常va_start和va_end是成对出现。<strong>va-end必须在va-arg读完所有参数后再调用</strong></li>
+</ul>
+]]></content>
+      <categories>
+        <category>C语言</category>
+      </categories>
+      <tags>
+        <tag>C语言</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Markdown基本语法</title>
     <url>/2020/06/10/hello-world/</url>
     <content><![CDATA[<h1 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h1><p>在source/_posts 文件夹下创建.md文件<br>配置属性</p>
@@ -136,90 +342,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Makefile基本语法</title>
-    <url>/2020/06/10/makefile/</url>
-    <content><![CDATA[<h1 id="什么是Makefile"><a href="#什么是Makefile" class="headerlink" title="什么是Makefile"></a>什么是Makefile</h1><p>使用 GCC 编译器在 Linux 进行 C 语言编译，通过在终端执行 gcc 命令来完成 C 文件的编译，如果我们的工程只有一两个 C 文件还好，需要输入的命令不多，当文件有几十、上百甚至上万个的时候用终端输入 GCC 命令的方法显然是不现实的。如果我们能够编写一个文件，这个文件描述了编译哪些源码文件、如何编译那就好了，每次需要编译工程的时只需要使用这个文件就行了。这种问题怎么可能难倒聪明的程序员，为此提出了一个解决大工程编译的工具： make，描述哪些文件需要编译、哪些需要重新编译的文件就叫做 Makefile，命令即可完成整个工程的自动编译，极大的提高了软件开发的效率。</p>
-<h1 id="Makefile语法"><a href="#Makefile语法" class="headerlink" title="Makefile语法"></a>Makefile语法</h1><h2 id="Makefile文件的创建和运行"><a href="#Makefile文件的创建和运行" class="headerlink" title="Makefile文件的创建和运行"></a>Makefile文件的创建和运行</h2><p>在工程目录下创建名为“Makefile”的文件，文件名一定要叫做“Makefile”！！！区分大小写</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">main: main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">  gcc -o main main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">main<span class="selector-class">.o</span>: main.c</span><br><span class="line">  gcc -c main.c</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-class">.o</span>: <span class="selector-tag">input</span>.c</span><br><span class="line">  gcc -c <span class="selector-tag">input</span>.c</span><br><span class="line">calcu<span class="selector-class">.o</span>: calcu.c</span><br><span class="line">  gcc -c calcu.c</span><br><span class="line"> </span><br><span class="line">clean:</span><br><span class="line">  rm *.o</span><br><span class="line">  rm main</span><br></pre></td></tr></table></figure>
-<p>上述代码中所有行首需要空出来的地方一定要<strong><em>使用“TAB”键！</em></strong>不要使用空格键！ 这是Makefile 的语法要求</p>
-<a id="more"></a>
-
-<p>Makefile 编写好以后我们就可以使用 make 命令来编译我们的工程了，直接在命令行中输入“make”即可， make 命令会在当前目录下查找是否存在“Makefile”这个文件，如果存在的话就会按照 Makefile 里面定义的编译方式进行编译。使用命令“make”编译完成以后就会在当前工程目录下生成各种.o 和可执行文件，说明我们编译成功了。</p>
-<h2 id="规则格式"><a href="#规则格式" class="headerlink" title="规则格式"></a>规则格式</h2><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">目标…... : 依赖文件集合……</span><br><span class="line">命令 <span class="number">1</span></span><br><span class="line">命令 <span class="number">2</span></span><br><span class="line">……</span><br></pre></td></tr></table></figure>
-<p>比如下面这条规则：</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">main : main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">	gcc -o main main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br></pre></td></tr></table></figure>
-<p>这条规则的目标是 main， main.o、 input.o 和 calcu.o 是生成 main 的依赖文件，如果要更新目标 main，就必须先更新它的所有依赖文件，如果依赖文件中的任何一个有更新，那么目标也必须更新，“更新”就是执行一遍规则中的命令列表。</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">main: main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">  gcc -o main main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">main<span class="selector-class">.o</span>: main.c</span><br><span class="line">  gcc -c main.c</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-class">.o</span>: <span class="selector-tag">input</span>.c</span><br><span class="line">  gcc -c <span class="selector-tag">input</span>.c</span><br><span class="line">calcu<span class="selector-class">.o</span>: calcu.c</span><br><span class="line">  gcc -c calcu.c</span><br><span class="line"> </span><br><span class="line">clean:</span><br><span class="line">  rm *.o</span><br><span class="line">  rm main</span><br></pre></td></tr></table></figure>
-<p>上述代码中一共有 5 条规则，1-2 行为第一条规则， 3-4 行为第二条规则， 5-6 行为第三条规则， 7-8 行为第四条规则， 10-12 为第五条规则， make 命令在执行这个 Makefile 的时候其执<br>行步骤如下：<br>首先更新第一条规则中的 main，第一条规则的目标成为默认目标，只要默认目标更新了那么就认为 Makefile 的工作，完成了整个 Makefile 就是为了完成这个工作。在第一次编译的时候由于 main 还不存在，因此第一条规则会执行，第一条规则依赖于文件 main.o、 input.o 和 calcu.o这个三个.o 文件，这三个.o 文件目前还都没有，因此必须先更新这三个文件。 make 会查找以这三个.o 文件为目标的规则并执行。以 main.o 为例，发现更新 main.o 的是第二条规则，因此会执行第二条规则，第二条规则里面的命令为“gcc –c main.c”，这行命令很熟悉了吧，就是不链接编译 main.c，生成 main.o，其它两个.o 文件同理。最后一个规则目标是 clean，它没有依赖文件，因此会默认为依赖文件都是最新的，所以其对应的命令不会执行，当我们想要执行 clean 的话可以直接使用命令“make clean”，执行以后就会删除当前目录下所有的.o 文件以及 main，因此clean 的功能就是完成工程的清理</p>
-<h2 id="Makefile变量"><a href="#Makefile变量" class="headerlink" title="Makefile变量"></a>Makefile变量</h2><p><strong><em>不像 C 语言中的变量有 int、 char等各种类型， Makefile 中的变量都是字符串！</em></strong></p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Makefile 变量的使用</span></span><br><span class="line">objects = main.o input.o calcu.o</span><br><span class="line"><span class="section">main: <span class="variable">$(objects)</span></span></span><br><span class="line">  gcc -o main <span class="variable">$(objects)</span></span><br></pre></td></tr></table></figure>
-<p>第 1 行是注释， Makefile 中可以写注释，注释开头要用符号“#”，不能用 C 语言中的“//”或者“/**/”！第 2 行我们定义了一个变量 objects，并且给这个变量进行了赋值，其值为字符串“main.o input.o calcu.o”，第 3 和 4 行使用到了变量 objects，Makefile 中变量的引用方法是“$(变量名)”，比如本例中的“$(objects)”就是使用变量 objects。</p>
-<h3 id="赋值符"><a href="#赋值符" class="headerlink" title="赋值符"></a>赋值符</h3><p>1.赋值符“=”</p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">name = zou</span><br><span class="line">curname = <span class="variable">$(name)</span></span><br><span class="line">name = zouding</span><br><span class="line"></span><br><span class="line"><span class="section">print:</span></span><br><span class="line">  @echo curname: <span class="variable">$(curname)</span></span><br></pre></td></tr></table></figure>
-<p>在 Makefile 要输出一串字符的话使用“echo”，就和 C 语言中的“printf”一样，“echo”前面加了个“@”符号，因为 Make 在执行的过程中会自动输出命令执行过程，在命令前面加上“@”的话就不会输出命令执行过程<br>print为zouding，“=”变量的真实值取决于它所引用的变量的最后一次有效值</p>
-<p>2.赋值符“：=“</p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">name = zou</span><br><span class="line">curname := <span class="variable">$(name)</span></span><br><span class="line">name = zouding</span><br><span class="line"></span><br><span class="line"><span class="section">print:</span></span><br><span class="line">  @echo curname: <span class="variable">$(curname)</span></span><br></pre></td></tr></table></figure>
-<p>print的为zou，”:=”只能使用前面赋的值</p>
-<p>3.赋值符”？=“<br><code>curname?=zouding</code><br>上述代码的意思就是，如果变量 curname 前面没有被赋值，那么此变量就是“zouding”，如果前面已经赋过值了，那么就使用前面赋的值。</p>
-<p>4.追加变量”+=“</p>
-<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">objects = main.o inpiut.o</span><br><span class="line">objects += calcu.o</span><br></pre></td></tr></table></figure>
-<p>一开始变量 objects 的值为“main.o input.o”，后面我们给他追加了一个“calcu.o”，因此变量 objects 变成了<br>“main.o input.o calcu.o”，这个就是变量的追加。</p>
-<h2 id="自动化变量"><a href="#自动化变量" class="headerlink" title="自动化变量"></a>自动化变量</h2><p>所谓自动化变量就是这种变量会把模式中所定义的一系列的文件自动的挨个取出，直至所有的符合模式的文件都取完，自动化变量只应该出现在规则的命令中，常用的自动化变量如表 </p>
-<table>
-<thead>
-<tr>
-<th>自动化变量</th>
-<th align="left">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>$@</td>
-<td align="left">规则中的目标集合，在模式规则中，如果有多个目标的话，“$@”表示匹配模式中定义的目标集合。</td>
-</tr>
-<tr>
-<td>$%</td>
-<td align="left">当目标是函数库的时候表示规则中的目标成员名，如果目标不是函数库文件，那么其值为空。</td>
-</tr>
-<tr>
-<td>$&lt;</td>
-<td align="left">依赖文件集合中的第一个文件，如果依赖文件是以模式(即“%” )定义的，那么“$&lt;”就是符合模式的一系列的文件集合。</td>
-</tr>
-<tr>
-<td>$?</td>
-<td align="left">所有比目标新的依赖目标集合，以空格分开。</td>
-</tr>
-<tr>
-<td>$^</td>
-<td align="left">所有依赖文件的集合，使用空格分开，如果在依赖文件中有多个重复的文件，“$^”会去除重复的依赖文件，值保留一份。</td>
-</tr>
-<tr>
-<td>$+</td>
-<td align="left">和“$^”类似，但是当依赖文件存在重复的话不会去除重复的依赖文件。</td>
-</tr>
-<tr>
-<td>$*</td>
-<td align="left">这个变量表示目标模式中”%”及其之前的部分，如果目标是 test/a.test.c，目标模式为 a.%.c，那么“$*”就是 test/a.test。</td>
-</tr>
-</tbody></table>
-<p>常用的三种：<strong><em>$@、 $&lt;和$^</em></strong></p>
-<h2 id="模式规则"><a href="#模式规则" class="headerlink" title="模式规则"></a>模式规则</h2><p>模式规则中，至少在规则的目标定定义中要包涵“%”，否则就是一般规则，目标中的“%”表示对文件名的匹配，“%”表示长度任意的非空字符串，比如“%.c”就是所有的以.c 结尾的文件</p>
-<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">objects</span> = <span class="string">main.o input.o calcu.o</span></span><br><span class="line"><span class="attr">main</span>: <span class="string">$(objects)</span></span><br><span class="line">	<span class="attr">gcc</span> <span class="string">-o main $(objects)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">%.o</span> : <span class="string">%.c</span></span><br><span class="line">	<span class="attr">gcc</span> <span class="string">-c $&lt;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">clean</span>:<span class="string"></span></span><br><span class="line">	<span class="attr">rm</span> <span class="string">*.o</span></span><br><span class="line">	<span class="attr">rm</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
-<p>上诉代码可代替2.1中的代码，更加精简</p>
-<h2 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h2><p>Makefile 中的函数是已经定义好的，我们直接使用，不支持我们自定义函数。<br>函数的用法如下：<br><code>$(函数名 参数集合）</code></p>
-<p>1、函数 subst<br>函数 subst 用来完成字符串替换，调用形式如下：<br><code>$(subst &lt;from&gt;,&lt;to&gt;,&lt;text&gt;)</code><br>此函数的功能是将字符串<text>中的<from>内容替换为<to>，函数返回被替换以后的字符串，比如如下示例：<br><code>$(subst zou,ZZK,my name is zzk)</code><br>把字符串“my name is zzk”中的“zzk”替换为“zou”，替换完成以后的字符串为“my name is zou”。</p>
-<p>2、函数 patsubst<br>函数 patsubst 用来完成模式字符串替换，使用方法如下：<br><code>$(patsubst &lt;pattern&gt;,&lt;replacement&gt;,&lt;text&gt;)</code><br>此函数查找字符串<text>中的单词是否符合模式<pattern>，如果匹配就用<replacement>来替换掉， <pattern>可以使用包括通配符“%”，表示任意长度的字符串，函数返回值就是替换后<br>的字符串。如果<replacement>中也包涵“%”，那么<replacement>中的“%”将是<pattern>中的那个“%”所代表的字符串，比如：<br><code>$(patsubst %.c,%.o,a.c b.c c.c)</code><br>将字符串“a.c b.c c.c”中的所有符合“%.c”的字符串，替换为“%.o”，替换完成以后的字符串为“a.o b.o c.o”。</p>
-<p>符串为“a.o b.o c.o”。<br>3、函数 dir<br>函数 dir 用来获取目录，使用方法如下：<br><code>$(dir &lt;names…&gt;)</code><br>此函数用来从文件名序列<names>中提取出目录部分，返回值是文件名序列<names>的目录部分，比如：<br><code>$(dir &lt;/src/a.c&gt;)</code><br>提取文件“/src/a.c”的目录部分，也就是“/src”。</p>
-<p>4、函数 notdir<br>函数 notdir 看名字就是知道去除文件中的目录部分，也就是提取文件名，用法如下：<br><code>$(notdir &lt;names…&gt;)</code><br>此函数用与从文件名序列<names>中提取出文件名非目录部分，比如：<br><code>$(notdir &lt;/src/a.c&gt;)</code><br>提取文件“/src/a.c”中的非目录部分，也就是文件名“a.c”。</p>
-<p>5、函数 foreach<br>foreach 函数用来完成循环，用法如下：<br><code>$(foreach &lt;var&gt;, &lt;list&gt;,&lt;text&gt;)</code><br>此函数的意思就是把参数list中的单词逐一取出来放到参数var中，然后再执行text所包含的表达式。每次text都会返回一个字符串，循环的过程中， text中所包含的每个字符串会以空格隔开，最后当整个循环结束时，<text>所返回的每个字符串所组成的整个字符串将会是函数 foreach 函数的返回值。</p>
-]]></content>
-      <categories>
-        <category>Makefile基本语法</category>
-      </categories>
-      <tags>
-        <tag>Makefile</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>lua基本语法</title>
     <url>/2020/06/11/lua%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<h1 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h1><h2 id="单行注释"><a href="#单行注释" class="headerlink" title="单行注释"></a>单行注释</h2><p>两个减号是单行注释<br><code>--</code></p>
@@ -291,92 +413,6 @@
       </tags>
   </entry>
   <entry>
-    <title>lua数据类型</title>
-    <url>/2020/06/11/lua%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
-    <content><![CDATA[<p>Lua 中有 8 个基本类型分别为：nil、boolean、number、string、userdata、function、thread 和 table。</p>
-<table>
-<thead>
-<tr>
-<th>数据类型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>nil</td>
-<td>这个最简单，只有值nil属于该类，表示一个无效值（在条件表达式中相当于false）。</td>
-</tr>
-<tr>
-<td>boolean</td>
-<td>包含两个值：false和true。</td>
-</tr>
-<tr>
-<td>number</td>
-<td>表示双精度类型的实浮点数</td>
-</tr>
-<tr>
-<td>string</td>
-<td>字符串由一对双引号或单引号来表示</td>
-</tr>
-<tr>
-<td>function</td>
-<td>由 C 或 Lua 编写的函数</td>
-</tr>
-<tr>
-<td>userdata</td>
-<td>表示任意存储在变量中的C数据结构</td>
-</tr>
-<tr>
-<td>thread</td>
-<td>表示执行的独立线路，用于执行协同程序</td>
-</tr>
-<tr>
-<td>table</td>
-<td>Lua 中的表（table）其实是一个”关联数组”（associative arrays），数组的索引可以是数字、字符串或表类型。在 Lua 里，table 的创建是通过”构造表达式”来完成，最简单构造表达式是{}，用来创建一个空表。</td>
-</tr>
-</tbody></table>
-<a id="more"></a>
-<figure class="highlight livescript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span><span class="function"><span class="params">(type(<span class="string">"Hello world"</span>))</span>      --&gt;</span> string</span><br><span class="line"><span class="built_in">print</span><span class="function"><span class="params">(type(<span class="number">10.4</span>*<span class="number">3</span>))</span>             --&gt;</span> number</span><br><span class="line"><span class="built_in">print</span><span class="function"><span class="params">(type(<span class="built_in">print</span>))</span>              --&gt;</span> <span class="keyword">function</span></span><br><span class="line"><span class="built_in">print</span><span class="function"><span class="params">(type(type))</span>               --&gt;</span> <span class="keyword">function</span></span><br><span class="line"><span class="built_in">print</span><span class="function"><span class="params">(type(<span class="literal">true</span>))</span>               --&gt;</span> boolean</span><br><span class="line"><span class="built_in">print</span><span class="function"><span class="params">(type(nil))</span>                --&gt;</span> nil</span><br><span class="line"><span class="built_in">print</span><span class="function"><span class="params">(type(type(X)))</span>            --&gt;</span> string</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="nil"><a href="#nil" class="headerlink" title="nil"></a>nil</h2><p>nil 类型表示一种没有任何有效值，它只有一个值 – nil，例如打印一个没有赋值的变量，便会输出一个 nil 值：</p>
-<figure class="highlight lisp"><table><tr><td class="code"><pre><span class="line">&gt; print(<span class="name">type</span>(<span class="name">a</span>))</span><br><span class="line"><span class="literal">nil</span></span><br></pre></td></tr></table></figure>
-<p>对于全局变量和 table，nil 还有一个”删除”作用，给全局变量或者 table 表里的变量赋一个 nil 值，等同于把它们删掉</p>
-<p>nil 作比较时应该加上双引号 “：</p>
-<figure class="highlight elm"><table><tr><td class="code"><pre><span class="line">&gt; <span class="keyword">type</span>(<span class="type">X</span>)</span><br><span class="line"><span class="title">nil</span></span><br><span class="line">&gt; <span class="keyword">type</span>(<span class="type">X</span>)==nil</span><br><span class="line"><span class="title">false</span></span><br><span class="line">&gt; <span class="keyword">type</span>(<span class="type">X</span>)=="nil"</span><br><span class="line"><span class="title">true</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="boolean"><a href="#boolean" class="headerlink" title="boolean"></a>boolean</h2><p>boolean 类型只有两个可选值：true（真） 和 false（假），Lua 把 false 和 nil 看作是 false，其他的都为 true，<strong><em>数字 0 也是 true</em></strong></p>
-<hr>
-<h2 id="number（数字）"><a href="#number（数字）" class="headerlink" title="number（数字）"></a>number（数字）</h2><p>Lua 默认只有一种 number 类型 – double（双精度）类型（默认类型可以修改 luaconf.h 里的定义），以下几种写法都被看作是 number 类型</p>
-<hr>
-<h2 id="string（字符串）"><a href="#string（字符串）" class="headerlink" title="string（字符串）"></a>string（字符串）</h2><p>字符串由一对双引号或单引号来表示。</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">string1</span> = <span class="string">"this is string1"</span></span><br><span class="line"><span class="attr">string2</span> = <span class="string">'this is string2'</span></span><br></pre></td></tr></table></figure>
-<p>也可以用 2 个方括号 “[[]]” 来表示”一块”字符串。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">html = [[</span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.runoob.com/"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line">]]</span><br><span class="line">print(html)</span><br></pre></td></tr></table></figure>
-
-<p>在对一个数字字符串上进行算术操作时，Lua会尝试将这个数字字符串转成一个数字</p>
-<figure class="highlight isbl"><table><tr><td class="code"><pre><span class="line">&gt; <span class="function"><span class="title">print</span>(<span class="string">"2"</span> + <span class="number">6</span>)</span></span><br><span class="line"><span class="number">8.0</span></span><br><span class="line">&gt; <span class="function"><span class="title">print</span>(<span class="string">"2"</span> + <span class="string">"6"</span>)</span></span><br><span class="line"><span class="number">8.0</span></span><br><span class="line">&gt; <span class="function"><span class="title">print</span>(<span class="string">"2 + 6"</span>)</span></span><br><span class="line"><span class="number">2</span> + <span class="number">6</span></span><br><span class="line">&gt; <span class="function"><span class="title">print</span>(<span class="string">"-2e2"</span> * <span class="string">"6"</span>)</span></span><br><span class="line">-<span class="number">1200.0</span></span><br></pre></td></tr></table></figure>
-<p>字符串连接使用的是 ..  如</p>
-<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">&gt; <span class="builtin-name">print</span>(<span class="string">"a"</span> <span class="built_in">..</span> <span class="string">'b'</span>)</span><br><span class="line">ab</span><br><span class="line">&gt; <span class="builtin-name">print</span>(157 <span class="built_in">..</span> 428)</span><br><span class="line">157428</span><br></pre></td></tr></table></figure>
-
-<p>使用 # 来计算字符串的长度，放在字符串前面</p>
-<figure class="highlight plain"><figcaption><span>len </span></figcaption><table><tr><td class="code"><pre><span class="line">&gt; print(#len)</span><br><span class="line">14</span><br><span class="line">&gt; print(#&quot;www.runoob.com&quot;)</span><br><span class="line">14</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="table表"><a href="#table表" class="headerlink" title="table表"></a>table表</h2><p>在 Lua 里，table 的创建是通过”构造表达式”来完成，最简单构造表达式是{}，用来创建一个空表。也可以在表里添加一些数据，直接初始化表:<br><code>local tbl1 = {}  --创建一个空表</code><br><code>local tbl2 = {&quot;apple&quot;, &quot;pear&quot;, &quot;orange&quot;, &quot;grape&quot;}  --初始化表</code></p>
-<p>不同于其他语言的数组把 0 作为数组的初始索引，在 Lua 里表的默认初始索引一般以 1 开始。Lua 中的表（table）其实是一个”关联数组”（associative arrays），数组的索引可以是数字或者是字符串。</p>
-<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">a = &#123;&#125;</span><br><span class="line">a[<span class="string">"key"</span>] = <span class="string">"value"</span></span><br><span class="line"><span class="type">key</span> = <span class="number">10</span></span><br><span class="line">a[<span class="type">key</span>] = <span class="number">22</span></span><br><span class="line">a[<span class="type">key</span>] = a[<span class="type">key</span>] + <span class="number">11</span></span><br><span class="line">for k, v in pairs(a) do</span><br><span class="line">    print(k .. <span class="string">" : "</span> .. v)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">key :</span> <span class="string">value</span></span><br><span class="line"><span class="attr">10 :</span> <span class="number">33</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>lua语言</category>
-      </categories>
-      <tags>
-        <tag>lua</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Lua循环</title>
     <url>/2020/06/11/lua%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5/</url>
     <content><![CDATA[<h1 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h1><h2 id="数值for循环"><a href="#数值for循环" class="headerlink" title="数值for循环"></a>数值for循环</h2><figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> var=<span class="built_in">exp1</span>,<span class="built_in">exp2</span>,exp3 <span class="built_in">do</span>  </span><br><span class="line">    &lt;执行体&gt;  </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
@@ -413,230 +449,6 @@
 
 <p>if…elesif…else</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">if(</span> <span class="string">布尔表达式</span> <span class="number">1</span><span class="string">)</span></span><br><span class="line"><span class="string">then</span></span><br><span class="line">   <span class="string">--[</span> <span class="string">在布尔表达式</span> <span class="number">1</span> <span class="string">为</span> <span class="literal">true</span> <span class="string">时执行该语句块</span> <span class="string">--]</span></span><br><span class="line"></span><br><span class="line"><span class="string">elseif(</span> <span class="string">布尔表达式</span> <span class="number">2</span><span class="string">)</span></span><br><span class="line"><span class="string">then</span></span><br><span class="line">   <span class="string">--[</span> <span class="string">在布尔表达式</span> <span class="number">2</span> <span class="string">为</span> <span class="literal">true</span> <span class="string">时执行该语句块</span> <span class="string">--]</span></span><br><span class="line"></span><br><span class="line"><span class="string">elseif(</span> <span class="string">布尔表达式</span> <span class="number">3</span><span class="string">)</span></span><br><span class="line"><span class="string">then</span></span><br><span class="line">   <span class="string">--[</span> <span class="string">在布尔表达式</span> <span class="number">3</span> <span class="string">为</span> <span class="literal">true</span> <span class="string">时执行该语句块</span> <span class="string">--]</span></span><br><span class="line"><span class="string">else</span> </span><br><span class="line">   <span class="string">--[</span> <span class="string">如果以上布尔表达式都不为</span> <span class="literal">true</span> <span class="string">则执行该语句块</span> <span class="string">--]</span></span><br><span class="line"><span class="string">end</span></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>lua语言</category>
-      </categories>
-      <tags>
-        <tag>lua</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>lua函数</title>
-    <url>/2020/06/12/Lua%E5%87%BD%E6%95%B0/</url>
-    <content><![CDATA[<p>函数定义</p>
-<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line">optional_function_scope <span class="function"><span class="keyword">function</span> <span class="title">function_name</span><span class="params">( argument1, argument2, argument3<span class="rest_arg">..., argumentn</span>)</span></span></span><br><span class="line"><span class="function">    <span class="title">function_body</span></span></span><br><span class="line"><span class="function">    <span class="title">return</span> <span class="title">result_params_comma_separated</span></span></span><br><span class="line"><span class="function"><span class="title">end</span></span></span><br></pre></td></tr></table></figure>
-
-<a id="more"></a>
-
-<p>解析：</p>
-<ul>
-<li>optional_function_scope: 该参数是可选的制定函数是全局函数还是局部函数，未设置该参数默认为全局函数，如果你需要设置函数为局部函数需要使用关键字 local。</li>
-<li>function_name: 指定函数名称。</li>
-<li>argument1, argument2, argument3…, argumentn: 函数参数，多个参数以逗号隔开，函数也可以不带参数。</li>
-<li>function_body: 函数体，函数中需要执行的代码语句块。</li>
-<li>result_params_comma_separated: 函数返回值，Lua语言函数可以返回多个值，每个值以逗号隔开。</li>
-</ul>
-<hr>
-<h2 id="多返回值"><a href="#多返回值" class="headerlink" title="多返回值"></a>多返回值</h2><p>Lua函数可以返回多个结果值，在return后列出要返回的值的列表即可返回多值</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">maximum</span> <span class="params">(a)</span></span></span><br><span class="line">    <span class="keyword">local</span> mi = <span class="number">1</span>             <span class="comment">-- 最大值索引</span></span><br><span class="line">    <span class="keyword">local</span> m = a[mi]          <span class="comment">-- 最大值</span></span><br><span class="line">    <span class="keyword">for</span> i,val <span class="keyword">in</span> <span class="built_in">ipairs</span>(a) <span class="keyword">do</span></span><br><span class="line">       <span class="keyword">if</span> val &gt; m <span class="keyword">then</span></span><br><span class="line">           mi = i</span><br><span class="line">           m = val</span><br><span class="line">       <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> m, mi</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(maximum(&#123;<span class="number">8</span>,<span class="number">10</span>,<span class="number">23</span>,<span class="number">12</span>,<span class="number">5</span>&#125;))</span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line"><span class="number">23</span> <span class="number">3</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h2><p>Lua 函数可以接受可变数目的参数，和 C 语言类似，在函数参数列表中使用三点 … 表示函数有可变的参数</p>
-<figure class="highlight nimrod"><table><tr><td class="code"><pre><span class="line">function add(...)  </span><br><span class="line">local s = <span class="number">0</span>  </span><br><span class="line">  <span class="keyword">for</span> i, v <span class="keyword">in</span> ipairs<span class="meta">&#123;...&#125;</span> <span class="keyword">do</span>   --&gt; <span class="meta">&#123;...&#125;</span> 表示一个由所有变长参数构成的数组  </span><br><span class="line">    s = s + v  </span><br><span class="line">  <span class="keyword">end</span>  </span><br><span class="line">  <span class="keyword">return</span> s  </span><br><span class="line"><span class="keyword">end</span>  </span><br><span class="line">print(add(<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>))  ---&gt;<span class="number">25</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight nimrod"><table><tr><td class="code"><pre><span class="line">function average(...)</span><br><span class="line">   <span class="literal">result</span> = <span class="number">0</span></span><br><span class="line">   local arg=<span class="meta">&#123;...&#125;</span>    --&gt; arg 为一个表，局部变量</span><br><span class="line">   <span class="keyword">for</span> i,v <span class="keyword">in</span> ipairs(arg) <span class="keyword">do</span></span><br><span class="line">      <span class="literal">result</span> = <span class="literal">result</span> + v</span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   print(<span class="string">"总共传入 "</span> .. <span class="comment">#arg .. " 个数")</span></span><br><span class="line">   <span class="keyword">return</span> <span class="literal">result</span>/<span class="comment">#arg</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">"平均值为"</span>,average(<span class="number">10</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>))</span><br></pre></td></tr></table></figure>
-
-
-<p>有时候我们可能需要几个固定参数加上可变参数，固定参数必须放在变长参数之前:</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fwrite</span><span class="params">(fmt, ...)</span></span>  <span class="comment">---&gt; 固定的参数fmt</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">io</span>.<span class="built_in">write</span>(<span class="built_in">string</span>.<span class="built_in">format</span>(fmt, ...))    </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">fwrite(<span class="string">"runoob\n"</span>)       <span class="comment">---&gt;fmt = "runoob", 没有变长参数。  </span></span><br><span class="line">fwrite(<span class="string">"%d%d\n"</span>, <span class="number">1</span>, <span class="number">2</span>)   <span class="comment">---&gt;fmt = "%d%d", 变长参数为 1 和 2</span></span><br><span class="line"></span><br><span class="line">输出结果：</span><br><span class="line">runoob</span><br><span class="line"><span class="number">12</span></span><br></pre></td></tr></table></figure>
-
-<p>通常在遍历变长参数的时候只需要使用 {…}，然而变长参数可能会包含一些 nil，那么就可以用 select 函数来访问变长参数了：select(‘#’, …) 或者 select(n, …)</p>
-<p>select(‘#’, …) 返回可变参数的长度<br>select(n, …) 用于返回 n 到 select(‘#’,…) 的参数</p>
-<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">do</span>  </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(<span class="rest_arg">...)  </span></span></span></span><br><span class="line"><span class="function"><span class="params"><span class="rest_arg">        for</span> i = 1, select(<span class="string">'#'</span>, <span class="rest_arg">...) do</span>  --&gt;获取参数总数</span></span></span><br><span class="line"><span class="function"><span class="params">            local arg = select(i, <span class="rest_arg">...); --&gt;读取参数</span></span></span></span><br><span class="line"><span class="function"><span class="params"><span class="rest_arg">            print</span>(<span class="string">"arg"</span>, arg)</span></span>;  </span><br><span class="line">        end  </span><br><span class="line">    end  </span><br><span class="line"> </span><br><span class="line">    foo(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>);  </span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>lua语言</category>
-      </categories>
-      <tags>
-        <tag>lua</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>c语言中对可变参数列表的简单理解</title>
-    <url>/2020/06/12/c%E8%AF%AD%E8%A8%80%E5%8F%AF%E5%8F%98%E6%95%B0%E7%9B%AE%E5%8F%82%E6%95%B0/</url>
-    <content><![CDATA[<p>C中变长实参头文件stdarg.h提供了一个数据类型va-list和三个宏（va-start、va-arg和va-end），用它们在被调用函数不知道参数个数和类型时对可变参数表进行测试，从而为访问可变参数提供了方便且有效的方法。va-list是一个char类型的指针，当被调用函数使用一个可变参数时，它声明一个类型为va-list的变量，该变量用来指向va-arg和va-end所需信息的位置。下面给出va_list、va-start、va-arg和va-end在C中的源码：<br><code>typedef char *  va_list;</code><br><code>#define va_start(ap,v)  ( ap = (va_list)&amp;v + _INTSIZEOF(v) )   //得到可变参数中第一个参数的首地址</code><br><code>#define va_arg(ap,type)    ( *(type *)((ap += _INTSIZEOF(type)) - _INTSIZEOF(type)) )    //将参数转换成需要的类型，并使ap指向下一个参数</code><br><code>#define va_end(ap)      ( ap = (va_list)0 )//功能就是把指针ap赋值为0，使它不指向内存的变量</code></p>
-<a id="more"></a>
-<hr>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdarg.h&gt;</span></span></span><br><span class="line"> <span class="comment">/*函数sum中首先定义了可变参数表指针vap，而后通过va_start ( vap, n )取得了参数表首地址（赋值给了vap），</span></span><br><span class="line"><span class="comment"> 其后的for循环则用来遍历可变参数表。*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> n,...)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i , sum = <span class="number">0</span>;</span><br><span class="line">	va_list vap;  <span class="comment">//声明va_list变量</span></span><br><span class="line">	va_start(vap , n);     <span class="comment">//指向可变参数表中的第一个参数</span></span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span> ; i &lt; n ; ++i)</span><br><span class="line">		sum += va_arg(vap , <span class="keyword">int</span>);     <span class="comment">//取出可变参数表中的参数，并修改参数指针vap使其增加以指向表中下一个参数</span></span><br><span class="line">	va_end(vap);    <span class="comment">//把指针vap赋值为0</span></span><br><span class="line">	<span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> m = sum(<span class="number">3</span> , <span class="number">45</span> , <span class="number">89</span> , <span class="number">72</span>);</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;m&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>函数原型声明，至少需要一个确定的参数，注意括号内的省略号</li>
-<li>在调用参数表之前，定义一个 va_list 类型的变量，(假设va_list 类型变量被定义为ap)；</li>
-<li>然后应该对ap进行初始化，让它指向可变参数表里面的第一个参数，这是通过 va_start 来实现的，第一个参数是 ap 本身，第二个参数是在变参表前面紧挨着的一个变量,即“…”之前的那个参数；</li>
-<li>然后是获取参数，调用va_arg，它的第一个参数是ap，第二个参数是要获取的参数的指定类型，然后返回这个指定类型的值，并且把ap的位置指向变参表的下一个变量位置；</li>
-<li>获取所有的参数之后，我们有必要将这个ap指针关掉，以免发生危险，方法是调用 va_end，他是输入的参数ap置为NULL，应该养成获取完参数表之后关闭指针的习惯。通常va_start和va_end是成对出现。<strong>va-end必须在va-arg读完所有参数后再调用</strong></li>
-</ul>
-]]></content>
-      <categories>
-        <category>C语言</category>
-      </categories>
-      <tags>
-        <tag>C语言</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Lua迭代器</title>
-    <url>/2020/06/12/%E8%BF%AD%E4%BB%A3%E5%99%A8/</url>
-    <content><![CDATA[<h1 id="ipairs-和pairs-的区别"><a href="#ipairs-和pairs-的区别" class="headerlink" title="ipairs()和pairs()的区别"></a>ipairs()和pairs()的区别</h1><p>pairs会遍历表中所有的key-value值，而ipairs会根据key的数值从1开始加1递增遍历对应的table[i]值，直到出现第一个不是按1递增的数值时候退出。</p>
-<p>下面我们以例子说明一下吧</p>
-<p>stars = {[1] = “Sun”, [2] = “Moon”, [5] = ‘Earth’}</p>
-<p>for i, v in pairs(stars) do</p>
-<p>   print(i, v)</p>
-<p>end</p>
-<a id="more"></a>
-
-<p>使用pairs()将会遍历表中所有的数据，输出结果是：</p>
-<p>1    Sun<br>2    Moon<br>5    Earth</p>
-<p>如果使用ipairs()的话，</p>
-<p>for i, v in ipairs(stars) do</p>
-<p>   print(i, v)</p>
-<p>end</p>
-<p>当i的值遍历到第三个元素时，i的值为5，此时i并不是上一个次i值（2）的+1递增，所以遍历结束，结果则会是：</p>
-<p>1    Sun<br>2    Moon</p>
-<p>ipairs()和pairs()的区别就是这么简单。</p>
-<h1 id="泛型-for-迭代器"><a href="#泛型-for-迭代器" class="headerlink" title="泛型 for 迭代器"></a>泛型 for 迭代器</h1><p>泛型 for 在自己内部保存迭代函数，实际上它保存三个值：迭代函数、状态常量、控制变量。<br>泛型 for 迭代器提供了集合的 key/value 对，语法格式如下：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">pairs</span>(t) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(k, v)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<!--more-->
-
-
-<p>上面代码中，k, v为变量列表；pairs(t)为表达式列表。</p>
-<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">array</span> = &#123;"Google", "Runoob"&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for key</span>,<span class="keyword">value</span> <span class="keyword">in</span> ipairs(<span class="keyword">array</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   print(key, <span class="keyword">value</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">执行结果：</span><br><span class="line"><span class="number">1</span>  Google</span><br><span class="line"><span class="number">2</span>  Runoob</span><br></pre></td></tr></table></figure>
-
-<p>Lua 默认提供的迭代函数 ipairs。</p>
-<p>泛型 for 的执行过程：</p>
-<ul>
-<li>首先，初始化，计算 in 后面表达式的值，表达式应该返回泛型 for 需要的三个值：迭代函数、状态常量、控制变量；与多值赋值一样，如果表达式返回的结果个数不足三个会自动用 nil 补足，多出部分会被忽略。</li>
-<li>第二，将状态常量和控制变量作为参数调用迭代函数（注意：对于 for 结构来说，状态常量没有用处，仅仅在初始化时获取他的值并传递给迭代函数）。</li>
-<li>第三，将迭代函数返回的值赋给变量列表。</li>
-<li>第四，如果返回的第一个值为nil循环结束，否则执行循环体。</li>
-<li>第五，回到第二步再次调用迭代函数</li>
-</ul>
-<h1 id="无状态的迭代器"><a href="#无状态的迭代器" class="headerlink" title="无状态的迭代器"></a>无状态的迭代器</h1><p>无状态的迭代器是指不保留任何状态的迭代器，因此在循环中我们可以利用无状态迭代器避免创建闭包花费额外的代价。</p>
-<p>每一次迭代，迭代函数都是用两个变量（状态常量和控制变量）的值作为参数被调用，一个无状态的迭代器只利用这两个值可以获取下一个元素。这种无状态迭代器的典型的简单的例子是 ipairs，它遍历数组的每一个元素。</p>
-<p>以下实例我们使用了一个简单的函数来实现迭代器，实现 数字 n 的平方：</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">--求数字<span class="built_in">j</span>到N的平方</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">square</span><span class="params">(N, j)</span></span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">j</span> &lt;= N</span><br><span class="line">    then</span><br><span class="line">        <span class="keyword">return</span>  <span class="built_in">j</span>+<span class="number">1</span> ,  <span class="built_in">j</span>*<span class="built_in">j</span> --  这里的<span class="built_in">j</span>+<span class="number">1</span> 是为了传给<span class="keyword">for</span>的<span class="built_in">i</span>值，类似++<span class="built_in">i</span>，否则<span class="built_in">i</span>一直不变，死循环</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">--         迭代器函数、恒定状态、控制变量的初值</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>,n in square ,     <span class="number">3</span> ,    <span class="number">1</span></span><br><span class="line">do</span><br><span class="line">    --这里的<span class="built_in">i</span>,n是square返回的</span><br><span class="line">    print(<span class="built_in">i</span><span class="number">-1</span> ,<span class="string">"的平方是"</span> , n)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">iter</span> <span class="params">(a, i)</span></span></span><br><span class="line">    <span class="built_in">i</span> = <span class="built_in">i</span> + <span class="number">1</span></span><br><span class="line">    local v = a[<span class="built_in">i</span>]</span><br><span class="line">    <span class="keyword">if</span> v then</span><br><span class="line">       <span class="keyword">return</span> <span class="built_in">i</span>, v</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ipairs</span> <span class="params">(a)</span></span></span><br><span class="line">    <span class="keyword">return</span> iter, a, <span class="number">0</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>当 Lua 调用 ipairs(a) 开始循环时，他获取三个值：迭代函数 iter、状态常量 a、控制变量初始值 0；然后 Lua 调用 iter(a,0) 返回 1, a[1]（除非 a[1]=nil）；第二次迭代调用 iter(a,1) 返回 2, a[2]……直到第一个 nil 元素。</p>
-<h1 id="多状态的迭代器"><a href="#多状态的迭代器" class="headerlink" title="多状态的迭代器"></a>多状态的迭代器</h1><p>很多情况下，迭代器需要保存多个状态信息而不是简单的状态常量和控制变量，最简单的方法是使用闭包，还有一种方法就是将所有的状态信息封装到 table 内，将 table 作为迭代器的状态常量，因为这种情况下可以将所有的信息存放在 table 内，所以迭代函数通常不需要第二个参数。</p>
-<p>以下实例我们创建了自己的迭代器：</p>
-<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">array</span> = &#123;"Google", "Runoob"&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> elementIterator (collection)</span><br><span class="line">   <span class="keyword">local</span> <span class="keyword">index</span> = <span class="number">0</span></span><br><span class="line">   <span class="keyword">local</span> count = #collection</span><br><span class="line">   <span class="comment">-- 闭包函数</span></span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">function</span> ()</span><br><span class="line">      <span class="keyword">index</span> = <span class="keyword">index</span> + <span class="number">1</span></span><br><span class="line">      <span class="keyword">if</span> <span class="keyword">index</span> &lt;= count</span><br><span class="line">      <span class="keyword">then</span></span><br><span class="line">         <span class="comment">--  返回迭代器的当前元素</span></span><br><span class="line">         <span class="keyword">return</span> collection[<span class="keyword">index</span>]</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> element <span class="keyword">in</span> elementIterator(<span class="keyword">array</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   print(element)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">Google</span><br><span class="line">Runoob</span><br></pre></td></tr></table></figure>
-<p>以上实例中我们可以看到，elementIterator 内使用了闭包函数，实现计算集合大小并输出各个元素。</p>
-]]></content>
-      <categories>
-        <category>lua语言</category>
-      </categories>
-      <tags>
-        <tag>lua</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>表和元表</title>
-    <url>/2020/06/15/%E8%A1%A8/</url>
-    <content><![CDATA[<h1 id="表"><a href="#表" class="headerlink" title="表"></a>表</h1><p>table 是Lua的一种数据结构用来帮助我们创建不同的数据类型，如：数组、字典等。<br>Lua table使用关联型数组，你可以用任意类型的值来作数组的索引，但这个值不能是 nil。<br>Lua table 是不固定大小的，你可以根据自己需要进行扩容。</p>
-<h2 id="table-表-的构造"><a href="#table-表-的构造" class="headerlink" title="table(表)的构造"></a>table(表)的构造</h2><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 初始化表</span></span><br><span class="line">mytable = &#123;&#125;</span><br><span class="line"></span><br><span class="line">a=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;  <span class="comment">--索引默认为1，2，3</span></span><br><span class="line">a[<span class="string">"c"</span>]=<span class="string">"cc"</span>  <span class="comment">--a.c----&gt;cc</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 指定值</span></span><br><span class="line">mytable[<span class="number">1</span>]= <span class="string">"Lua"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 移除引用</span></span><br><span class="line">mytable = <span class="literal">nil</span></span><br><span class="line"><span class="comment">-- lua 垃圾回收会释放内存</span></span><br></pre></td></tr></table></figure>
-
-<a id="more"></a>
-
-<h2 id="Table-操作"><a href="#Table-操作" class="headerlink" title="Table 操作"></a>Table 操作</h2><ul>
-<li>table.concat (table [, sep [, start [, end]]]):<br>concat是concatenate(连锁, 连接)的缩写. table.concat()函数列出参数中指定table的数组部分从start位置到end位置的所有元素, 元素间以指定的分隔符(sep)隔开。<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">fruits = &#123;<span class="string">"banana"</span>,<span class="string">"orange"</span>,<span class="string">"apple"</span>&#125;</span><br><span class="line"><span class="comment">-- 返回 table 连接后的字符串</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"连接后的字符串 "</span>,<span class="built_in">table</span>.<span class="built_in">concat</span>(fruits))</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 指定连接字符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"连接后的字符串 "</span>,<span class="built_in">table</span>.<span class="built_in">concat</span>(fruits,<span class="string">", "</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 指定索引来连接 table</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"连接后的字符串 "</span>,<span class="built_in">table</span>.<span class="built_in">concat</span>(fruits,<span class="string">", "</span>, <span class="number">2</span>,<span class="number">3</span>))</span><br></pre></td></tr></table></figure></li>
-<li>table.insert (table, [pos,] value):<br>在table的数组部分指定位置(pos)插入值为value的一个元素. pos参数可选, 默认为数组部分末尾.</li>
-<li>table.maxn (table)<br>指定table中所有正数key值中最大的key值. 如果不存在key值为正数的元素, 则返回0。(Lua5.2之后该方法已经不存在了,本文使用了自定义函数实现)</li>
-<li>table.remove (table [, pos])<br>返回table数组部分位于pos位置的元素. 其后的元素会被前移. pos参数可选, 默认为table长度, 即从最后一个元素删起。</li>
-<li>table.sort (table [, comp])<br>对给定的table进行升序排序。</li>
-</ul>
-<h1 id="Lua-元表-Metatable"><a href="#Lua-元表-Metatable" class="headerlink" title="Lua 元表(Metatable)"></a>Lua 元表(Metatable)</h1><p>元表 (metatable) 的表现行为类似于 C++ 语言中的操作符重载，例如我们可以重载 “__add” 元方法 (metamethod)，来计算两个 Lua 数组的并集；或者重载 “__index”方法，来定义我们自己的 Hash 函数<br>在Lua table中我们可以访问对应的key来得到value值，但是却无法对两个table进行操作。因此Lua提供了元表，允许我们改变table的行为，每个行为关联了对应的元方法。Lua中的每个值都可以有一个元表。这个元表就是一个普通的Lua表，它用于原始值在特定操作下的行为。如果你想改变一个值在特定操作下的行为，你可以在它的元表中设置对应域。例如，使用元表我们可以定义Lua如何计算两个table的相加操作a+b。当Lua试图对两个表进行相加时，先检查两者之一是否有元表，之后检查是否有一个叫”__add”的字段，若找到，则调用对应的值。”__add “等即时字段，其对应的值（往往是一个函数或是table）就是”元方法”.提供了两个十分重要的用来处理元表的方法，如下：</p>
-<ul>
-<li><p>setmetatable(table,metatable): 对指定 table 设置元表(metatable)，如果元表(metatable)中存在 __metatable 键值，setmetatable 会失败。</p>
-</li>
-<li><p>getmetatable(table): 返回对象的元表(metatable)。</p>
-</li>
-</ul>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">mytable = &#123;&#125;                          <span class="comment">-- 普通表</span></span><br><span class="line">mymetatable = &#123;&#125;                      <span class="comment">-- 元表</span></span><br><span class="line"><span class="built_in">setmetatable</span>(mytable,mymetatable)     <span class="comment">-- 把 mymetatable 设为 mytable 的元表</span></span><br></pre></td></tr></table></figure>
-<p>以上代码也可以直接写成一行：<br><code>mytable = setmetatable({},{})</code><br>以下为返回对象元表：<br><code>getmetatable(mytable)                 -- 这回返回mymetatable</code></p>
-<h2 id="index-元方法"><a href="#index-元方法" class="headerlink" title="__index 元方法"></a>__index 元方法</h2><p>访问一个table的字段时，如果table有这个字段，直接返回对应的值；<br>当table没有这个字段，就会去找table的元表的__index,没有找到返回nil。<br>如果有的话分两种情况，__index可以是方法也可以是一个table</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">$ lua</span><br><span class="line">Lua <span class="number">5.3</span><span class="number">.0</span>  Copyright (C) <span class="number">1994</span><span class="number">-2015</span> Lua.org, PUC-Rio</span><br><span class="line">&gt; other = &#123; foo = <span class="number">3</span> &#125;</span><br><span class="line">&gt; t = setmetatable(&#123;&#125;, &#123; __index = other &#125;)</span><br><span class="line">&gt; t.foo</span><br><span class="line"><span class="number">3</span></span><br><span class="line">&gt; t.bar</span><br><span class="line">nil</span><br></pre></td></tr></table></figure>
-<p>如果<strong>index包含一个函数的话，Lua就会调用那个函数，table和键会作为参数传递给函数。<br>__index 元方法查看表中元素是否存在，如果不存在，返回结果为 nil；如果存在则由 \</strong>index 返回结果。</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">mytable = <span class="built_in">setmetatable</span>(&#123;key1 = <span class="string">"value1"</span>&#125;, &#123;</span><br><span class="line">  <span class="built_in">__index</span> = <span class="function"><span class="keyword">function</span><span class="params">(mytable, key)</span></span></span><br><span class="line">    <span class="keyword">if</span> key == <span class="string">"key2"</span> <span class="keyword">then</span></span><br><span class="line">      <span class="keyword">return</span> <span class="string">"metatablevalue"</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(mytable.key1,mytable.key2)</span><br></pre></td></tr></table></figure>
-<p>实例解析：</p>
-<ul>
-<li>mytable 表赋值为 {key1 = “value1”}。</li>
-<li>mytable 设置了元表，元方法为 __index。<br>在mytable表中查找 key1，如果找到，返回该元素，找不到则继续。</li>
-<li>在mytable表中查找 key2，如果找到，返回 metatablevalue，找不到则继续。</li>
-<li>判断元表有没有__index方法，如果__index方法是一个函数，则调用该函数。</li>
-<li>元方法中查看是否传入 “key2” 键的参数（mytable.key2已设置），如果传入 “key2” 参数返回 </li>
-</ul>
-<p>“metatablevalue”，否则返回 mytable 对应的键值。<br>我们可以将以上代码简单写成：<code>mytable = setmetatable({key1 = &quot;value1&quot;}, { __index = { key2 = &quot;metatablevalue&quot; } })</code></p>
-<h2 id="newindex-元方法"><a href="#newindex-元方法" class="headerlink" title="__newindex 元方法"></a>__newindex 元方法</h2><p>__newindex 元方法用来对表更新，__index则用来对表访问 。<br>当你给表的一个缺少的索引赋值，解释器就会查找__newindex 元方法：如果存在则调用这个函数而不进行赋值操作。<br>以下实例演示了 __newindex 元方法的应用：</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">mymetatable = &#123;&#125;</span><br><span class="line">mytable = setmetatable(&#123;key1 = <span class="string">"value1"</span>&#125;, &#123; __newindex = mymetatable &#125;)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mytable.key1)</span></span></span><br><span class="line"></span><br><span class="line">mytable<span class="selector-class">.newkey</span> = <span class="string">"新值2"</span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mytable.newkey,mymetatable.newkey)</span></span></span><br><span class="line"></span><br><span class="line">mytable<span class="selector-class">.key1</span> = <span class="string">"新值1"</span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mytable.key1,mymetatable.key1)</span></span></span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line">value1</span><br><span class="line">nil    新值<span class="number">2</span></span><br><span class="line">新值<span class="number">1</span>    nil</span><br></pre></td></tr></table></figure>
-<p>以上实例中表设置了元方法 __newindex，在对新索引键（newkey）赋值时（mytable.newkey = “新值2”），会调用元方法，而不进行赋值。而如果对已存在的索引键（key1），则会进行赋值，而不调用元方法 __newindex。</p>
-<h2 id="call-元方法"><a href="#call-元方法" class="headerlink" title="__call 元方法"></a>__call 元方法</h2><p>__call 元方法在 Lua 调用一个值时调用。</p>
-<h2 id="修改表的操作符行为"><a href="#修改表的操作符行为" class="headerlink" title="修改表的操作符行为"></a>修改表的操作符行为</h2><p>通过重载 “__add” 元方法来计算集合的并集实例：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> set1 = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>&#125;   <span class="comment">-- 集合</span></span><br><span class="line"><span class="keyword">local</span> set2 = &#123;<span class="number">20</span>, <span class="number">40</span>, <span class="number">50</span>&#125;   <span class="comment">-- 集合</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 将用于重载__add的函数，注意第一个参数是self</span></span><br><span class="line"><span class="keyword">local</span> union = <span class="function"><span class="keyword">function</span> <span class="params">(self, another)</span></span></span><br><span class="line">    <span class="keyword">local</span> set = &#123;&#125;</span><br><span class="line">    <span class="keyword">local</span> result = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 利用数组来确保集合的互异性</span></span><br><span class="line">    <span class="keyword">for</span> i, j <span class="keyword">in</span> <span class="built_in">pairs</span>(self) <span class="keyword">do</span> set[j] = <span class="literal">true</span> <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">for</span> i, j <span class="keyword">in</span> <span class="built_in">pairs</span>(another) <span class="keyword">do</span> set[j] = <span class="literal">true</span> <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 加入结果集合</span></span><br><span class="line">    <span class="keyword">for</span> i, j <span class="keyword">in</span> <span class="built_in">pairs</span>(set) <span class="keyword">do</span> <span class="built_in">table</span>.<span class="built_in">insert</span>(result, i) <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">setmetatable</span>(set1, &#123;<span class="built_in">__add</span> = union&#125;) <span class="comment">-- 重载 set1 表的 __add 元方法</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">local</span> set3 = set1 + set2</span><br><span class="line"><span class="keyword">for</span> _, j <span class="keyword">in</span> <span class="built_in">pairs</span>(set3) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">io</span>.<span class="built_in">write</span>(j..<span class="string">" "</span>)               <span class="comment">--&gt;output：30 50 20 40 10</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>除了加法可以被重载之外，Lua 提供的所有操作符都可以被重载：</p>
-<table>
-<thead>
-<tr>
-<th>元方法</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>“__add”</td>
-<td>+ 操作</td>
-</tr>
-<tr>
-<td>“__sub”</td>
-<td>- 操作 其行为类似于 “add” 操作</td>
-</tr>
-<tr>
-<td>“__mul”</td>
-<td>* 操作 其行为类似于 “add” 操作</td>
-</tr>
-<tr>
-<td>“__div”</td>
-<td>/ 操作 其行为类似于 “add” 操作</td>
-</tr>
-<tr>
-<td>“__mod”</td>
-<td>% 操作 其行为类似于 “add” 操作</td>
-</tr>
-<tr>
-<td>“__pow”</td>
-<td>^ （幂）操作 其行为类似于 “add” 操作</td>
-</tr>
-<tr>
-<td>“__unm”</td>
-<td>一元 - 操作</td>
-</tr>
-<tr>
-<td>“__len”</td>
-<td># 操作</td>
-</tr>
-<tr>
-<td>“__eq”</td>
-<td>== 操作 函数 getcomphandler 定义了 Lua 怎样选择一个处理器来作比较操作</td>
-</tr>
-<tr>
-<td>“__lt”</td>
-<td>&lt; 操作</td>
-</tr>
-<tr>
-<td>“__le”</td>
-<td>&lt;= 操作</td>
-</tr>
-</tbody></table>
-]]></content>
       <categories>
         <category>lua语言</category>
       </categories>
@@ -752,146 +564,334 @@
       </tags>
   </entry>
   <entry>
-    <title>IIC原理</title>
-    <url>/2020/06/19/IIC/</url>
-    <content><![CDATA[<p><strong><em>STM32的硬件IIC非常复杂，更重要的是它并不稳定，故推荐使用软件模拟IIC</em></strong></p>
-<hr>
-<p>IIC优点：</p>
-<ul>
-<li>仅用两根线就完成了数据传输</li>
-<li>采用器件地址的硬件设置方法，通过软件寻址避免了像SPI那样的器件片选线寻址，显著地简化了微控制器和外围器件之间的连接，连接在同一条总线上</li>
-<li>要求被寻址的设备发回应答信息，这样可以提供相对可靠的系统</li>
-</ul>
-<p>IIC缺点：</p>
-<ul>
-<li>仅能实现半双工通信</li>
-<li>传输速率也相对有限</li>
-<li>易受干扰，并且不检查错误</li>
-</ul>
-<h1 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h1><p><img src="/images/1.png" alt=""></p>
+    <title>表和元表</title>
+    <url>/2020/06/15/%E8%A1%A8/</url>
+    <content><![CDATA[<h1 id="表"><a href="#表" class="headerlink" title="表"></a>表</h1><p>table 是Lua的一种数据结构用来帮助我们创建不同的数据类型，如：数组、字典等。<br>Lua table使用关联型数组，你可以用任意类型的值来作数组的索引，但这个值不能是 nil。<br>Lua table 是不固定大小的，你可以根据自己需要进行扩容。</p>
+<h2 id="table-表-的构造"><a href="#table-表-的构造" class="headerlink" title="table(表)的构造"></a>table(表)的构造</h2><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 初始化表</span></span><br><span class="line">mytable = &#123;&#125;</span><br><span class="line"></span><br><span class="line">a=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;  <span class="comment">--索引默认为1，2，3</span></span><br><span class="line">a[<span class="string">"c"</span>]=<span class="string">"cc"</span>  <span class="comment">--a.c----&gt;cc</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 指定值</span></span><br><span class="line">mytable[<span class="number">1</span>]= <span class="string">"Lua"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 移除引用</span></span><br><span class="line">mytable = <span class="literal">nil</span></span><br><span class="line"><span class="comment">-- lua 垃圾回收会释放内存</span></span><br></pre></td></tr></table></figure>
+
 <a id="more"></a>
 
-<p>它的物理层有如下特点：</p>
-<ol>
-<li>它是一个支持设备的总线。“总线”指多个设备共用的信号线。在一个 I2C 通讯总线<br>中，可连接多个 I2C 通讯设备，支持多个通讯主机及多个通讯从机。</li>
-<li>一个 I2C 总线只使用两条总线线路，一条双向串行数据线(SDA) ，一条串行时钟线(SCL)。数据线即用来表示数据，时钟线用于数据收发同步。</li>
-<li>每个连接到总线的设备都有一个独立的地址，主机可以利用这个地址进行不同设备之间的访问。</li>
-<li>总线通过上拉电阻接到电源。当 I2C 设备空闲时，会输出高阻态，而当所有设备都空闲，都输出高阻态时，由上拉电阻把总线拉成高电平。</li>
-<li>多个主机同时使用总线时，为了防止数据冲突，会利用仲裁方式决定由哪个设备占用总线。</li>
-<li>具有三种传输模式：标准模式传输速率为 100kbit/s ，快速模式为 400kbit/s ，高速模式下可达 3.4Mbit/s，但目前大多 I2C 设备尚不支持高速模式。</li>
-<li>连接到相同总线的 IC 数量受到总线的最大电容 400pF 限制 。 </li>
-</ol>
-<h1 id="I2C-基本读写过程"><a href="#I2C-基本读写过程" class="headerlink" title="I2C 基本读写过程"></a>I2C 基本读写过程</h1><p><img src="/images/2.png" alt=""></p>
-<h2 id="写数据"><a href="#写数据" class="headerlink" title="写数据"></a>写数据</h2><p>若配置的方向传输位为“写数据”方向， 即第一幅图的情况， 广播完地址，接收到应答信号后， 主机开始正式向从机传输数据(DATA)，数据包的大小为 8 位，主机每发送完一个字节数据，都要等待从机的应答信号(ACK)，重复这个过程，可以向从机传输 N 个数据，这个 N 没有大小限制。当数据传输结束时，主机向从机发送一个停止传输信号(P)，表示不再传输数据。</p>
-<hr>
-<h2 id="读数据"><a href="#读数据" class="headerlink" title="读数据"></a>读数据</h2><p>若配置的方向传输位为“读数据”方向， 即第二幅图的情况， 广播完地址，接收到应答信号后， 从机开始向主机返回数据(DATA)，数据包大小也为 8 位，从机每发送完一个数据，都会等待主机的应答信号(ACK)，重复这个过程，可以返回 N 个数据，这个 N 也没有大小限制。当主机希望停止接收数据时，就向从机返回一个非应答信号(NACK)，则从机自动停止数据传输。</p>
-<hr>
-<h2 id="读和写数据"><a href="#读和写数据" class="headerlink" title="读和写数据"></a>读和写数据</h2><p>除了基本的读写， I2C 通讯更常用的是复合格式，即第三幅图的情况，该传输过程有两次起始信号(S)。一般在第一次传输中，主机通过 SLAVE_ADDRESS 寻找到从设备后，发送一段“数据”，这段数据通常用于表示从设备内部的寄存器或存储器地址(注意区分它与 SLAVE_ADDRESS 的区别)；在第二次的传输中，对该地址的内容进行读或写。也就是说，第一次通讯是告诉从机读写地址，第二次则是读写的实际内容。</p>
-<h1 id="协议层"><a href="#协议层" class="headerlink" title="协议层"></a>协议层</h1><h2 id="起始和停止信号"><a href="#起始和停止信号" class="headerlink" title="起始和停止信号"></a>起始和停止信号</h2><p>起始(S)和停止(P)信号是两种特殊的状态。当 SCL 线是高电平时 SDA 线从高电平向低电平切换，这个情况表示通讯的起始。当 SCL 是高电平时 SDA线由低电平向高电平切换，表示通讯的停止。起始和停止信号一般由主机产生。<br><img src="/images/3.png" alt=""></p>
-<h2 id="数据有效性"><a href="#数据有效性" class="headerlink" title="数据有效性"></a>数据有效性</h2><p>I2C 使用 SDA 信号线来传输数据，使用 SCL信号线进行数据同步。 SDA 数据线在 SCL的每个时钟周期传输一位数据。传输时， SCL为高电平的时候 SDA表示的数据有效，即此时的 SDA为高电平时表示数据“1”，为低电平时表示数据“0”。当 SCL为低电平时， SDA的数据无效，一般在这个时候 SDA 进行电平切换，为下一次表示数据做好准备。<br><img src="/images/4.png" alt=""><br><img src="/images/5.png" alt=""></p>
-<p>##地址及数据方向<br>I2C 总线上的每个设备都有自己的独立地址，主机发起通讯时，通过 SDA 信号线发送<br>设备地址(SLAVE_ADDRESS)来查找从机。 I2C 协议规定设备地址可以是 7 位或 10 位，实际中 7 位的地址应用比较广泛。紧跟设备地址的一个数据位用来表示数据传输方向，它是数据方向位(R/W)，第 8 位或第 11 位。数据方向位为“1”时表示主机由从机读数据，该位为“0”时表示主机向从机写数据。<br><img src="/images/6.png" alt=""><br>读数据方向时，主机会释放对 SDA 信号线的控制，由从机控制 SDA 信号线，主机接收信号，写数据方向时， SDA 由主机控制，从机接收信号。</p>
-<h2 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h2><p>IIC总线协议规定，每传送一个字节数据<strong>(含地址及命令)</strong>后，都要有一个应答信号，以确定数据传送是否被对方收到。应答信号由接受设备产生，在SCL信号为高电平期间，接受设备将SDA拉为低电平，表示数据传送正确，产生应答。响应包括“应答(ACK)”和“非应答(NACK)”两种信号。作为数据接收端时，当设备(无论主从机)接收到 I2C 传输的一个字节数据或地址后，若希望对方继续发送数据，则需要向对方发送“应答(ACK)”信号，发送方会继续发送下一个数据；若接收端希望结束数据传输，则向对方发送“非应答(NACK)”信号，发送方接收到该信号后会产生一个停止信号，结束信号传输<br><img src="/images/7.png" alt=""><br><img src="/images/8.png" alt=""><br><strong>*传输时主机产生时钟，在第 9 个时钟时，数据发送端会释放 SDA 的控制权，由数据接收端控制 SDA，若 SDA 为高电平，表示非应答信号(NACK)，低电平表示应答信号(ACK)。 *</strong><br><img src="/images/9.png" alt=""></p>
-<h1 id="stm321编程要点"><a href="#stm321编程要点" class="headerlink" title="stm321编程要点"></a>stm321编程要点</h1><ol>
-<li>配置通讯使用的目标引脚为开漏模式；</li>
-<li>使能 I2C 外设的时钟；</li>
-<li>配置 I2C 外设的模式、地址、速率等参数并使能 I2C 外设；</li>
-<li>编写基本 I2C 按字节收发的函数；</li>
-<li>编写读写内容的函数；</li>
-<li>编写测试程序，对读写数据进行校验。 </li>
-</ol>
-<p>软件模拟IIC</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//初始化IIC</span></span><br><span class="line"><span class="built_in">void</span> IIC_Init(<span class="built_in">void</span>)</span><br><span class="line">&#123;					     </span><br><span class="line">	GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">	RCC_APB2PeriphClockCmd(	RCC_APB2Periph_GPIOB, ENABLE );	<span class="comment">//使能GPIOB时钟</span></span><br><span class="line">	   </span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_7;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP ;   <span class="comment">//推挽输出</span></span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">	GPIO_Init(GPIOB, &amp;GPIO_InitStructure);</span><br><span class="line">	GPIO_SetBits(GPIOB,GPIO_Pin_6|GPIO_Pin_7); 	<span class="comment">//PB6,PB7 输出高，空闲状态</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//产生IIC起始信号</span></span><br><span class="line"><span class="built_in">void</span> IIC_Start(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	SDA_OUT();     <span class="comment">//sda线输出</span></span><br><span class="line">	IIC_SDA=<span class="number">1</span>;	  	  </span><br><span class="line">	IIC_SCL=<span class="number">1</span>;</span><br><span class="line">	delay_us(<span class="number">4</span>);</span><br><span class="line"> 	IIC_SDA=<span class="number">0</span>;    <span class="comment">//START:when CLK is high,DATA change form high to low </span></span><br><span class="line">	delay_us(<span class="number">4</span>);</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;    <span class="comment">//钳住I2C总线，准备发送或接收数据 </span></span><br><span class="line">&#125;	  </span><br><span class="line"><span class="comment">//产生IIC停止信号</span></span><br><span class="line"><span class="built_in">void</span> IIC_Stop(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	SDA_OUT();    <span class="comment">//sda线输出</span></span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">	IIC_SDA=<span class="number">0</span>;    <span class="comment">//STOP:when CLK is high DATA change form low to high</span></span><br><span class="line"> 	delay_us(<span class="number">4</span>);</span><br><span class="line">	IIC_SCL=<span class="number">1</span>; </span><br><span class="line">	IIC_SDA=<span class="number">1</span>;    <span class="comment">//发送I2C总线结束信号</span></span><br><span class="line">	delay_us(<span class="number">4</span>);							   	</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//发送数据后，等待应答信号到来</span></span><br><span class="line"><span class="comment">//返回值：1，接收应答失败，IIC直接退出</span></span><br><span class="line"><span class="comment">//        0，接收应答成功，什么都不做</span></span><br><span class="line">u8 IIC_Wait_Ack(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	u8 ucErrTime=<span class="number">0</span>;</span><br><span class="line">	SDA_IN();      <span class="comment">//SDA设置为输入  </span></span><br><span class="line">	IIC_SDA=<span class="number">1</span>;delay_us(<span class="number">1</span>);	   </span><br><span class="line">	IIC_SCL=<span class="number">1</span>;delay_us(<span class="number">1</span>);	 </span><br><span class="line">	<span class="keyword">while</span>(READ_SDA)</span><br><span class="line">	&#123;</span><br><span class="line">		ucErrTime++;</span><br><span class="line">		<span class="keyword">if</span>(ucErrTime&gt;<span class="number">250</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			IIC_Stop();</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;    <span class="comment">//时钟输出0 	   </span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">//产生ACK应答</span></span><br><span class="line"><span class="built_in">void</span> IIC_Ack(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">	SDA_OUT();</span><br><span class="line">	IIC_SDA=<span class="number">0</span>;</span><br><span class="line">	delay_us(<span class="number">2</span>);</span><br><span class="line">	IIC_SCL=<span class="number">1</span>;</span><br><span class="line">	delay_us(<span class="number">2</span>);</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//不产生ACK应答		    </span></span><br><span class="line"><span class="built_in">void</span> IIC_NAck(<span class="built_in">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">	SDA_OUT();</span><br><span class="line">	IIC_SDA=<span class="number">1</span>;</span><br><span class="line">	delay_us(<span class="number">2</span>);</span><br><span class="line">	IIC_SCL=<span class="number">1</span>;</span><br><span class="line">	delay_us(<span class="number">2</span>);</span><br><span class="line">	IIC_SCL=<span class="number">0</span>;</span><br><span class="line">&#125;					 				     </span><br><span class="line"><span class="comment">//IIC发送一个字节</span></span><br><span class="line"><span class="comment">//返回从机有无应答</span></span><br><span class="line"><span class="comment">//1，有应答</span></span><br><span class="line"><span class="comment">//0，无应答			  </span></span><br><span class="line"><span class="built_in">void</span> IIC_Send_Byte(u8 txd)   <span class="comment">//结合起始、应答、结束信号才能传输数据</span></span><br><span class="line">&#123;                        </span><br><span class="line">    u8 t;   </span><br><span class="line">	SDA_OUT(); 	    </span><br><span class="line">    IIC_SCL=<span class="number">0</span>;            <span class="comment">//拉低时钟开始数据传输</span></span><br><span class="line">    <span class="keyword">for</span>(t=<span class="number">0</span>;t&lt;<span class="number">8</span>;t++)</span><br><span class="line">    &#123;              </span><br><span class="line">        <span class="comment">//IIC_SDA=(txd&amp;0x80)&gt;&gt;7;</span></span><br><span class="line">		<span class="keyword">if</span>((txd&amp;<span class="number">0x80</span>)&gt;&gt;<span class="number">7</span>)</span><br><span class="line">			IIC_SDA=<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			IIC_SDA=<span class="number">0</span>;</span><br><span class="line">		txd&lt;&lt;=<span class="number">1</span>; 	  </span><br><span class="line">		delay_us(<span class="number">2</span>);       <span class="comment">//对TEA5767这三个延时都是必须的</span></span><br><span class="line">		IIC_SCL=<span class="number">1</span>;</span><br><span class="line">		delay_us(<span class="number">2</span>); </span><br><span class="line">		IIC_SCL=<span class="number">0</span>;	</span><br><span class="line">		delay_us(<span class="number">2</span>);</span><br><span class="line">    &#125;	 </span><br><span class="line">&#125; 	    </span><br><span class="line"><span class="comment">//读1个字节，ack=1时，发送ACK，ack=0，发送nACK   </span></span><br><span class="line">u8 IIC_Read_Byte(unsigned char ack)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned char i,receive=<span class="number">0</span>;</span><br><span class="line">	SDA_IN();        <span class="comment">//SDA设置为输入</span></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">8</span>;i++ )</span><br><span class="line">	&#123;</span><br><span class="line">        IIC_SCL=<span class="number">0</span>; </span><br><span class="line">        delay_us(<span class="number">2</span>);</span><br><span class="line">		IIC_SCL=<span class="number">1</span>;</span><br><span class="line">        receive&lt;&lt;=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(READ_SDA)receive++;   </span><br><span class="line">		delay_us(<span class="number">1</span>); </span><br><span class="line">    &#125;					 </span><br><span class="line">    <span class="keyword">if</span> (!ack)</span><br><span class="line">        IIC_NAck();        <span class="comment">//发送nACK</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        IIC_Ack();         <span class="comment">//发送ACK   </span></span><br><span class="line">    <span class="keyword">return</span> receive;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+<h2 id="Table-操作"><a href="#Table-操作" class="headerlink" title="Table 操作"></a>Table 操作</h2><ul>
+<li>table.concat (table [, sep [, start [, end]]]):<br>concat是concatenate(连锁, 连接)的缩写. table.concat()函数列出参数中指定table的数组部分从start位置到end位置的所有元素, 元素间以指定的分隔符(sep)隔开。<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">fruits = &#123;<span class="string">"banana"</span>,<span class="string">"orange"</span>,<span class="string">"apple"</span>&#125;</span><br><span class="line"><span class="comment">-- 返回 table 连接后的字符串</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"连接后的字符串 "</span>,<span class="built_in">table</span>.<span class="built_in">concat</span>(fruits))</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 指定连接字符</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"连接后的字符串 "</span>,<span class="built_in">table</span>.<span class="built_in">concat</span>(fruits,<span class="string">", "</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 指定索引来连接 table</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"连接后的字符串 "</span>,<span class="built_in">table</span>.<span class="built_in">concat</span>(fruits,<span class="string">", "</span>, <span class="number">2</span>,<span class="number">3</span>))</span><br></pre></td></tr></table></figure></li>
+<li>table.insert (table, [pos,] value):<br>在table的数组部分指定位置(pos)插入值为value的一个元素. pos参数可选, 默认为数组部分末尾.</li>
+<li>table.maxn (table)<br>指定table中所有正数key值中最大的key值. 如果不存在key值为正数的元素, 则返回0。(Lua5.2之后该方法已经不存在了,本文使用了自定义函数实现)</li>
+<li>table.remove (table [, pos])<br>返回table数组部分位于pos位置的元素. 其后的元素会被前移. pos参数可选, 默认为table长度, 即从最后一个元素删起。</li>
+<li>table.sort (table [, comp])<br>对给定的table进行升序排序。</li>
+</ul>
+<h1 id="Lua-元表-Metatable"><a href="#Lua-元表-Metatable" class="headerlink" title="Lua 元表(Metatable)"></a>Lua 元表(Metatable)</h1><p>元表 (metatable) 的表现行为类似于 C++ 语言中的操作符重载，例如我们可以重载 “__add” 元方法 (metamethod)，来计算两个 Lua 数组的并集；或者重载 “__index”方法，来定义我们自己的 Hash 函数<br>在Lua table中我们可以访问对应的key来得到value值，但是却无法对两个table进行操作。因此Lua提供了元表，允许我们改变table的行为，每个行为关联了对应的元方法。Lua中的每个值都可以有一个元表。这个元表就是一个普通的Lua表，它用于原始值在特定操作下的行为。如果你想改变一个值在特定操作下的行为，你可以在它的元表中设置对应域。例如，使用元表我们可以定义Lua如何计算两个table的相加操作a+b。当Lua试图对两个表进行相加时，先检查两者之一是否有元表，之后检查是否有一个叫”__add”的字段，若找到，则调用对应的值。”__add “等即时字段，其对应的值（往往是一个函数或是table）就是”元方法”.提供了两个十分重要的用来处理元表的方法，如下：</p>
+<ul>
+<li><p>setmetatable(table,metatable): 对指定 table 设置元表(metatable)，如果元表(metatable)中存在 __metatable 键值，setmetatable 会失败。</p>
+</li>
+<li><p>getmetatable(table): 返回对象的元表(metatable)。</p>
+</li>
+</ul>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">mytable = &#123;&#125;                          <span class="comment">-- 普通表</span></span><br><span class="line">mymetatable = &#123;&#125;                      <span class="comment">-- 元表</span></span><br><span class="line"><span class="built_in">setmetatable</span>(mytable,mymetatable)     <span class="comment">-- 把 mymetatable 设为 mytable 的元表</span></span><br></pre></td></tr></table></figure>
+<p>以上代码也可以直接写成一行：<br><code>mytable = setmetatable({},{})</code><br>以下为返回对象元表：<br><code>getmetatable(mytable)                 -- 这回返回mymetatable</code></p>
+<h2 id="index-元方法"><a href="#index-元方法" class="headerlink" title="__index 元方法"></a>__index 元方法</h2><p>访问一个table的字段时，如果table有这个字段，直接返回对应的值；<br>当table没有这个字段，就会去找table的元表的__index,没有找到返回nil。<br>如果有的话分两种情况，__index可以是方法也可以是一个table</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">$ lua</span><br><span class="line">Lua <span class="number">5.3</span><span class="number">.0</span>  Copyright (C) <span class="number">1994</span><span class="number">-2015</span> Lua.org, PUC-Rio</span><br><span class="line">&gt; other = &#123; foo = <span class="number">3</span> &#125;</span><br><span class="line">&gt; t = setmetatable(&#123;&#125;, &#123; __index = other &#125;)</span><br><span class="line">&gt; t.foo</span><br><span class="line"><span class="number">3</span></span><br><span class="line">&gt; t.bar</span><br><span class="line">nil</span><br></pre></td></tr></table></figure>
+<p>如果<strong>index包含一个函数的话，Lua就会调用那个函数，table和键会作为参数传递给函数。<br>__index 元方法查看表中元素是否存在，如果不存在，返回结果为 nil；如果存在则由 \</strong>index 返回结果。</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">mytable = <span class="built_in">setmetatable</span>(&#123;key1 = <span class="string">"value1"</span>&#125;, &#123;</span><br><span class="line">  <span class="built_in">__index</span> = <span class="function"><span class="keyword">function</span><span class="params">(mytable, key)</span></span></span><br><span class="line">    <span class="keyword">if</span> key == <span class="string">"key2"</span> <span class="keyword">then</span></span><br><span class="line">      <span class="keyword">return</span> <span class="string">"metatablevalue"</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(mytable.key1,mytable.key2)</span><br></pre></td></tr></table></figure>
+<p>实例解析：</p>
+<ul>
+<li>mytable 表赋值为 {key1 = “value1”}。</li>
+<li>mytable 设置了元表，元方法为 __index。<br>在mytable表中查找 key1，如果找到，返回该元素，找不到则继续。</li>
+<li>在mytable表中查找 key2，如果找到，返回 metatablevalue，找不到则继续。</li>
+<li>判断元表有没有__index方法，如果__index方法是一个函数，则调用该函数。</li>
+<li>元方法中查看是否传入 “key2” 键的参数（mytable.key2已设置），如果传入 “key2” 参数返回 </li>
+</ul>
+<p>“metatablevalue”，否则返回 mytable 对应的键值。<br>我们可以将以上代码简单写成：<code>mytable = setmetatable({key1 = &quot;value1&quot;}, { __index = { key2 = &quot;metatablevalue&quot; } })</code></p>
+<h2 id="newindex-元方法"><a href="#newindex-元方法" class="headerlink" title="__newindex 元方法"></a>__newindex 元方法</h2><p>__newindex 元方法用来对表更新，__index则用来对表访问 。<br>当你给表的一个缺少的索引赋值，解释器就会查找__newindex 元方法：如果存在则调用这个函数而不进行赋值操作。<br>以下实例演示了 __newindex 元方法的应用：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">mymetatable = &#123;&#125;</span><br><span class="line">mytable = setmetatable(&#123;key1 = <span class="string">"value1"</span>&#125;, &#123; __newindex = mymetatable &#125;)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mytable.key1)</span></span></span><br><span class="line"></span><br><span class="line">mytable<span class="selector-class">.newkey</span> = <span class="string">"新值2"</span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mytable.newkey,mymetatable.newkey)</span></span></span><br><span class="line"></span><br><span class="line">mytable<span class="selector-class">.key1</span> = <span class="string">"新值1"</span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(mytable.key1,mymetatable.key1)</span></span></span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line">value1</span><br><span class="line">nil    新值<span class="number">2</span></span><br><span class="line">新值<span class="number">1</span>    nil</span><br></pre></td></tr></table></figure>
+<p>以上实例中表设置了元方法 __newindex，在对新索引键（newkey）赋值时（mytable.newkey = “新值2”），会调用元方法，而不进行赋值。而如果对已存在的索引键（key1），则会进行赋值，而不调用元方法 __newindex。</p>
+<h2 id="call-元方法"><a href="#call-元方法" class="headerlink" title="__call 元方法"></a>__call 元方法</h2><p>__call 元方法在 Lua 调用一个值时调用。</p>
+<h2 id="修改表的操作符行为"><a href="#修改表的操作符行为" class="headerlink" title="修改表的操作符行为"></a>修改表的操作符行为</h2><p>通过重载 “__add” 元方法来计算集合的并集实例：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> set1 = &#123;<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>&#125;   <span class="comment">-- 集合</span></span><br><span class="line"><span class="keyword">local</span> set2 = &#123;<span class="number">20</span>, <span class="number">40</span>, <span class="number">50</span>&#125;   <span class="comment">-- 集合</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 将用于重载__add的函数，注意第一个参数是self</span></span><br><span class="line"><span class="keyword">local</span> union = <span class="function"><span class="keyword">function</span> <span class="params">(self, another)</span></span></span><br><span class="line">    <span class="keyword">local</span> set = &#123;&#125;</span><br><span class="line">    <span class="keyword">local</span> result = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 利用数组来确保集合的互异性</span></span><br><span class="line">    <span class="keyword">for</span> i, j <span class="keyword">in</span> <span class="built_in">pairs</span>(self) <span class="keyword">do</span> set[j] = <span class="literal">true</span> <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">for</span> i, j <span class="keyword">in</span> <span class="built_in">pairs</span>(another) <span class="keyword">do</span> set[j] = <span class="literal">true</span> <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">-- 加入结果集合</span></span><br><span class="line">    <span class="keyword">for</span> i, j <span class="keyword">in</span> <span class="built_in">pairs</span>(set) <span class="keyword">do</span> <span class="built_in">table</span>.<span class="built_in">insert</span>(result, i) <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">setmetatable</span>(set1, &#123;<span class="built_in">__add</span> = union&#125;) <span class="comment">-- 重载 set1 表的 __add 元方法</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">local</span> set3 = set1 + set2</span><br><span class="line"><span class="keyword">for</span> _, j <span class="keyword">in</span> <span class="built_in">pairs</span>(set3) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">io</span>.<span class="built_in">write</span>(j..<span class="string">" "</span>)               <span class="comment">--&gt;output：30 50 20 40 10</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>除了加法可以被重载之外，Lua 提供的所有操作符都可以被重载：</p>
+<table>
+<thead>
+<tr>
+<th>元方法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>“__add”</td>
+<td>+ 操作</td>
+</tr>
+<tr>
+<td>“__sub”</td>
+<td>- 操作 其行为类似于 “add” 操作</td>
+</tr>
+<tr>
+<td>“__mul”</td>
+<td>* 操作 其行为类似于 “add” 操作</td>
+</tr>
+<tr>
+<td>“__div”</td>
+<td>/ 操作 其行为类似于 “add” 操作</td>
+</tr>
+<tr>
+<td>“__mod”</td>
+<td>% 操作 其行为类似于 “add” 操作</td>
+</tr>
+<tr>
+<td>“__pow”</td>
+<td>^ （幂）操作 其行为类似于 “add” 操作</td>
+</tr>
+<tr>
+<td>“__unm”</td>
+<td>一元 - 操作</td>
+</tr>
+<tr>
+<td>“__len”</td>
+<td># 操作</td>
+</tr>
+<tr>
+<td>“__eq”</td>
+<td>== 操作 函数 getcomphandler 定义了 Lua 怎样选择一个处理器来作比较操作</td>
+</tr>
+<tr>
+<td>“__lt”</td>
+<td>&lt; 操作</td>
+</tr>
+<tr>
+<td>“__le”</td>
+<td>&lt;= 操作</td>
+</tr>
+</tbody></table>
+]]></content>
       <categories>
-        <category>通信协议</category>
+        <category>lua语言</category>
       </categories>
       <tags>
-        <tag>IIC</tag>
+        <tag>lua</tag>
       </tags>
   </entry>
   <entry>
-    <title>UART原理</title>
-    <url>/2020/06/19/UART/</url>
-    <content><![CDATA[<p>优点：</p>
-<ul>
-<li>只使用两根电线</li>
-<li>支持多个主服务器和多个从服务器</li>
-<li>ACK / NACK位确认每个帧都已成功传输</li>
-<li>硬件没有UART那么复杂</li>
-<li>众所周知且广泛使用的协议</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>数据传输速率比SPI慢</li>
-<li>数据帧的大小限制为8位</li>
-<li>实现比SPI更复杂的硬件</li>
-</ul>
-<h1 id="异步通信与同步通信区别"><a href="#异步通信与同步通信区别" class="headerlink" title="异步通信与同步通信区别"></a>异步通信与同步通信区别</h1><h2 id="异步通信："><a href="#异步通信：" class="headerlink" title="异步通信："></a>异步通信：</h2><p>异步通信中的接收方并不知道数据什么时候会到达，收发双方可以有各自自己的时钟。发送方发送的时间间隔可以不均，接收方是在数据的起始位和停止位的帮助下实现信息同步的。这种传输通常是很小的分组，比如一个字符为一组，为这个组配备起始位和结束位。所以这种传输方式的效率是比较低的，毕竟额外加入了很多的辅助位作为负载，常用在低速的传输中。<br>举个例子，我们的键盘按下一个按键，发出一个字符信号，异步传输机制就会为它加上前后的辅助同步信息，帮助接收方识别到我们按下了哪一个按键。因为我们敲击键盘的节奏不固定，所以异步是一种很适合的方式。</p>
+    <title>Lua迭代器</title>
+    <url>/2020/06/12/%E8%BF%AD%E4%BB%A3%E5%99%A8/</url>
+    <content><![CDATA[<h1 id="ipairs-和pairs-的区别"><a href="#ipairs-和pairs-的区别" class="headerlink" title="ipairs()和pairs()的区别"></a>ipairs()和pairs()的区别</h1><p>pairs会遍历表中所有的key-value值，而ipairs会根据key的数值从1开始加1递增遍历对应的table[i]值，直到出现第一个不是按1递增的数值时候退出。</p>
+<p>下面我们以例子说明一下吧</p>
+<p>stars = {[1] = “Sun”, [2] = “Moon”, [5] = ‘Earth’}</p>
+<p>for i, v in pairs(stars) do</p>
+<p>   print(i, v)</p>
+<p>end</p>
 <a id="more"></a>
 
-<h2 id="同步通信："><a href="#同步通信：" class="headerlink" title="同步通信："></a>同步通信：</h2><p>  同步通信中双方使用频率一致的时钟，它的分组相比异步则大得多，称为一个数据帧，通过独特的bit串作为启停标识。发送方要以固定的节奏去发送数据，而接收方要时刻做好接收数据的准备，识别到前导码后马上要开始接收数据了。同步这种方式中因为分组很大，很长一段数据才会有额外的辅助位负载，所以效率更高，更加适合对速度要求高的传输，当然这种通信对时序的要求也更高。</p>
-<hr>
-<p>总结一下，异步传输其实是通过字符数据前后的开始和停止码进行再同步，弥补自己刚才注意不集中的不足；而同步方式则是一个规矩的好学生，时刻候命准备工作。异步是你扔出去一个内容，对方靠着内容前后他能嗅到的异样在人潮之中发现了它，把这个内容存下来；而同步是对方在时刻等着你发布号令，你告诉对方我要发送了哦，然后双方一拍即合。</p>
-<h1 id="USART和UART区别"><a href="#USART和UART区别" class="headerlink" title="USART和UART区别"></a>USART和UART区别</h1><p>UART它是在 USART 基础上裁剪掉了同步通信功能，只有异步通信。 简单区分同步和异步就是看通信时需不需要对外提供时钟输出，我们平时用的串口通信基本都是UART。</p>
-<h1 id="协议层"><a href="#协议层" class="headerlink" title="协议层"></a>协议层</h1><h2 id="串口数据包的基本组成"><a href="#串口数据包的基本组成" class="headerlink" title="串口数据包的基本组成"></a>串口数据包的基本组成</h2><p><img src="/images/10.png" alt=""></p>
-<h2 id="原理理解"><a href="#原理理解" class="headerlink" title="原理理解"></a>原理理解</h2><p>也就是双方必要约定一种暗号。<br>也许当时发送这个通信的小组是这样讨论的。<br>经理：我要用一根线就能传输数据，你来给我定个标准。<br>研发：好。<br>经理：只有一根线，我怎么知道数据什么时候开始呢。<br>研发：就一根线，默认是高电平，那就有一个起始位吧。当检测到有低电平的时候，就是开始有一个字节的数据发送了,起始位之后，先是字节的最低位,传送一个字节。<br>经理：可是，就一根线，过来的数据会不会有干扰，容易出错呀。<br>研发：行呀，那就在字节数据后再加一个校验位。可以作奇校验，偶校验，1校验，0校验，无校验。<br>经理：嗯 ，很不错。有起始位就应该有停止位，那我们就再加个停止位在后面吧。<br>经理：传输一串数据，对方要怎么知道数据的拆分呢，怎么按时间或频率去解读数据位，校验位呢。<br>研发：这样吧，双方约定一个波特率吧，定义一个每个位占用多长的时间，这样双方按这个波特率就可以处理了。这个波特率呢，是指1S钟可以传输多个位，也就知道一个位占用多长时间。这样就解决传输的问题了。（波特率：即单位时间内传输的符号个数；）<br>经理：那万一传输过程，数据快太，判断失误停不下来怎么办。<br>研发：那就把停止位可以调节为1个停止位或者2个停止位。这样就可以停下来了。<br>经理：嗯，听着不错。就这样办吧。</p>
-<p>于是，串口通信就这样出来了。<br>在串口的通信参数上，就有了波特率，数据位，停止位，校验位这几个参数来确保串口通信的正确性和稳定上。当然，这只是某个方面保证串口通信的正确性和稳定性，不代表设备间通信的正确性和稳定性。</p>
-<h3 id="1-波特率"><a href="#1-波特率" class="headerlink" title="1. 波特率"></a>1. 波特率</h3><p>异步通讯中由于没有时钟信号接口中是没有时钟信号的)，所以两个通讯设备之间需要约定好波特率，即每个码元的长度。常见的波特率为4800、 9600、 115200 等。波特率：即单位时间内传输的符号个数。</p>
-<h3 id="2-通讯的起始和停止信号"><a href="#2-通讯的起始和停止信号" class="headerlink" title="2. 通讯的起始和停止信号"></a>2. 通讯的起始和停止信号</h3><p>串口通讯的一个数据包从起始信号开始，直到停止信号结束。数据包的起始信号由一个逻辑 0 的数据位表示，而数据包的停止信号可由 0.5、 1、 1.5 或 2 个逻辑 1 的数据位表示，只要双方约定一致即可。</p>
-<h3 id="3-有效数据"><a href="#3-有效数据" class="headerlink" title="3. 有效数据"></a>3. 有效数据</h3><p>在数据包的起始位之后紧接着的就是要传输的主体数据内容，也称为有效数据，有效数据的长度常被约定为 5、 6、 7 或 8 位长。</p>
-<h3 id="4-数据校验"><a href="#4-数据校验" class="headerlink" title="4. 数据校验"></a>4. 数据校验</h3><p>在有效数据之后，有一个可选的数据校验位。由于数据通信相对更容易受到外部干扰导致传输数据出现偏差，可以在传输过程加上校验位来解决这个问题。校验方法有奇校验(odd)、偶校验(even)、 0 校验(space)、 1 校验(mark)以及无校验(noparity)。奇校验要求有效数据和校验位中“1”的个数为奇数，比如一个 8 位长的有效数据为：01101001，此时总共有4个“1”，为达到奇校验效果，校验位为“1”，最后传输的数据将是 8 位的有效数据加上 1 位的校验位总共 9 位。偶校验与奇校验要求刚好相反，要求帧数据和校验位中“1”的个数为偶数，比如数据帧： 11001010，此时数据帧“1”的个数为 4 个，所以偶校验位为“0”。0校验是不管有效数据中的内容是什么，校验位总为“0”， 1 校验是校验位总为“1”。</p>
-<hr>
-<p>在两个UART之间传输数据只需要两根线。数据从发送UART的Tx引脚流向接收UART的Rx引脚：<br><img src="/images/11.png" alt=""></p>
+<p>使用pairs()将会遍历表中所有的数据，输出结果是：</p>
+<p>1    Sun<br>2    Moon<br>5    Earth</p>
+<p>如果使用ipairs()的话，</p>
+<p>for i, v in ipairs(stars) do</p>
+<p>   print(i, v)</p>
+<p>end</p>
+<p>当i的值遍历到第三个元素时，i的值为5，此时i并不是上一个次i值（2）的+1递增，所以遍历结束，结果则会是：</p>
+<p>1    Sun<br>2    Moon</p>
+<p>ipairs()和pairs()的区别就是这么简单。</p>
+<h1 id="泛型-for-迭代器"><a href="#泛型-for-迭代器" class="headerlink" title="泛型 for 迭代器"></a>泛型 for 迭代器</h1><p>泛型 for 在自己内部保存迭代函数，实际上它保存三个值：迭代函数、状态常量、控制变量。<br>泛型 for 迭代器提供了集合的 key/value 对，语法格式如下：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">pairs</span>(t) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(k, v)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<!--more-->
+
+
+<p>上面代码中，k, v为变量列表；pairs(t)为表达式列表。</p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">array</span> = &#123;"Google", "Runoob"&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for key</span>,<span class="keyword">value</span> <span class="keyword">in</span> ipairs(<span class="keyword">array</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   print(key, <span class="keyword">value</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">执行结果：</span><br><span class="line"><span class="number">1</span>  Google</span><br><span class="line"><span class="number">2</span>  Runoob</span><br></pre></td></tr></table></figure>
+
+<p>Lua 默认提供的迭代函数 ipairs。</p>
+<p>泛型 for 的执行过程：</p>
+<ul>
+<li>首先，初始化，计算 in 后面表达式的值，表达式应该返回泛型 for 需要的三个值：迭代函数、状态常量、控制变量；与多值赋值一样，如果表达式返回的结果个数不足三个会自动用 nil 补足，多出部分会被忽略。</li>
+<li>第二，将状态常量和控制变量作为参数调用迭代函数（注意：对于 for 结构来说，状态常量没有用处，仅仅在初始化时获取他的值并传递给迭代函数）。</li>
+<li>第三，将迭代函数返回的值赋给变量列表。</li>
+<li>第四，如果返回的第一个值为nil循环结束，否则执行循环体。</li>
+<li>第五，回到第二步再次调用迭代函数</li>
+</ul>
+<h1 id="无状态的迭代器"><a href="#无状态的迭代器" class="headerlink" title="无状态的迭代器"></a>无状态的迭代器</h1><p>无状态的迭代器是指不保留任何状态的迭代器，因此在循环中我们可以利用无状态迭代器避免创建闭包花费额外的代价。</p>
+<p>每一次迭代，迭代函数都是用两个变量（状态常量和控制变量）的值作为参数被调用，一个无状态的迭代器只利用这两个值可以获取下一个元素。这种无状态迭代器的典型的简单的例子是 ipairs，它遍历数组的每一个元素。</p>
+<p>以下实例我们使用了一个简单的函数来实现迭代器，实现 数字 n 的平方：</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">--求数字<span class="built_in">j</span>到N的平方</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">square</span><span class="params">(N, j)</span></span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">j</span> &lt;= N</span><br><span class="line">    then</span><br><span class="line">        <span class="keyword">return</span>  <span class="built_in">j</span>+<span class="number">1</span> ,  <span class="built_in">j</span>*<span class="built_in">j</span> --  这里的<span class="built_in">j</span>+<span class="number">1</span> 是为了传给<span class="keyword">for</span>的<span class="built_in">i</span>值，类似++<span class="built_in">i</span>，否则<span class="built_in">i</span>一直不变，死循环</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">--         迭代器函数、恒定状态、控制变量的初值</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>,n in square ,     <span class="number">3</span> ,    <span class="number">1</span></span><br><span class="line">do</span><br><span class="line">    --这里的<span class="built_in">i</span>,n是square返回的</span><br><span class="line">    print(<span class="built_in">i</span><span class="number">-1</span> ,<span class="string">"的平方是"</span> , n)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">iter</span> <span class="params">(a, i)</span></span></span><br><span class="line">    <span class="built_in">i</span> = <span class="built_in">i</span> + <span class="number">1</span></span><br><span class="line">    local v = a[<span class="built_in">i</span>]</span><br><span class="line">    <span class="keyword">if</span> v then</span><br><span class="line">       <span class="keyword">return</span> <span class="built_in">i</span>, v</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ipairs</span> <span class="params">(a)</span></span></span><br><span class="line">    <span class="keyword">return</span> iter, a, <span class="number">0</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>当 Lua 调用 ipairs(a) 开始循环时，他获取三个值：迭代函数 iter、状态常量 a、控制变量初始值 0；然后 Lua 调用 iter(a,0) 返回 1, a[1]（除非 a[1]=nil）；第二次迭代调用 iter(a,1) 返回 2, a[2]……直到第一个 nil 元素。</p>
+<h1 id="多状态的迭代器"><a href="#多状态的迭代器" class="headerlink" title="多状态的迭代器"></a>多状态的迭代器</h1><p>很多情况下，迭代器需要保存多个状态信息而不是简单的状态常量和控制变量，最简单的方法是使用闭包，还有一种方法就是将所有的状态信息封装到 table 内，将 table 作为迭代器的状态常量，因为这种情况下可以将所有的信息存放在 table 内，所以迭代函数通常不需要第二个参数。</p>
+<p>以下实例我们创建了自己的迭代器：</p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">array</span> = &#123;"Google", "Runoob"&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> elementIterator (collection)</span><br><span class="line">   <span class="keyword">local</span> <span class="keyword">index</span> = <span class="number">0</span></span><br><span class="line">   <span class="keyword">local</span> count = #collection</span><br><span class="line">   <span class="comment">-- 闭包函数</span></span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">function</span> ()</span><br><span class="line">      <span class="keyword">index</span> = <span class="keyword">index</span> + <span class="number">1</span></span><br><span class="line">      <span class="keyword">if</span> <span class="keyword">index</span> &lt;= count</span><br><span class="line">      <span class="keyword">then</span></span><br><span class="line">         <span class="comment">--  返回迭代器的当前元素</span></span><br><span class="line">         <span class="keyword">return</span> collection[<span class="keyword">index</span>]</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> element <span class="keyword">in</span> elementIterator(<span class="keyword">array</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   print(element)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">Google</span><br><span class="line">Runoob</span><br></pre></td></tr></table></figure>
+<p>以上实例中我们可以看到，elementIterator 内使用了闭包函数，实现计算集合大小并输出各个元素。</p>
 ]]></content>
       <categories>
-        <category>通信协议</category>
+        <category>lua语言</category>
       </categories>
       <tags>
-        <tag>UART</tag>
+        <tag>lua</tag>
       </tags>
   </entry>
   <entry>
-    <title>SPI原理</title>
-    <url>/2020/06/19/SPI/</url>
-    <content><![CDATA[<p>SPI 协议是由摩托罗拉公司提出的通讯协议(Serial Peripheral Interface)，即串行外围设备接口，是一种高速全双工的通信总线。它被广泛地使用在 ADC、 LCD 等设备与 MCU 间，要求通讯速率较高的场合。</p>
-<p>SPI接口具有如下优点：</p>
-<ul>
-<li>支持全双工操作；</li>
-<li>操作简单；</li>
-<li>数据传输速率较高。</li>
-</ul>
-<p>SPI接口具有如下缺点：</p>
-<ul>
-<li>需要占用主机较多的口线（每个从机都需要一根片选线）；</li>
-<li>只支持单个主机。</li>
-<li>没有指定的流控制，没有应答机制确认是否接收到数据。</li>
-</ul>
-<h1 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h1><p><img src="/images/13.png" alt=""></p>
+    <title>Makefile基本语法</title>
+    <url>/2020/06/10/makefile/</url>
+    <content><![CDATA[<h1 id="什么是Makefile"><a href="#什么是Makefile" class="headerlink" title="什么是Makefile"></a>什么是Makefile</h1><p>使用 GCC 编译器在 Linux 进行 C 语言编译，通过在终端执行 gcc 命令来完成 C 文件的编译，如果我们的工程只有一两个 C 文件还好，需要输入的命令不多，当文件有几十、上百甚至上万个的时候用终端输入 GCC 命令的方法显然是不现实的。如果我们能够编写一个文件，这个文件描述了编译哪些源码文件、如何编译那就好了，每次需要编译工程的时只需要使用这个文件就行了。这种问题怎么可能难倒聪明的程序员，为此提出了一个解决大工程编译的工具： make，描述哪些文件需要编译、哪些需要重新编译的文件就叫做 Makefile，命令即可完成整个工程的自动编译，极大的提高了软件开发的效率。</p>
+<h1 id="Makefile语法"><a href="#Makefile语法" class="headerlink" title="Makefile语法"></a>Makefile语法</h1><h2 id="Makefile文件的创建和运行"><a href="#Makefile文件的创建和运行" class="headerlink" title="Makefile文件的创建和运行"></a>Makefile文件的创建和运行</h2><p>在工程目录下创建名为“Makefile”的文件，文件名一定要叫做“Makefile”！！！区分大小写</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">main: main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">  gcc -o main main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">main<span class="selector-class">.o</span>: main.c</span><br><span class="line">  gcc -c main.c</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-class">.o</span>: <span class="selector-tag">input</span>.c</span><br><span class="line">  gcc -c <span class="selector-tag">input</span>.c</span><br><span class="line">calcu<span class="selector-class">.o</span>: calcu.c</span><br><span class="line">  gcc -c calcu.c</span><br><span class="line"> </span><br><span class="line">clean:</span><br><span class="line">  rm *.o</span><br><span class="line">  rm main</span><br></pre></td></tr></table></figure>
+<p>上述代码中所有行首需要空出来的地方一定要<strong><em>使用“TAB”键！</em></strong>不要使用空格键！ 这是Makefile 的语法要求</p>
 <a id="more"></a>
 
-<p>SPI 通讯使用 3 条总线及片选线， 3 条总线分别为 SCK、 MOSI、 MISO，片选线为 SS，它们的作用介绍如下： </p>
-<ol>
-<li>nSS(Slave Select)：片选信号线，用于选中SPI从设备。每个从设备独立拥有这条nSS信号线，占据主机的一个引脚。设备的其他总线是并联到SPI主机的，即无论多少个从设备，都共同使用这3条总线。当从设备上的nSS引脚被置拉低时表明该从设备被主机选中。</li>
-<li>SCK(Serial Clock)：时钟信号线，通讯数据同步用。时钟信号由通讯主机产生，它决定了SPI的通讯速率。</li>
-<li>MOSI(Master Ouput Slave Input)：主机(数据)输出/从设备(数据)输入引脚，即这条信号线上传输从主机到从机的数据。</li>
-<li>MISO(Master Input Slave Ouput)：主机(数据)输入/从设备(数据)输出引脚，即这条信号线上传输从机从到主机的数据主从机通过两条信号线来传输数据，那么自然是全双工通讯的了。之前的I2C通讯，数据只在一条SDA线上传输，主从机数据交互只能采用半双工。</li>
-</ol>
-<h1 id="协议层"><a href="#协议层" class="headerlink" title="协议层"></a>协议层</h1><p>与 I2C 的类似， SPI 协议定义了通讯的起始和停止信号、数据有效性、时钟同步等环节。</p>
-<h2 id="SPI-基本通讯过程"><a href="#SPI-基本通讯过程" class="headerlink" title="SPI 基本通讯过程"></a>SPI 基本通讯过程</h2><p> SPI 通讯的通讯时序<br><img src="/images/12.png" alt=""><br>这是一个主机的通讯时序。 NSS、 SCK、 MOSI 信号都由主机控制产生，而 MISO 的信号由从机产生，主机通过该信号线读取从机的数据。 MOSI 与 MISO 的信号只在 NSS 为低电平的时候才有效，在 SCK 的每个时钟周期 MOSI 和 MISO 传输一位数据。以上通讯流程中包含的各个信号分解如下：</p>
-<h2 id="通讯的起始和停止信号"><a href="#通讯的起始和停止信号" class="headerlink" title="通讯的起始和停止信号"></a>通讯的起始和停止信号</h2><p>标号①处， nSS信号由高电平变为低电平即为SPI通讯的起始信号，反过来，nSS信号由低电平变为高电平即为SPI通讯的结束信号。这个可比I2C简单得多了。当从机检测到自身的nSS引脚被拉低时就知道自己被主机选中，准备和主机进行通讯</p>
-<h2 id="数据有效性"><a href="#数据有效性" class="headerlink" title="数据有效性"></a>数据有效性</h2><p>SPI 使用 MOSI 及 MISO 信号线来传输数据，使用 SCK 信号线进行数据同步。 MOSI 及MISO 数据线在 SCK 的每个时钟周期传输一位数据，且数据输入输出是同时进行的。数据传输时， MSB 先行或 LSB 先行并没有作硬性规定，但要保证两个 SPI 通讯设备之间使用同样的协定，一般都会采用图中的 MSB 先行模式。<br>观察图中的②③④⑤标号处， MOSI 及 MISO 的数据在 SCK 的上升沿期间变化输出，在SCK 的下降沿时被采样。即在 SCK 的下降沿时刻， MOSI 及 MISO 的数据有效，高电平时表示数据“1”，为低电平时表示数据“0”。在其它时刻，数据无效， MOSI及 MISO 为下一次表示数据做准备。<br>SPI 每次数据传输可以 8 位或 16 位为单位，每次传输的单位数不受限制。 </p>
-<hr>
-<p>这里需要再提及的概念是时钟极性(CPOL)和时钟相位(CPHA)。<br>  时钟极性(CPOL)指通讯设备处于空闲状态(SPI开始通讯前、nSS线无效)时，SCK的状态。</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">CPOL</span> = <span class="number">0</span>：SCK在空闲时为低电平</span><br><span class="line"><span class="attr">CPOL</span> = <span class="number">1</span>：SCK在空闲时为高电平</span><br></pre></td></tr></table></figure>
-<p>  时钟相位(CPHA)指数据的采样时刻位于SCK的偶数边沿采样还是奇数边沿采样。</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">CPHA</span> = <span class="number">0</span>：在SCK的奇数边沿采样</span><br><span class="line"><span class="attr">CPHA</span> = <span class="number">1</span>：在SCK的偶数边沿采样</span><br></pre></td></tr></table></figure>
-<p>  那么这样说来，<strong>*SPI的采样时刻并非由上升沿/下降沿决定的</strong>。注意的是，在数据采样时刻，MOSI和MOSI的电平为有效电平，数据不能在这个时刻进行切换注意的是，在数据采样时刻，MOSI和MOSI的电平为有效电平，数据不能在这个时刻进行切换。在非采样时刻MOSI和MISO上的信号才能切换</p>
-<h1 id="编程要点"><a href="#编程要点" class="headerlink" title="编程要点"></a>编程要点</h1><p>(1) 初始化通讯使用的目标引脚及端口时钟；<br>(2) 使能 SPI 外设的时钟；<br>(3) 配置 SPI 外设的模式、地址、速率等参数并使能 SPI 外设；<br>(4) 编写基本 SPI 按字节收发的函数；<br>(5) 编写读写操作的的函数；<br>(6) 编写测试程序，对读写数据进行校验。 </p>
+<p>Makefile 编写好以后我们就可以使用 make 命令来编译我们的工程了，直接在命令行中输入“make”即可， make 命令会在当前目录下查找是否存在“Makefile”这个文件，如果存在的话就会按照 Makefile 里面定义的编译方式进行编译。使用命令“make”编译完成以后就会在当前工程目录下生成各种.o 和可执行文件，说明我们编译成功了。</p>
+<h2 id="规则格式"><a href="#规则格式" class="headerlink" title="规则格式"></a>规则格式</h2><figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">目标…... : 依赖文件集合……</span><br><span class="line">命令 <span class="number">1</span></span><br><span class="line">命令 <span class="number">2</span></span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+<p>比如下面这条规则：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">main : main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">	gcc -o main main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br></pre></td></tr></table></figure>
+<p>这条规则的目标是 main， main.o、 input.o 和 calcu.o 是生成 main 的依赖文件，如果要更新目标 main，就必须先更新它的所有依赖文件，如果依赖文件中的任何一个有更新，那么目标也必须更新，“更新”就是执行一遍规则中的命令列表。</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">main: main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">  gcc -o main main<span class="selector-class">.o</span> <span class="selector-tag">input</span><span class="selector-class">.o</span> calcu.o</span><br><span class="line">main<span class="selector-class">.o</span>: main.c</span><br><span class="line">  gcc -c main.c</span><br><span class="line"><span class="selector-tag">input</span><span class="selector-class">.o</span>: <span class="selector-tag">input</span>.c</span><br><span class="line">  gcc -c <span class="selector-tag">input</span>.c</span><br><span class="line">calcu<span class="selector-class">.o</span>: calcu.c</span><br><span class="line">  gcc -c calcu.c</span><br><span class="line"> </span><br><span class="line">clean:</span><br><span class="line">  rm *.o</span><br><span class="line">  rm main</span><br></pre></td></tr></table></figure>
+<p>上述代码中一共有 5 条规则，1-2 行为第一条规则， 3-4 行为第二条规则， 5-6 行为第三条规则， 7-8 行为第四条规则， 10-12 为第五条规则， make 命令在执行这个 Makefile 的时候其执<br>行步骤如下：<br>首先更新第一条规则中的 main，第一条规则的目标成为默认目标，只要默认目标更新了那么就认为 Makefile 的工作，完成了整个 Makefile 就是为了完成这个工作。在第一次编译的时候由于 main 还不存在，因此第一条规则会执行，第一条规则依赖于文件 main.o、 input.o 和 calcu.o这个三个.o 文件，这三个.o 文件目前还都没有，因此必须先更新这三个文件。 make 会查找以这三个.o 文件为目标的规则并执行。以 main.o 为例，发现更新 main.o 的是第二条规则，因此会执行第二条规则，第二条规则里面的命令为“gcc –c main.c”，这行命令很熟悉了吧，就是不链接编译 main.c，生成 main.o，其它两个.o 文件同理。最后一个规则目标是 clean，它没有依赖文件，因此会默认为依赖文件都是最新的，所以其对应的命令不会执行，当我们想要执行 clean 的话可以直接使用命令“make clean”，执行以后就会删除当前目录下所有的.o 文件以及 main，因此clean 的功能就是完成工程的清理</p>
+<h2 id="Makefile变量"><a href="#Makefile变量" class="headerlink" title="Makefile变量"></a>Makefile变量</h2><p><strong><em>不像 C 语言中的变量有 int、 char等各种类型， Makefile 中的变量都是字符串！</em></strong></p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Makefile 变量的使用</span></span><br><span class="line">objects = main.o input.o calcu.o</span><br><span class="line"><span class="section">main: <span class="variable">$(objects)</span></span></span><br><span class="line">  gcc -o main <span class="variable">$(objects)</span></span><br></pre></td></tr></table></figure>
+<p>第 1 行是注释， Makefile 中可以写注释，注释开头要用符号“#”，不能用 C 语言中的“//”或者“/**/”！第 2 行我们定义了一个变量 objects，并且给这个变量进行了赋值，其值为字符串“main.o input.o calcu.o”，第 3 和 4 行使用到了变量 objects，Makefile 中变量的引用方法是“$(变量名)”，比如本例中的“$(objects)”就是使用变量 objects。</p>
+<h3 id="赋值符"><a href="#赋值符" class="headerlink" title="赋值符"></a>赋值符</h3><p>1.赋值符“=”</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">name = zou</span><br><span class="line">curname = <span class="variable">$(name)</span></span><br><span class="line">name = zouding</span><br><span class="line"></span><br><span class="line"><span class="section">print:</span></span><br><span class="line">  @echo curname: <span class="variable">$(curname)</span></span><br></pre></td></tr></table></figure>
+<p>在 Makefile 要输出一串字符的话使用“echo”，就和 C 语言中的“printf”一样，“echo”前面加了个“@”符号，因为 Make 在执行的过程中会自动输出命令执行过程，在命令前面加上“@”的话就不会输出命令执行过程<br>print为zouding，“=”变量的真实值取决于它所引用的变量的最后一次有效值</p>
+<p>2.赋值符“：=“</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">name = zou</span><br><span class="line">curname := <span class="variable">$(name)</span></span><br><span class="line">name = zouding</span><br><span class="line"></span><br><span class="line"><span class="section">print:</span></span><br><span class="line">  @echo curname: <span class="variable">$(curname)</span></span><br></pre></td></tr></table></figure>
+<p>print的为zou，”:=”只能使用前面赋的值</p>
+<p>3.赋值符”？=“<br><code>curname?=zouding</code><br>上述代码的意思就是，如果变量 curname 前面没有被赋值，那么此变量就是“zouding”，如果前面已经赋过值了，那么就使用前面赋的值。</p>
+<p>4.追加变量”+=“</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">objects = main.o inpiut.o</span><br><span class="line">objects += calcu.o</span><br></pre></td></tr></table></figure>
+<p>一开始变量 objects 的值为“main.o input.o”，后面我们给他追加了一个“calcu.o”，因此变量 objects 变成了<br>“main.o input.o calcu.o”，这个就是变量的追加。</p>
+<h2 id="自动化变量"><a href="#自动化变量" class="headerlink" title="自动化变量"></a>自动化变量</h2><p>所谓自动化变量就是这种变量会把模式中所定义的一系列的文件自动的挨个取出，直至所有的符合模式的文件都取完，自动化变量只应该出现在规则的命令中，常用的自动化变量如表 </p>
+<table>
+<thead>
+<tr>
+<th>自动化变量</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$@</td>
+<td align="left">规则中的目标集合，在模式规则中，如果有多个目标的话，“$@”表示匹配模式中定义的目标集合。</td>
+</tr>
+<tr>
+<td>$%</td>
+<td align="left">当目标是函数库的时候表示规则中的目标成员名，如果目标不是函数库文件，那么其值为空。</td>
+</tr>
+<tr>
+<td>$&lt;</td>
+<td align="left">依赖文件集合中的第一个文件，如果依赖文件是以模式(即“%” )定义的，那么“$&lt;”就是符合模式的一系列的文件集合。</td>
+</tr>
+<tr>
+<td>$?</td>
+<td align="left">所有比目标新的依赖目标集合，以空格分开。</td>
+</tr>
+<tr>
+<td>$^</td>
+<td align="left">所有依赖文件的集合，使用空格分开，如果在依赖文件中有多个重复的文件，“$^”会去除重复的依赖文件，值保留一份。</td>
+</tr>
+<tr>
+<td>$+</td>
+<td align="left">和“$^”类似，但是当依赖文件存在重复的话不会去除重复的依赖文件。</td>
+</tr>
+<tr>
+<td>$*</td>
+<td align="left">这个变量表示目标模式中”%”及其之前的部分，如果目标是 test/a.test.c，目标模式为 a.%.c，那么“$*”就是 test/a.test。</td>
+</tr>
+</tbody></table>
+<p>常用的三种：<strong><em>$@、 $&lt;和$^</em></strong></p>
+<h2 id="模式规则"><a href="#模式规则" class="headerlink" title="模式规则"></a>模式规则</h2><p>模式规则中，至少在规则的目标定定义中要包涵“%”，否则就是一般规则，目标中的“%”表示对文件名的匹配，“%”表示长度任意的非空字符串，比如“%.c”就是所有的以.c 结尾的文件</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">objects</span> = <span class="string">main.o input.o calcu.o</span></span><br><span class="line"><span class="attr">main</span>: <span class="string">$(objects)</span></span><br><span class="line">	<span class="attr">gcc</span> <span class="string">-o main $(objects)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">%.o</span> : <span class="string">%.c</span></span><br><span class="line">	<span class="attr">gcc</span> <span class="string">-c $&lt;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">clean</span>:<span class="string"></span></span><br><span class="line">	<span class="attr">rm</span> <span class="string">*.o</span></span><br><span class="line">	<span class="attr">rm</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+<p>上诉代码可代替2.1中的代码，更加精简</p>
+<h2 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h2><p>Makefile 中的函数是已经定义好的，我们直接使用，不支持我们自定义函数。<br>函数的用法如下：<br><code>$(函数名 参数集合）</code></p>
+<p>1、函数 subst<br>函数 subst 用来完成字符串替换，调用形式如下：<br><code>$(subst &lt;from&gt;,&lt;to&gt;,&lt;text&gt;)</code><br>此函数的功能是将字符串<text>中的<from>内容替换为<to>，函数返回被替换以后的字符串，比如如下示例：<br><code>$(subst zou,ZZK,my name is zzk)</code><br>把字符串“my name is zzk”中的“zzk”替换为“zou”，替换完成以后的字符串为“my name is zou”。</p>
+<p>2、函数 patsubst<br>函数 patsubst 用来完成模式字符串替换，使用方法如下：<br><code>$(patsubst &lt;pattern&gt;,&lt;replacement&gt;,&lt;text&gt;)</code><br>此函数查找字符串<text>中的单词是否符合模式<pattern>，如果匹配就用<replacement>来替换掉， <pattern>可以使用包括通配符“%”，表示任意长度的字符串，函数返回值就是替换后<br>的字符串。如果<replacement>中也包涵“%”，那么<replacement>中的“%”将是<pattern>中的那个“%”所代表的字符串，比如：<br><code>$(patsubst %.c,%.o,a.c b.c c.c)</code><br>将字符串“a.c b.c c.c”中的所有符合“%.c”的字符串，替换为“%.o”，替换完成以后的字符串为“a.o b.o c.o”。</p>
+<p>符串为“a.o b.o c.o”。<br>3、函数 dir<br>函数 dir 用来获取目录，使用方法如下：<br><code>$(dir &lt;names…&gt;)</code><br>此函数用来从文件名序列<names>中提取出目录部分，返回值是文件名序列<names>的目录部分，比如：<br><code>$(dir &lt;/src/a.c&gt;)</code><br>提取文件“/src/a.c”的目录部分，也就是“/src”。</p>
+<p>4、函数 notdir<br>函数 notdir 看名字就是知道去除文件中的目录部分，也就是提取文件名，用法如下：<br><code>$(notdir &lt;names…&gt;)</code><br>此函数用与从文件名序列<names>中提取出文件名非目录部分，比如：<br><code>$(notdir &lt;/src/a.c&gt;)</code><br>提取文件“/src/a.c”中的非目录部分，也就是文件名“a.c”。</p>
+<p>5、函数 foreach<br>foreach 函数用来完成循环，用法如下：<br><code>$(foreach &lt;var&gt;, &lt;list&gt;,&lt;text&gt;)</code><br>此函数的意思就是把参数list中的单词逐一取出来放到参数var中，然后再执行text所包含的表达式。每次text都会返回一个字符串，循环的过程中， text中所包含的每个字符串会以空格隔开，最后当整个循环结束时，<text>所返回的每个字符串所组成的整个字符串将会是函数 foreach 函数的返回值。</p>
 ]]></content>
       <categories>
-        <category>通信协议</category>
+        <category>Makefile基本语法</category>
       </categories>
       <tags>
-        <tag>SPI</tag>
+        <tag>Makefile</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>lua数据类型</title>
+    <url>/2020/06/11/lua%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
+    <content><![CDATA[<p>Lua 中有 8 个基本类型分别为：nil、boolean、number、string、userdata、function、thread 和 table。</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>nil</td>
+<td>这个最简单，只有值nil属于该类，表示一个无效值（在条件表达式中相当于false）。</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>包含两个值：false和true。</td>
+</tr>
+<tr>
+<td>number</td>
+<td>表示双精度类型的实浮点数</td>
+</tr>
+<tr>
+<td>string</td>
+<td>字符串由一对双引号或单引号来表示</td>
+</tr>
+<tr>
+<td>function</td>
+<td>由 C 或 Lua 编写的函数</td>
+</tr>
+<tr>
+<td>userdata</td>
+<td>表示任意存储在变量中的C数据结构</td>
+</tr>
+<tr>
+<td>thread</td>
+<td>表示执行的独立线路，用于执行协同程序</td>
+</tr>
+<tr>
+<td>table</td>
+<td>Lua 中的表（table）其实是一个”关联数组”（associative arrays），数组的索引可以是数字、字符串或表类型。在 Lua 里，table 的创建是通过”构造表达式”来完成，最简单构造表达式是{}，用来创建一个空表。</td>
+</tr>
+</tbody></table>
+<a id="more"></a>
+<figure class="highlight livescript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span><span class="function"><span class="params">(type(<span class="string">"Hello world"</span>))</span>      --&gt;</span> string</span><br><span class="line"><span class="built_in">print</span><span class="function"><span class="params">(type(<span class="number">10.4</span>*<span class="number">3</span>))</span>             --&gt;</span> number</span><br><span class="line"><span class="built_in">print</span><span class="function"><span class="params">(type(<span class="built_in">print</span>))</span>              --&gt;</span> <span class="keyword">function</span></span><br><span class="line"><span class="built_in">print</span><span class="function"><span class="params">(type(type))</span>               --&gt;</span> <span class="keyword">function</span></span><br><span class="line"><span class="built_in">print</span><span class="function"><span class="params">(type(<span class="literal">true</span>))</span>               --&gt;</span> boolean</span><br><span class="line"><span class="built_in">print</span><span class="function"><span class="params">(type(nil))</span>                --&gt;</span> nil</span><br><span class="line"><span class="built_in">print</span><span class="function"><span class="params">(type(type(X)))</span>            --&gt;</span> string</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="nil"><a href="#nil" class="headerlink" title="nil"></a>nil</h2><p>nil 类型表示一种没有任何有效值，它只有一个值 – nil，例如打印一个没有赋值的变量，便会输出一个 nil 值：</p>
+<figure class="highlight lisp"><table><tr><td class="code"><pre><span class="line">&gt; print(<span class="name">type</span>(<span class="name">a</span>))</span><br><span class="line"><span class="literal">nil</span></span><br></pre></td></tr></table></figure>
+<p>对于全局变量和 table，nil 还有一个”删除”作用，给全局变量或者 table 表里的变量赋一个 nil 值，等同于把它们删掉</p>
+<p>nil 作比较时应该加上双引号 “：</p>
+<figure class="highlight elm"><table><tr><td class="code"><pre><span class="line">&gt; <span class="keyword">type</span>(<span class="type">X</span>)</span><br><span class="line"><span class="title">nil</span></span><br><span class="line">&gt; <span class="keyword">type</span>(<span class="type">X</span>)==nil</span><br><span class="line"><span class="title">false</span></span><br><span class="line">&gt; <span class="keyword">type</span>(<span class="type">X</span>)=="nil"</span><br><span class="line"><span class="title">true</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="boolean"><a href="#boolean" class="headerlink" title="boolean"></a>boolean</h2><p>boolean 类型只有两个可选值：true（真） 和 false（假），Lua 把 false 和 nil 看作是 false，其他的都为 true，<strong><em>数字 0 也是 true</em></strong></p>
+<hr>
+<h2 id="number（数字）"><a href="#number（数字）" class="headerlink" title="number（数字）"></a>number（数字）</h2><p>Lua 默认只有一种 number 类型 – double（双精度）类型（默认类型可以修改 luaconf.h 里的定义），以下几种写法都被看作是 number 类型</p>
+<hr>
+<h2 id="string（字符串）"><a href="#string（字符串）" class="headerlink" title="string（字符串）"></a>string（字符串）</h2><p>字符串由一对双引号或单引号来表示。</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">string1</span> = <span class="string">"this is string1"</span></span><br><span class="line"><span class="attr">string2</span> = <span class="string">'this is string2'</span></span><br></pre></td></tr></table></figure>
+<p>也可以用 2 个方括号 “[[]]” 来表示”一块”字符串。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">html = [[</span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.runoob.com/"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line">]]</span><br><span class="line">print(html)</span><br></pre></td></tr></table></figure>
+
+<p>在对一个数字字符串上进行算术操作时，Lua会尝试将这个数字字符串转成一个数字</p>
+<figure class="highlight isbl"><table><tr><td class="code"><pre><span class="line">&gt; <span class="function"><span class="title">print</span>(<span class="string">"2"</span> + <span class="number">6</span>)</span></span><br><span class="line"><span class="number">8.0</span></span><br><span class="line">&gt; <span class="function"><span class="title">print</span>(<span class="string">"2"</span> + <span class="string">"6"</span>)</span></span><br><span class="line"><span class="number">8.0</span></span><br><span class="line">&gt; <span class="function"><span class="title">print</span>(<span class="string">"2 + 6"</span>)</span></span><br><span class="line"><span class="number">2</span> + <span class="number">6</span></span><br><span class="line">&gt; <span class="function"><span class="title">print</span>(<span class="string">"-2e2"</span> * <span class="string">"6"</span>)</span></span><br><span class="line">-<span class="number">1200.0</span></span><br></pre></td></tr></table></figure>
+<p>字符串连接使用的是 ..  如</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">&gt; <span class="builtin-name">print</span>(<span class="string">"a"</span> <span class="built_in">..</span> <span class="string">'b'</span>)</span><br><span class="line">ab</span><br><span class="line">&gt; <span class="builtin-name">print</span>(157 <span class="built_in">..</span> 428)</span><br><span class="line">157428</span><br></pre></td></tr></table></figure>
+
+<p>使用 # 来计算字符串的长度，放在字符串前面</p>
+<figure class="highlight plain"><figcaption><span>len </span></figcaption><table><tr><td class="code"><pre><span class="line">&gt; print(#len)</span><br><span class="line">14</span><br><span class="line">&gt; print(#&quot;www.runoob.com&quot;)</span><br><span class="line">14</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="table表"><a href="#table表" class="headerlink" title="table表"></a>table表</h2><p>在 Lua 里，table 的创建是通过”构造表达式”来完成，最简单构造表达式是{}，用来创建一个空表。也可以在表里添加一些数据，直接初始化表:<br><code>local tbl1 = {}  --创建一个空表</code><br><code>local tbl2 = {&quot;apple&quot;, &quot;pear&quot;, &quot;orange&quot;, &quot;grape&quot;}  --初始化表</code></p>
+<p>不同于其他语言的数组把 0 作为数组的初始索引，在 Lua 里表的默认初始索引一般以 1 开始。Lua 中的表（table）其实是一个”关联数组”（associative arrays），数组的索引可以是数字或者是字符串。</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">a = &#123;&#125;</span><br><span class="line">a[<span class="string">"key"</span>] = <span class="string">"value"</span></span><br><span class="line"><span class="type">key</span> = <span class="number">10</span></span><br><span class="line">a[<span class="type">key</span>] = <span class="number">22</span></span><br><span class="line">a[<span class="type">key</span>] = a[<span class="type">key</span>] + <span class="number">11</span></span><br><span class="line">for k, v in pairs(a) do</span><br><span class="line">    print(k .. <span class="string">" : "</span> .. v)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">key :</span> <span class="string">value</span></span><br><span class="line"><span class="attr">10 :</span> <span class="number">33</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>lua语言</category>
+      </categories>
+      <tags>
+        <tag>lua</tag>
       </tags>
   </entry>
 </search>
