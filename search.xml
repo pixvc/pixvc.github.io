@@ -110,46 +110,6 @@
       </tags>
   </entry>
   <entry>
-    <title>lua函数</title>
-    <url>/2020/06/12/Lua%E5%87%BD%E6%95%B0/</url>
-    <content><![CDATA[<p>函数定义</p>
-<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line">optional_function_scope <span class="function"><span class="keyword">function</span> <span class="title">function_name</span><span class="params">( argument1, argument2, argument3<span class="rest_arg">..., argumentn</span>)</span></span></span><br><span class="line"><span class="function">    <span class="title">function_body</span></span></span><br><span class="line"><span class="function">    <span class="title">return</span> <span class="title">result_params_comma_separated</span></span></span><br><span class="line"><span class="function"><span class="title">end</span></span></span><br></pre></td></tr></table></figure>
-
-<a id="more"></a>
-
-<p>解析：</p>
-<ul>
-<li>optional_function_scope: 该参数是可选的制定函数是全局函数还是局部函数，未设置该参数默认为全局函数，如果你需要设置函数为局部函数需要使用关键字 local。</li>
-<li>function_name: 指定函数名称。</li>
-<li>argument1, argument2, argument3…, argumentn: 函数参数，多个参数以逗号隔开，函数也可以不带参数。</li>
-<li>function_body: 函数体，函数中需要执行的代码语句块。</li>
-<li>result_params_comma_separated: 函数返回值，Lua语言函数可以返回多个值，每个值以逗号隔开。</li>
-</ul>
-<hr>
-<h2 id="多返回值"><a href="#多返回值" class="headerlink" title="多返回值"></a>多返回值</h2><p>Lua函数可以返回多个结果值，在return后列出要返回的值的列表即可返回多值</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">maximum</span> <span class="params">(a)</span></span></span><br><span class="line">    <span class="keyword">local</span> mi = <span class="number">1</span>             <span class="comment">-- 最大值索引</span></span><br><span class="line">    <span class="keyword">local</span> m = a[mi]          <span class="comment">-- 最大值</span></span><br><span class="line">    <span class="keyword">for</span> i,val <span class="keyword">in</span> <span class="built_in">ipairs</span>(a) <span class="keyword">do</span></span><br><span class="line">       <span class="keyword">if</span> val &gt; m <span class="keyword">then</span></span><br><span class="line">           mi = i</span><br><span class="line">           m = val</span><br><span class="line">       <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> m, mi</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(maximum(&#123;<span class="number">8</span>,<span class="number">10</span>,<span class="number">23</span>,<span class="number">12</span>,<span class="number">5</span>&#125;))</span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line"><span class="number">23</span> <span class="number">3</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h2><p>Lua 函数可以接受可变数目的参数，和 C 语言类似，在函数参数列表中使用三点 … 表示函数有可变的参数</p>
-<figure class="highlight nimrod"><table><tr><td class="code"><pre><span class="line">function add(...)  </span><br><span class="line">local s = <span class="number">0</span>  </span><br><span class="line">  <span class="keyword">for</span> i, v <span class="keyword">in</span> ipairs<span class="meta">&#123;...&#125;</span> <span class="keyword">do</span>   --&gt; <span class="meta">&#123;...&#125;</span> 表示一个由所有变长参数构成的数组  </span><br><span class="line">    s = s + v  </span><br><span class="line">  <span class="keyword">end</span>  </span><br><span class="line">  <span class="keyword">return</span> s  </span><br><span class="line"><span class="keyword">end</span>  </span><br><span class="line">print(add(<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>))  ---&gt;<span class="number">25</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight nimrod"><table><tr><td class="code"><pre><span class="line">function average(...)</span><br><span class="line">   <span class="literal">result</span> = <span class="number">0</span></span><br><span class="line">   local arg=<span class="meta">&#123;...&#125;</span>    --&gt; arg 为一个表，局部变量</span><br><span class="line">   <span class="keyword">for</span> i,v <span class="keyword">in</span> ipairs(arg) <span class="keyword">do</span></span><br><span class="line">      <span class="literal">result</span> = <span class="literal">result</span> + v</span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   print(<span class="string">"总共传入 "</span> .. <span class="comment">#arg .. " 个数")</span></span><br><span class="line">   <span class="keyword">return</span> <span class="literal">result</span>/<span class="comment">#arg</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">"平均值为"</span>,average(<span class="number">10</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>))</span><br></pre></td></tr></table></figure>
-
-
-<p>有时候我们可能需要几个固定参数加上可变参数，固定参数必须放在变长参数之前:</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fwrite</span><span class="params">(fmt, ...)</span></span>  <span class="comment">---&gt; 固定的参数fmt</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">io</span>.<span class="built_in">write</span>(<span class="built_in">string</span>.<span class="built_in">format</span>(fmt, ...))    </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">fwrite(<span class="string">"runoob\n"</span>)       <span class="comment">---&gt;fmt = "runoob", 没有变长参数。  </span></span><br><span class="line">fwrite(<span class="string">"%d%d\n"</span>, <span class="number">1</span>, <span class="number">2</span>)   <span class="comment">---&gt;fmt = "%d%d", 变长参数为 1 和 2</span></span><br><span class="line"></span><br><span class="line">输出结果：</span><br><span class="line">runoob</span><br><span class="line"><span class="number">12</span></span><br></pre></td></tr></table></figure>
-
-<p>通常在遍历变长参数的时候只需要使用 {…}，然而变长参数可能会包含一些 nil，那么就可以用 select 函数来访问变长参数了：select(‘#’, …) 或者 select(n, …)</p>
-<p>select(‘#’, …) 返回可变参数的长度<br>select(n, …) 用于返回 n 到 select(‘#’,…) 的参数</p>
-<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">do</span>  </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(<span class="rest_arg">...)  </span></span></span></span><br><span class="line"><span class="function"><span class="params"><span class="rest_arg">        for</span> i = 1, select(<span class="string">'#'</span>, <span class="rest_arg">...) do</span>  --&gt;获取参数总数</span></span></span><br><span class="line"><span class="function"><span class="params">            local arg = select(i, <span class="rest_arg">...); --&gt;读取参数</span></span></span></span><br><span class="line"><span class="function"><span class="params"><span class="rest_arg">            print</span>(<span class="string">"arg"</span>, arg)</span></span>;  </span><br><span class="line">        end  </span><br><span class="line">    end  </span><br><span class="line"> </span><br><span class="line">    foo(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>);  </span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>lua语言</category>
-      </categories>
-      <tags>
-        <tag>lua</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SPI原理</title>
     <url>/2020/06/19/SPI/</url>
     <content><![CDATA[<p>SPI 协议是由摩托罗拉公司提出的通讯协议(Serial Peripheral Interface)，即串行外围设备接口，是一种高速全双工的通信总线。它被广泛地使用在 ADC、 LCD 等设备与 MCU 间，要求通讯速率较高的场合。</p>
@@ -192,29 +152,6 @@
       </categories>
       <tags>
         <tag>SPI</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>c语言中对可变参数列表的简单理解</title>
-    <url>/2020/06/12/c%E8%AF%AD%E8%A8%80%E5%8F%AF%E5%8F%98%E6%95%B0%E7%9B%AE%E5%8F%82%E6%95%B0/</url>
-    <content><![CDATA[<p>C中变长实参头文件stdarg.h提供了一个数据类型va-list和三个宏（va-start、va-arg和va-end），用它们在被调用函数不知道参数个数和类型时对可变参数表进行测试，从而为访问可变参数提供了方便且有效的方法。va-list是一个char类型的指针，当被调用函数使用一个可变参数时，它声明一个类型为va-list的变量，该变量用来指向va-arg和va-end所需信息的位置。下面给出va_list、va-start、va-arg和va-end在C中的源码：<br><code>typedef char *  va_list;</code><br><code>#define va_start(ap,v)  ( ap = (va_list)&amp;v + _INTSIZEOF(v) )   //得到可变参数中第一个参数的首地址</code><br><code>#define va_arg(ap,type)    ( *(type *)((ap += _INTSIZEOF(type)) - _INTSIZEOF(type)) )    //将参数转换成需要的类型，并使ap指向下一个参数</code><br><code>#define va_end(ap)      ( ap = (va_list)0 )//功能就是把指针ap赋值为0，使它不指向内存的变量</code></p>
-<a id="more"></a>
-<hr>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdarg.h&gt;</span></span></span><br><span class="line"> <span class="comment">/*函数sum中首先定义了可变参数表指针vap，而后通过va_start ( vap, n )取得了参数表首地址（赋值给了vap），</span></span><br><span class="line"><span class="comment"> 其后的for循环则用来遍历可变参数表。*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> n,...)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i , sum = <span class="number">0</span>;</span><br><span class="line">	va_list vap;  <span class="comment">//声明va_list变量</span></span><br><span class="line">	va_start(vap , n);     <span class="comment">//指向可变参数表中的第一个参数</span></span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span> ; i &lt; n ; ++i)</span><br><span class="line">		sum += va_arg(vap , <span class="keyword">int</span>);     <span class="comment">//取出可变参数表中的参数，并修改参数指针vap使其增加以指向表中下一个参数</span></span><br><span class="line">	va_end(vap);    <span class="comment">//把指针vap赋值为0</span></span><br><span class="line">	<span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> m = sum(<span class="number">3</span> , <span class="number">45</span> , <span class="number">89</span> , <span class="number">72</span>);</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;m&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>函数原型声明，至少需要一个确定的参数，注意括号内的省略号</li>
-<li>在调用参数表之前，定义一个 va_list 类型的变量，(假设va_list 类型变量被定义为ap)；</li>
-<li>然后应该对ap进行初始化，让它指向可变参数表里面的第一个参数，这是通过 va_start 来实现的，第一个参数是 ap 本身，第二个参数是在变参表前面紧挨着的一个变量,即“…”之前的那个参数；</li>
-<li>然后是获取参数，调用va_arg，它的第一个参数是ap，第二个参数是要获取的参数的指定类型，然后返回这个指定类型的值，并且把ap的位置指向变参表的下一个变量位置；</li>
-<li>获取所有的参数之后，我们有必要将这个ap指针关掉，以免发生危险，方法是调用 va_end，他是输入的参数ap置为NULL，应该养成获取完参数表之后关闭指针的习惯。通常va_start和va_end是成对出现。<strong>va-end必须在va-arg读完所有参数后再调用</strong></li>
-</ul>
-]]></content>
-      <categories>
-        <category>C语言</category>
-      </categories>
-      <tags>
-        <tag>C语言</tag>
       </tags>
   </entry>
   <entry>
@@ -338,138 +275,47 @@
       </tags>
   </entry>
   <entry>
-    <title>Markdown基本语法</title>
-    <url>/2020/06/10/hello-world/</url>
-    <content><![CDATA[<h1 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h1><p>在source/_posts 文件夹下创建.md文件<br>配置属性</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Markdown基本语法</span></span><br><span class="line"><span class="attr">data:</span> <span class="number">2019</span><span class="number">-6</span><span class="number">-10</span></span><br><span class="line"><span class="attr">categories:</span>    </span><br><span class="line"><span class="bullet">-</span> <span class="string">lua语言</span>    <span class="comment">##添加到lua语言分类，也也可以新建一个分类</span></span><br><span class="line"><span class="string">tags：</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">lua</span>        <span class="comment">#添加标签</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">编程</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
-<p>文章写完回到终端 hexo g 再 hexo d</p>
+    <title>Lua循环</title>
+    <url>/2020/06/11/lua%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5/</url>
+    <content><![CDATA[<h1 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h1><h2 id="数值for循环"><a href="#数值for循环" class="headerlink" title="数值for循环"></a>数值for循环</h2><figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> var=<span class="built_in">exp1</span>,<span class="built_in">exp2</span>,exp3 <span class="built_in">do</span>  </span><br><span class="line">    &lt;执行体&gt;  </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>var 从 exp1 变化到 exp2，每次变化以 exp3 为步长递增 var，并执行一次 “执行体”。exp3 是可选的，如果不指定，<strong>默认为1。</strong></p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">(x)</span></span>  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"function"</span>)  </span><br><span class="line">    <span class="keyword">return</span> x*<span class="number">2</span>  </span><br><span class="line"><span class="keyword">end</span>  </span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>,f(<span class="number">5</span>) <span class="keyword">do</span> <span class="built_in">print</span>(i)  </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>for的三个表达式在循环开始前一次性求值，以后不再进行求值。比如上面的f(x)只会在循环开始前执行一次，其结果用在后面的循环中。</p>
 <a id="more"></a>
 
-<p>在写博客的时候在文章中使用&lt;!--more--&gt;进行手动截断,这样可以实现只显示摘要的效果，并且在摘要下方生成一个阅读全文的链接</p>
-<h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><p>Markdown 是一种标记语言，语法简单，易阅读易编写，可以让用户完全脱离鼠标写出样式丰富的文档，广受程序员喜爱，目前许多网站都已经支持通过 Markdown 语法来写文章或者发表评论。 </p>
-<h2 id="分级标题"><a href="#分级标题" class="headerlink" title="分级标题"></a>分级标题</h2><figure class="highlight clean"><table><tr><td class="code"><pre><span class="line"># 一级标题</span><br><span class="line">## 二级标题</span><br><span class="line">### 三级标题</span><br><span class="line">#### 四级标题</span><br><span class="line">##### 五级标题</span><br><span class="line">###### 六级标题</span><br></pre></td></tr></table></figure>
+<p>验证如下:<br>执行结果：</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">function</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">9</span></span><br><span class="line"><span class="number">10</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="斜体和粗体"><a href="#斜体和粗体" class="headerlink" title="斜体和粗体"></a>斜体和粗体</h2><figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line"><span class="strong">*这是斜体*</span> 或 <span class="emphasis">_这也是斜体_</span> </span><br><span class="line">*<span class="strong">*这是粗体*</span><span class="strong">*</span></span><br><span class="line"><span class="strong">*</span>*<span class="strong">*这是加粗斜体*</span>*<span class="strong">*</span></span><br><span class="line"><span class="strong">~~这是删除线~~</span></span><br></pre></td></tr></table></figure>
-<p>效果：<br><em>这是斜体</em> 或 <em>这也是斜体</em><br><strong>这是粗体</strong><br><strong><em>这是加粗斜体</em></strong><br><del>这是删除线</del> </p>
-<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><figure class="highlight gherkin"><table><tr><td class="code"><pre><span class="line">|<span class="string"> 表头1</span>|<span class="string">表头2</span>|<span class="string">表头3</span>|<span class="string">表头4</span></span><br><span class="line">|<span class="string">-</span>|<span class="string"> :- </span>|<span class="string"> :-: </span>|<span class="string"> -: </span>|</span><br><span class="line">|<span class="string">默认左对齐</span>|<span class="string">左对齐</span>|<span class="string">居中对其</span>|<span class="string">右对齐</span>|</span><br><span class="line">|<span class="string">默认左对齐</span>|<span class="string">左对齐</span>|<span class="string">居中对其</span>|<span class="string">右对齐</span>|</span><br><span class="line">|<span class="string">默认左对齐</span>|<span class="string">左对齐</span>|<span class="string">居中对其</span>|<span class="string">右对齐</span>|</span><br></pre></td></tr></table></figure>
-<p>效果：（表格与文字要有空行）</p>
-<table>
-<thead>
-<tr>
-<th>表头1</th>
-<th align="left">表头2</th>
-<th align="center">表头3</th>
-<th align="right">表头4</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>默认左对齐</td>
-<td align="left">左对齐</td>
-<td align="center">居中对其</td>
-<td align="right">右对齐</td>
-</tr>
-<tr>
-<td>默认左对齐</td>
-<td align="left">左对齐</td>
-<td align="center">居中对其</td>
-<td align="right">右对齐</td>
-</tr>
-<tr>
-<td>默认左对齐</td>
-<td align="left">左对齐</td>
-<td align="center">居中对其</td>
-<td align="right">右对齐</td>
-</tr>
-</tbody></table>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line">```代码块```  #单行代码一个点包起来</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">//</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">//</span>]: <span class="link"># (哈哈我是注释，不会在浏览器中显示。)</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h2><p>Markdown中的转义字符为\，可以转义的有：</p>
-<figure class="highlight taggerscript"><table><tr><td class="code"><pre><span class="line"><span class="symbol">\\</span> 反斜杠</span><br><span class="line"><span class="symbol">\`</span> 反引号</span><br><span class="line"><span class="symbol">\*</span> 星号</span><br><span class="line"><span class="symbol">\_</span> 下划线</span><br><span class="line"><span class="symbol">\&#123;</span><span class="symbol">\&#125;</span> 大括号</span><br><span class="line"><span class="symbol">\[</span><span class="symbol">\]</span> 中括号</span><br><span class="line"><span class="symbol">\(</span><span class="symbol">\)</span> 小括号</span><br><span class="line"><span class="symbol">\#</span> 井号</span><br><span class="line"><span class="symbol">\+</span> 加号</span><br><span class="line"><span class="symbol">\-</span> 减号</span><br><span class="line"><span class="symbol">\.</span> 英文句号</span><br><span class="line"><span class="symbol">\!</span> 感叹号</span><br><span class="line"><span class="symbol">\&lt;</span>&gt;尖括号</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h2><p>在 Hexo 中插入图片，首先需要将图片放在 source/images/ 文件夹下，然后如下方式进行插入：</p>
-<figure class="highlight less"><table><tr><td class="code"><pre><span class="line">!<span class="selector-attr">[]</span>(/images/insert_image.jpg)</span><br></pre></td></tr></table></figure>
-<p>效果：<br><img src="/images/header.jpg" alt=""></p>
-<h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">行内形式：[<span class="string">我的博客</span>](<span class="link">http://pixvc.github.io/</span>)</span><br><span class="line">参考形式：[<span class="string">p站</span>][<span class="symbol">1</span>]，[<span class="string">谷歌</span>][<span class="symbol">2</span>]</span><br><span class="line">[<span class="symbol">1</span>]:<span class="link">https://cn.pornhub.com/</span></span><br><span class="line">[<span class="symbol">2</span>]:<span class="link">https://www.google.com/</span></span><br></pre></td></tr></table></figure>
-<p>效果：<br>行内形式：<a href="http://pixvc.github.io/">我的博客</a><br>参考形式：[p站][1]，[谷歌][2]<br>[1]:<a href="https://cn.pornhub.com/" target="_blank" rel="noopener">https://cn.pornhub.com/</a><br>[2]:<a href="https://www.google.com/" target="_blank" rel="noopener">https://www.google.com/</a></p>
-<h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">----</span><br><span class="line">**<span class="strong">*</span></span><br><span class="line"><span class="strong">*</span>***<span class="strong">*</span></span><br></pre></td></tr></table></figure>
-<h2 id="效果："><a href="#效果：" class="headerlink" title="效果："></a>效果：</h2><hr>
+<h2 id="泛型for循环"><a href="#泛型for循环" class="headerlink" title="泛型for循环"></a>泛型for循环</h2><p>泛型 for 循环通过一个迭代器函数来遍历所有值，类似 java 中的 foreach 语句。<br>Lua 编程语言中泛型 for 循环语法格式:</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">a = &#123;<span class="string">"one"</span>, <span class="string">"two"</span>, <span class="string">"three"</span>&#125;</span><br><span class="line"><span class="keyword">for</span> i, v <span class="keyword">in</span> <span class="built_in">ipairs</span>(a) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(i, v)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>i是数组索引值，v是对应索引的数组元素值。ipairs是Lua提供的一个迭代器函数，用来迭代数组。<br>执行结果：</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">1 </span>one</span><br><span class="line"><span class="symbol">2 </span>two</span><br><span class="line"><span class="symbol">3 </span>three</span><br></pre></td></tr></table></figure>
 <hr>
+<h1 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h1><figure class="highlight gauss"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(condition)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   <span class="built_in">statements</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>statements(循环体语句) 可以是一条或多条语句，condition(条件) 可以是任意表达式，在 condition(条件) 为 true 时执行循环体语句。</p>
 <hr>
-<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">&gt;这是引用的内容</span><br><span class="line"><span class="meta">&gt;&gt;</span>这是引用的内容</span><br><span class="line"><span class="meta">&gt;&gt;</span>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;这是引用的内容</span><br></pre></td></tr></table></figure>
-<p>效果：</p>
-<blockquote>
-<p>这是引用的内容</p>
-<blockquote>
-<p>这是引用的内容</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>这是引用的内容</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>1.无序列表使用星号(*)、加号(+)或是减号(-)作为列表标记：</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">* </span>第一项</span><br><span class="line"><span class="bullet">* </span>第二项</span><br><span class="line"><span class="bullet">* </span>第三项</span><br><span class="line"></span><br><span class="line"><span class="bullet">+ </span>第一项</span><br><span class="line"><span class="bullet">+ </span>第二项</span><br><span class="line"><span class="bullet">+ </span>第三项</span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>第一项</span><br><span class="line"><span class="bullet">- </span>第二项</span><br><span class="line"><span class="bullet">- </span>第三项</span><br></pre></td></tr></table></figure>
-<ul>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
-</ul>
-<ul>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
-</ul>
-<ul>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
-</ul>
-<p>2.有序列表使用数字并加上 . 号来表示，如：</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="number">1.</span> 第一项</span><br><span class="line"><span class="number">2.</span> 第二项</span><br><span class="line"><span class="number">3.</span> 第三项</span><br></pre></td></tr></table></figure>
-<ol>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
-</ol>
-<p>3.列表嵌套只需在子列表中的选项添加四个空格即可：</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">1. </span>第一项：</span><br><span class="line"><span class="bullet">    - </span>第一项嵌套的第一个元素</span><br><span class="line"><span class="bullet">    - </span>第一项嵌套的第二个元素</span><br><span class="line"><span class="bullet">2. </span>第二项：</span><br><span class="line"><span class="bullet">    - </span>第二项嵌套的第一个元素</span><br><span class="line"><span class="bullet">    - </span>第二项嵌套的第二个元素</span><br></pre></td></tr></table></figure>
-<ol>
-<li>第一项：<ul>
-<li>第一项嵌套的第一个元素</li>
-<li>第一项嵌套的第二个元素</li>
-</ul>
-</li>
-<li>第二项：<ul>
-<li>第二项嵌套的第一个元素</li>
-<li>第二项嵌套的第二个元素</li>
-</ul>
-</li>
-</ol>
-]]></content>
+<h1 id="repeat…until-循环"><a href="#repeat…until-循环" class="headerlink" title="repeat…until 循环"></a>repeat…until 循环</h1><p> repeat…until 循环语句不同于 for 和 while循环，for 和 while 循环的条件语句在当前循环执行开始时判断，而 repeat…until 循环的条件语句在当前循环结束后判断<br> <figure class="highlight gauss"><table><tr><td class="code"><pre><span class="line"> repeat</span><br><span class="line">   <span class="built_in">statements</span></span><br><span class="line"><span class="keyword">until</span>( condition )</span><br></pre></td></tr></table></figure><br>循环条件判断语句（condition）在循环体末尾部分，所以在条件进行判断前循环体都会执行一次。<strong>如果条件判断语句（condition）为 false，循环会重新开始执行，直到条件判断语句（condition）为 true 才会停止执行。</strong></p>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line"><span class="keyword">a</span> = <span class="number">10</span></span><br><span class="line"><span class="comment">--[ 执行循环 --]</span></span><br><span class="line"><span class="keyword">repeat</span></span><br><span class="line">   print(<span class="string">"a的值为:"</span>, <span class="keyword">a</span>)</span><br><span class="line">   <span class="keyword">a</span> = <span class="keyword">a</span> + <span class="number">1</span></span><br><span class="line"><span class="keyword">until</span>( <span class="keyword">a</span> &gt; <span class="number">15</span> )</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">a的值为:    <span class="number">10</span></span><br><span class="line">a的值为:    <span class="number">11</span></span><br><span class="line">a的值为:    <span class="number">12</span></span><br><span class="line">a的值为:    <span class="number">13</span></span><br><span class="line">a的值为:    <span class="number">14</span></span><br><span class="line">a的值为:    <span class="number">15</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="goto"><a href="#goto" class="headerlink" title="goto"></a>goto</h1><p>语法格式如下所示<br><code>goto Label</code><br>Label 的格式为：<br><code>:: Label ::</code></p>
+<figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line">local a = 1</span><br><span class="line"><span class="meta">::label::</span> print("--- goto label ---")</span><br><span class="line"></span><br><span class="line">a = a+1</span><br><span class="line">if a &lt; 3 then</span><br><span class="line"><span class="code">    goto label   -- a 小于 3 的时候跳转到标签 label</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>执行结果：</p>
+<figure class="highlight brainfuck"><table><tr><td class="code"><pre><span class="line">--<span class="literal">-</span> <span class="comment">goto</span> <span class="comment">label</span> --<span class="literal">-</span></span><br><span class="line">--<span class="literal">-</span> <span class="comment">goto</span> <span class="comment">label</span> --<span class="literal">-</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h1><figure class="highlight isbl"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">if</span>(<span class="number">0</span>)</span></span><br><span class="line"><span class="variable">then</span></span><br><span class="line">    <span class="function"><span class="title">print</span>(<span class="string">"0 为 true"</span>)</span></span><br><span class="line"><span class="variable">end</span></span><br></pre></td></tr></table></figure>
+
+<p>if else</p>
+<figure class="highlight isbl"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">if</span>(布尔表达式)</span></span><br><span class="line"><span class="variable">then</span></span><br><span class="line">   --[ 布尔表达式为 <span class="variable"><span class="literal">true</span></span> 时执行该语句块 --]</span><br><span class="line"><span class="variable"><span class="keyword">else</span></span></span><br><span class="line">   --[ 布尔表达式为 <span class="variable"><span class="literal">false</span></span> 时执行该语句块 --]</span><br><span class="line"><span class="variable">end</span></span><br></pre></td></tr></table></figure>
+
+<p>if…elesif…else</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">if(</span> <span class="string">布尔表达式</span> <span class="number">1</span><span class="string">)</span></span><br><span class="line"><span class="string">then</span></span><br><span class="line">   <span class="string">--[</span> <span class="string">在布尔表达式</span> <span class="number">1</span> <span class="string">为</span> <span class="literal">true</span> <span class="string">时执行该语句块</span> <span class="string">--]</span></span><br><span class="line"></span><br><span class="line"><span class="string">elseif(</span> <span class="string">布尔表达式</span> <span class="number">2</span><span class="string">)</span></span><br><span class="line"><span class="string">then</span></span><br><span class="line">   <span class="string">--[</span> <span class="string">在布尔表达式</span> <span class="number">2</span> <span class="string">为</span> <span class="literal">true</span> <span class="string">时执行该语句块</span> <span class="string">--]</span></span><br><span class="line"></span><br><span class="line"><span class="string">elseif(</span> <span class="string">布尔表达式</span> <span class="number">3</span><span class="string">)</span></span><br><span class="line"><span class="string">then</span></span><br><span class="line">   <span class="string">--[</span> <span class="string">在布尔表达式</span> <span class="number">3</span> <span class="string">为</span> <span class="literal">true</span> <span class="string">时执行该语句块</span> <span class="string">--]</span></span><br><span class="line"><span class="string">else</span> </span><br><span class="line">   <span class="string">--[</span> <span class="string">如果以上布尔表达式都不为</span> <span class="literal">true</span> <span class="string">则执行该语句块</span> <span class="string">--]</span></span><br><span class="line"><span class="string">end</span></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>Markdown</category>
+        <category>lua语言</category>
       </categories>
       <tags>
-        <tag>makedown</tag>
+        <tag>lua</tag>
       </tags>
   </entry>
   <entry>
@@ -559,42 +405,13 @@
       </tags>
   </entry>
   <entry>
-    <title>Lua循环</title>
-    <url>/2020/06/11/lua%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5/</url>
-    <content><![CDATA[<h1 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h1><h2 id="数值for循环"><a href="#数值for循环" class="headerlink" title="数值for循环"></a>数值for循环</h2><figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> var=<span class="built_in">exp1</span>,<span class="built_in">exp2</span>,exp3 <span class="built_in">do</span>  </span><br><span class="line">    &lt;执行体&gt;  </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>var 从 exp1 变化到 exp2，每次变化以 exp3 为步长递增 var，并执行一次 “执行体”。exp3 是可选的，如果不指定，<strong>默认为1。</strong></p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span><span class="params">(x)</span></span>  </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"function"</span>)  </span><br><span class="line">    <span class="keyword">return</span> x*<span class="number">2</span>  </span><br><span class="line"><span class="keyword">end</span>  </span><br><span class="line"><span class="keyword">for</span> i=<span class="number">1</span>,f(<span class="number">5</span>) <span class="keyword">do</span> <span class="built_in">print</span>(i)  </span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>for的三个表达式在循环开始前一次性求值，以后不再进行求值。比如上面的f(x)只会在循环开始前执行一次，其结果用在后面的循环中。</p>
+    <title>Lua 面向对象</title>
+    <url>/2020/06/16/lua%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</url>
+    <content><![CDATA[<figure class="highlight monkey"><table><tr><td class="code"><pre><span class="line">-- Meta <span class="class"><span class="keyword">class</span></span></span><br><span class="line">Shape = &#123;area = <span class="number">0</span>&#125;</span><br><span class="line">-- 基础类方法 <span class="keyword">new</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Shape</span>:</span><span class="keyword">new</span> (o,side)</span><br><span class="line">  o = o <span class="literal">or</span> &#123;&#125;</span><br><span class="line">  setmetatable(o, <span class="built_in">self</span>)</span><br><span class="line">  <span class="built_in">self</span>.__index = <span class="built_in">self</span></span><br><span class="line">  side = side <span class="literal">or</span> <span class="number">0</span></span><br><span class="line">  <span class="built_in">self</span>.area = side*side;</span><br><span class="line">  <span class="keyword">return</span> o</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">-- 基础类方法 printArea</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Shape</span>:</span>printArea ()</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"面积为 "</span>,<span class="built_in">self</span>.area)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">-- 创建对象</span><br><span class="line">myshape = Shape:<span class="keyword">new</span>(nil,<span class="number">10</span>)</span><br><span class="line">myshape:printArea()</span><br><span class="line"></span><br><span class="line">Square = Shape:<span class="keyword">new</span>()</span><br><span class="line">-- 派生类方法 <span class="keyword">new</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Square</span>:</span><span class="keyword">new</span> (o,side)</span><br><span class="line">  o = o <span class="literal">or</span> Shape:<span class="keyword">new</span>(o,side)</span><br><span class="line">  setmetatable(o, <span class="built_in">self</span>)</span><br><span class="line">  <span class="built_in">self</span>.__index = <span class="built_in">self</span></span><br><span class="line">  <span class="keyword">return</span> o</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">-- 派生类方法 printArea</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Square</span>:</span>printArea ()</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"正方形面积为 "</span>,<span class="built_in">self</span>.area)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">-- 创建对象</span><br><span class="line">mysquare = Square:<span class="keyword">new</span>(nil,<span class="number">10</span>)</span><br><span class="line">mysquare:printArea()</span><br><span class="line"></span><br><span class="line">Rectangle = Shape:<span class="keyword">new</span>()</span><br><span class="line">-- 派生类方法 <span class="keyword">new</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Rectangle</span>:</span><span class="keyword">new</span> (o,length,breadth)</span><br><span class="line">  o = o <span class="literal">or</span> Shape:<span class="keyword">new</span>(o)</span><br><span class="line">  setmetatable(o, <span class="built_in">self</span>)</span><br><span class="line">  <span class="built_in">self</span>.__index = <span class="built_in">self</span></span><br><span class="line">  <span class="built_in">self</span>.area = length * breadth</span><br><span class="line">  <span class="keyword">return</span> o</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">-- 派生类方法 printArea</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Rectangle</span>:</span>printArea ()</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"矩形面积为 "</span>,<span class="built_in">self</span>.area)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">-- 创建对象</span><br><span class="line">myrectangle = Rectangle:<span class="keyword">new</span>(nil,<span class="number">10</span>,<span class="number">20</span>)</span><br><span class="line">myrectangle:printArea()</span><br><span class="line"></span><br><span class="line">结果：</span><br><span class="line">面积为     <span class="number">100</span></span><br><span class="line">正方形面积为     <span class="number">100</span></span><br><span class="line">矩形面积为     <span class="number">200</span></span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 
-<p>验证如下:<br>执行结果：</p>
-<figure class="highlight lsl"><table><tr><td class="code"><pre><span class="line">function</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">9</span></span><br><span class="line"><span class="number">10</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="泛型for循环"><a href="#泛型for循环" class="headerlink" title="泛型for循环"></a>泛型for循环</h2><p>泛型 for 循环通过一个迭代器函数来遍历所有值，类似 java 中的 foreach 语句。<br>Lua 编程语言中泛型 for 循环语法格式:</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">a = &#123;<span class="string">"one"</span>, <span class="string">"two"</span>, <span class="string">"three"</span>&#125;</span><br><span class="line"><span class="keyword">for</span> i, v <span class="keyword">in</span> <span class="built_in">ipairs</span>(a) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(i, v)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>i是数组索引值，v是对应索引的数组元素值。ipairs是Lua提供的一个迭代器函数，用来迭代数组。<br>执行结果：</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">1 </span>one</span><br><span class="line"><span class="symbol">2 </span>two</span><br><span class="line"><span class="symbol">3 </span>three</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h1><figure class="highlight gauss"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(condition)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   <span class="built_in">statements</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>statements(循环体语句) 可以是一条或多条语句，condition(条件) 可以是任意表达式，在 condition(条件) 为 true 时执行循环体语句。</p>
-<hr>
-<h1 id="repeat…until-循环"><a href="#repeat…until-循环" class="headerlink" title="repeat…until 循环"></a>repeat…until 循环</h1><p> repeat…until 循环语句不同于 for 和 while循环，for 和 while 循环的条件语句在当前循环执行开始时判断，而 repeat…until 循环的条件语句在当前循环结束后判断<br> <figure class="highlight gauss"><table><tr><td class="code"><pre><span class="line"> repeat</span><br><span class="line">   <span class="built_in">statements</span></span><br><span class="line"><span class="keyword">until</span>( condition )</span><br></pre></td></tr></table></figure><br>循环条件判断语句（condition）在循环体末尾部分，所以在条件进行判断前循环体都会执行一次。<strong>如果条件判断语句（condition）为 false，循环会重新开始执行，直到条件判断语句（condition）为 true 才会停止执行。</strong></p>
-<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line"><span class="keyword">a</span> = <span class="number">10</span></span><br><span class="line"><span class="comment">--[ 执行循环 --]</span></span><br><span class="line"><span class="keyword">repeat</span></span><br><span class="line">   print(<span class="string">"a的值为:"</span>, <span class="keyword">a</span>)</span><br><span class="line">   <span class="keyword">a</span> = <span class="keyword">a</span> + <span class="number">1</span></span><br><span class="line"><span class="keyword">until</span>( <span class="keyword">a</span> &gt; <span class="number">15</span> )</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line">a的值为:    <span class="number">10</span></span><br><span class="line">a的值为:    <span class="number">11</span></span><br><span class="line">a的值为:    <span class="number">12</span></span><br><span class="line">a的值为:    <span class="number">13</span></span><br><span class="line">a的值为:    <span class="number">14</span></span><br><span class="line">a的值为:    <span class="number">15</span></span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="goto"><a href="#goto" class="headerlink" title="goto"></a>goto</h1><p>语法格式如下所示<br><code>goto Label</code><br>Label 的格式为：<br><code>:: Label ::</code></p>
-<figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line">local a = 1</span><br><span class="line"><span class="meta">::label::</span> print("--- goto label ---")</span><br><span class="line"></span><br><span class="line">a = a+1</span><br><span class="line">if a &lt; 3 then</span><br><span class="line"><span class="code">    goto label   -- a 小于 3 的时候跳转到标签 label</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<p>执行结果：</p>
-<figure class="highlight brainfuck"><table><tr><td class="code"><pre><span class="line">--<span class="literal">-</span> <span class="comment">goto</span> <span class="comment">label</span> --<span class="literal">-</span></span><br><span class="line">--<span class="literal">-</span> <span class="comment">goto</span> <span class="comment">label</span> --<span class="literal">-</span></span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h1><figure class="highlight isbl"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">if</span>(<span class="number">0</span>)</span></span><br><span class="line"><span class="variable">then</span></span><br><span class="line">    <span class="function"><span class="title">print</span>(<span class="string">"0 为 true"</span>)</span></span><br><span class="line"><span class="variable">end</span></span><br></pre></td></tr></table></figure>
-
-<p>if else</p>
-<figure class="highlight isbl"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">if</span>(布尔表达式)</span></span><br><span class="line"><span class="variable">then</span></span><br><span class="line">   --[ 布尔表达式为 <span class="variable"><span class="literal">true</span></span> 时执行该语句块 --]</span><br><span class="line"><span class="variable"><span class="keyword">else</span></span></span><br><span class="line">   --[ 布尔表达式为 <span class="variable"><span class="literal">false</span></span> 时执行该语句块 --]</span><br><span class="line"><span class="variable">end</span></span><br></pre></td></tr></table></figure>
-
-<p>if…elesif…else</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">if(</span> <span class="string">布尔表达式</span> <span class="number">1</span><span class="string">)</span></span><br><span class="line"><span class="string">then</span></span><br><span class="line">   <span class="string">--[</span> <span class="string">在布尔表达式</span> <span class="number">1</span> <span class="string">为</span> <span class="literal">true</span> <span class="string">时执行该语句块</span> <span class="string">--]</span></span><br><span class="line"></span><br><span class="line"><span class="string">elseif(</span> <span class="string">布尔表达式</span> <span class="number">2</span><span class="string">)</span></span><br><span class="line"><span class="string">then</span></span><br><span class="line">   <span class="string">--[</span> <span class="string">在布尔表达式</span> <span class="number">2</span> <span class="string">为</span> <span class="literal">true</span> <span class="string">时执行该语句块</span> <span class="string">--]</span></span><br><span class="line"></span><br><span class="line"><span class="string">elseif(</span> <span class="string">布尔表达式</span> <span class="number">3</span><span class="string">)</span></span><br><span class="line"><span class="string">then</span></span><br><span class="line">   <span class="string">--[</span> <span class="string">在布尔表达式</span> <span class="number">3</span> <span class="string">为</span> <span class="literal">true</span> <span class="string">时执行该语句块</span> <span class="string">--]</span></span><br><span class="line"><span class="string">else</span> </span><br><span class="line">   <span class="string">--[</span> <span class="string">如果以上布尔表达式都不为</span> <span class="literal">true</span> <span class="string">则执行该语句块</span> <span class="string">--]</span></span><br><span class="line"><span class="string">end</span></span><br></pre></td></tr></table></figure>]]></content>
+<p>对象由属性和方法组成。LUA中最基本的结构是table，所以需要用table来描述对象的属性。<br>lua 中的 function 可以用来表示方法。那么LUA中的类可以通过 table + function 模拟出来。<br>LUA语言也能继承</p>
+]]></content>
       <categories>
         <category>lua语言</category>
       </categories>
@@ -750,12 +567,238 @@
       </tags>
   </entry>
   <entry>
-    <title>Lua 面向对象</title>
-    <url>/2020/06/16/lua%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</url>
-    <content><![CDATA[<figure class="highlight monkey"><table><tr><td class="code"><pre><span class="line">-- Meta <span class="class"><span class="keyword">class</span></span></span><br><span class="line">Shape = &#123;area = <span class="number">0</span>&#125;</span><br><span class="line">-- 基础类方法 <span class="keyword">new</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Shape</span>:</span><span class="keyword">new</span> (o,side)</span><br><span class="line">  o = o <span class="literal">or</span> &#123;&#125;</span><br><span class="line">  setmetatable(o, <span class="built_in">self</span>)</span><br><span class="line">  <span class="built_in">self</span>.__index = <span class="built_in">self</span></span><br><span class="line">  side = side <span class="literal">or</span> <span class="number">0</span></span><br><span class="line">  <span class="built_in">self</span>.area = side*side;</span><br><span class="line">  <span class="keyword">return</span> o</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">-- 基础类方法 printArea</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Shape</span>:</span>printArea ()</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"面积为 "</span>,<span class="built_in">self</span>.area)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">-- 创建对象</span><br><span class="line">myshape = Shape:<span class="keyword">new</span>(nil,<span class="number">10</span>)</span><br><span class="line">myshape:printArea()</span><br><span class="line"></span><br><span class="line">Square = Shape:<span class="keyword">new</span>()</span><br><span class="line">-- 派生类方法 <span class="keyword">new</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Square</span>:</span><span class="keyword">new</span> (o,side)</span><br><span class="line">  o = o <span class="literal">or</span> Shape:<span class="keyword">new</span>(o,side)</span><br><span class="line">  setmetatable(o, <span class="built_in">self</span>)</span><br><span class="line">  <span class="built_in">self</span>.__index = <span class="built_in">self</span></span><br><span class="line">  <span class="keyword">return</span> o</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">-- 派生类方法 printArea</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Square</span>:</span>printArea ()</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"正方形面积为 "</span>,<span class="built_in">self</span>.area)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">-- 创建对象</span><br><span class="line">mysquare = Square:<span class="keyword">new</span>(nil,<span class="number">10</span>)</span><br><span class="line">mysquare:printArea()</span><br><span class="line"></span><br><span class="line">Rectangle = Shape:<span class="keyword">new</span>()</span><br><span class="line">-- 派生类方法 <span class="keyword">new</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Rectangle</span>:</span><span class="keyword">new</span> (o,length,breadth)</span><br><span class="line">  o = o <span class="literal">or</span> Shape:<span class="keyword">new</span>(o)</span><br><span class="line">  setmetatable(o, <span class="built_in">self</span>)</span><br><span class="line">  <span class="built_in">self</span>.__index = <span class="built_in">self</span></span><br><span class="line">  <span class="built_in">self</span>.area = length * breadth</span><br><span class="line">  <span class="keyword">return</span> o</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">-- 派生类方法 printArea</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Rectangle</span>:</span>printArea ()</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"矩形面积为 "</span>,<span class="built_in">self</span>.area)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">-- 创建对象</span><br><span class="line">myrectangle = Rectangle:<span class="keyword">new</span>(nil,<span class="number">10</span>,<span class="number">20</span>)</span><br><span class="line">myrectangle:printArea()</span><br><span class="line"></span><br><span class="line">结果：</span><br><span class="line">面积为     <span class="number">100</span></span><br><span class="line">正方形面积为     <span class="number">100</span></span><br><span class="line">矩形面积为     <span class="number">200</span></span><br></pre></td></tr></table></figure>
+    <title>线程与进程</title>
+    <url>/2020/06/21/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="进程线程的基本概念"><a href="#进程线程的基本概念" class="headerlink" title="进程线程的基本概念"></a>进程线程的基本概念</h1><h1 id="1-1-1什么是进程，线程？也就是问彼此有什么区别？"><a href="#1-1-1什么是进程，线程？也就是问彼此有什么区别？" class="headerlink" title="1.1.1什么是进程，线程？也就是问彼此有什么区别？"></a>1.1.1什么是进程，线程？也就是问彼此有什么区别？</h1><p>答：进程是资源（CPU、内存等）分配的基本单位，线程是CPU调度和分配的基本单位（程序执行的最小单位）。</p>
+<ol>
+<li>当我们运行一个程序的时候，系统就会创建一个进程，并分配地址空间和其他资源，最后把进程加入就绪队列直到分配到CPU时间就可以正式运行了。</li>
+<li>线程是进程的一个执行流，有一个初学者可能误解的概念，进程就像一个容器一样，包括程序运行的程序段、数据段等信息，但是进程其实是不能用来运行代码的，真正运行代码的是进程里的线程。</li>
+<li>进程拥有自己的资源空间，每启动一个进程，系统就会为它分配地址空间；而线程与CPU资源分配无关，多个线程共享同一进程内的资源，使用相同的地址空间。<br>一个进程可以包含若干个线程。</li>
+</ol>
+<h1 id="1-1-2-多进程、多线程的优缺点"><a href="#1-1-2-多进程、多线程的优缺点" class="headerlink" title="1.1.2 多进程、多线程的优缺点"></a>1.1.2 多进程、多线程的优缺点</h1><p>答：</p>
+<h2 id="多进程优点"><a href="#多进程优点" class="headerlink" title="多进程优点"></a>多进程优点</h2><ul>
+<li>每个进程互相独立，不影响主程序的稳定性，子进程崩溃没关系；</li>
+<li>通过增加CPU，就可以容易扩充性能；</li>
+<li>可以尽量减少线程加锁/解锁的影响，极大提高性能，就算是线程运行的模块算法效率低也没关系；</li>
+<li>每个子进程都有2GB地址空间和相关资源，总体能够达到的性能上限非常大</li>
+</ul>
+<h2 id="多进程缺点"><a href="#多进程缺点" class="headerlink" title="多进程缺点"></a>多进程缺点</h2><ul>
+<li>逻辑控制复杂，需要和主程序交互；</li>
+<li>需要跨进程边界，如果有大数据量传送，就不太好，适合小数据量传送、密集运算</li>
+<li>多进程调度开销比较大；</li>
+</ul>
+<h2 id="多线程的优点"><a href="#多线程的优点" class="headerlink" title="多线程的优点"></a>多线程的优点</h2><ul>
+<li>无需跨进程边界；</li>
+<li>程序逻辑和控制方式简单；</li>
+<li>所有线程可以直接共享内存和变量等；</li>
+<li>线程方式消耗的总资源比进程方式好；</li>
+</ul>
+<h2 id="多线程缺点"><a href="#多线程缺点" class="headerlink" title="多线程缺点"></a>多线程缺点</h2><ul>
+<li>每个线程与主程序共用地址空间，受限于2GB地址空间；</li>
+<li>线程之间的同步和加锁控制比较麻烦；</li>
+<li>一个线程的崩溃可能影响到整个程序的稳定性；</li>
+<li>到达一定的线程数程度后，即使再增加CPU也无法提高性能，例如Windows Server 2003，大约是1500个左右的线程数就快到极限了（线程堆栈设定为1M），如果设定线程堆栈为2M，还达不到1500个线程总数；</li>
+<li>线程能够提高的总性能有限，而且线程多了之后，线程本身的调度也是一个麻烦事儿，需要消耗较多的CPU</li>
+</ul>
+<hr>
+<h1 id="1-1-3-什么时候用进程，什么时候用线程"><a href="#1-1-3-什么时候用进程，什么时候用线程" class="headerlink" title="1.1.3 什么时候用进程，什么时候用线程"></a>1.1.3 什么时候用进程，什么时候用线程</h1><p>解析：还是同一个思想，进程是“要用来做大事”的，而线程是“各自做件小事，合作完成大事”，结合上节新鲜出炉的优缺点我们就很好理解什么时候用进程或者线程了。</p>
+<p>答：</p>
+<p>1）创建和销毁较频繁使用线程，因为创建进程花销大嘛。</p>
+<p>2）需要大量数据传送使用线程，因为多线程切换速度快，不需要跨越进程边界。</p>
+<p>3）并行操作使用线程。线程是为了实现并行操作的一个手段，也就是刚才说的需要多个并行操作“合作完成大事”，当然是使用线程啦。</p>
+<p>4）最后可以总结为：安全稳定选进程；快速频繁选线程；</p>
+]]></content>
+      <categories>
+        <category>嵌入式面试题</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Markdown基本语法</title>
+    <url>/2020/06/10/hello-world/</url>
+    <content><![CDATA[<h1 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h1><p>在source/_posts 文件夹下创建.md文件<br>配置属性</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Markdown基本语法</span></span><br><span class="line"><span class="attr">data:</span> <span class="number">2019</span><span class="number">-6</span><span class="number">-10</span></span><br><span class="line"><span class="attr">categories:</span>    </span><br><span class="line"><span class="bullet">-</span> <span class="string">lua语言</span>    <span class="comment">##添加到lua语言分类，也也可以新建一个分类</span></span><br><span class="line"><span class="string">tags：</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">lua</span>        <span class="comment">#添加标签</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">编程</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+<p>文章写完回到终端 hexo g 再 hexo d</p>
 <a id="more"></a>
 
-<p>对象由属性和方法组成。LUA中最基本的结构是table，所以需要用table来描述对象的属性。<br>lua 中的 function 可以用来表示方法。那么LUA中的类可以通过 table + function 模拟出来。<br>LUA语言也能继承</p>
+<p>在写博客的时候在文章中使用&lt;!--more--&gt;进行手动截断,这样可以实现只显示摘要的效果，并且在摘要下方生成一个阅读全文的链接</p>
+<h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><p>Markdown 是一种标记语言，语法简单，易阅读易编写，可以让用户完全脱离鼠标写出样式丰富的文档，广受程序员喜爱，目前许多网站都已经支持通过 Markdown 语法来写文章或者发表评论。 </p>
+<h2 id="分级标题"><a href="#分级标题" class="headerlink" title="分级标题"></a>分级标题</h2><figure class="highlight clean"><table><tr><td class="code"><pre><span class="line"># 一级标题</span><br><span class="line">## 二级标题</span><br><span class="line">### 三级标题</span><br><span class="line">#### 四级标题</span><br><span class="line">##### 五级标题</span><br><span class="line">###### 六级标题</span><br></pre></td></tr></table></figure>
+
+<h2 id="斜体和粗体"><a href="#斜体和粗体" class="headerlink" title="斜体和粗体"></a>斜体和粗体</h2><figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line"><span class="strong">*这是斜体*</span> 或 <span class="emphasis">_这也是斜体_</span> </span><br><span class="line">*<span class="strong">*这是粗体*</span><span class="strong">*</span></span><br><span class="line"><span class="strong">*</span>*<span class="strong">*这是加粗斜体*</span>*<span class="strong">*</span></span><br><span class="line"><span class="strong">~~这是删除线~~</span></span><br></pre></td></tr></table></figure>
+<p>效果：<br><em>这是斜体</em> 或 <em>这也是斜体</em><br><strong>这是粗体</strong><br><strong><em>这是加粗斜体</em></strong><br><del>这是删除线</del> </p>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><figure class="highlight gherkin"><table><tr><td class="code"><pre><span class="line">|<span class="string"> 表头1</span>|<span class="string">表头2</span>|<span class="string">表头3</span>|<span class="string">表头4</span></span><br><span class="line">|<span class="string">-</span>|<span class="string"> :- </span>|<span class="string"> :-: </span>|<span class="string"> -: </span>|</span><br><span class="line">|<span class="string">默认左对齐</span>|<span class="string">左对齐</span>|<span class="string">居中对其</span>|<span class="string">右对齐</span>|</span><br><span class="line">|<span class="string">默认左对齐</span>|<span class="string">左对齐</span>|<span class="string">居中对其</span>|<span class="string">右对齐</span>|</span><br><span class="line">|<span class="string">默认左对齐</span>|<span class="string">左对齐</span>|<span class="string">居中对其</span>|<span class="string">右对齐</span>|</span><br></pre></td></tr></table></figure>
+<p>效果：（表格与文字要有空行）</p>
+<table>
+<thead>
+<tr>
+<th>表头1</th>
+<th align="left">表头2</th>
+<th align="center">表头3</th>
+<th align="right">表头4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>默认左对齐</td>
+<td align="left">左对齐</td>
+<td align="center">居中对其</td>
+<td align="right">右对齐</td>
+</tr>
+<tr>
+<td>默认左对齐</td>
+<td align="left">左对齐</td>
+<td align="center">居中对其</td>
+<td align="right">右对齐</td>
+</tr>
+<tr>
+<td>默认左对齐</td>
+<td align="left">左对齐</td>
+<td align="center">居中对其</td>
+<td align="right">右对齐</td>
+</tr>
+</tbody></table>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line">```代码块```  #单行代码一个点包起来</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">comment</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">//</span>]: <span class="link">&lt;&gt; (哈哈我是注释，不会在浏览器中显示。)</span></span><br><span class="line">[<span class="symbol">//</span>]: <span class="link"># (哈哈我是注释，不会在浏览器中显示。)</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h2><p>Markdown中的转义字符为\，可以转义的有：</p>
+<figure class="highlight taggerscript"><table><tr><td class="code"><pre><span class="line"><span class="symbol">\\</span> 反斜杠</span><br><span class="line"><span class="symbol">\`</span> 反引号</span><br><span class="line"><span class="symbol">\*</span> 星号</span><br><span class="line"><span class="symbol">\_</span> 下划线</span><br><span class="line"><span class="symbol">\&#123;</span><span class="symbol">\&#125;</span> 大括号</span><br><span class="line"><span class="symbol">\[</span><span class="symbol">\]</span> 中括号</span><br><span class="line"><span class="symbol">\(</span><span class="symbol">\)</span> 小括号</span><br><span class="line"><span class="symbol">\#</span> 井号</span><br><span class="line"><span class="symbol">\+</span> 加号</span><br><span class="line"><span class="symbol">\-</span> 减号</span><br><span class="line"><span class="symbol">\.</span> 英文句号</span><br><span class="line"><span class="symbol">\!</span> 感叹号</span><br><span class="line"><span class="symbol">\&lt;</span>&gt;尖括号</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h2><p>在 Hexo 中插入图片，首先需要将图片放在 source/images/ 文件夹下，然后如下方式进行插入：</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line">!<span class="selector-attr">[]</span>(/images/insert_image.jpg)</span><br></pre></td></tr></table></figure>
+<p>效果：<br><img src="/images/header.jpg" alt=""></p>
+<h2 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h2><figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">行内形式：[<span class="string">我的博客</span>](<span class="link">http://pixvc.github.io/</span>)</span><br><span class="line">参考形式：[<span class="string">p站</span>][<span class="symbol">1</span>]，[<span class="string">谷歌</span>][<span class="symbol">2</span>]</span><br><span class="line">[<span class="symbol">1</span>]:<span class="link">https://cn.pornhub.com/</span></span><br><span class="line">[<span class="symbol">2</span>]:<span class="link">https://www.google.com/</span></span><br></pre></td></tr></table></figure>
+<p>效果：<br>行内形式：<a href="http://pixvc.github.io/">我的博客</a><br>参考形式：[p站][1]，[谷歌][2]<br>[1]:<a href="https://cn.pornhub.com/" target="_blank" rel="noopener">https://cn.pornhub.com/</a><br>[2]:<a href="https://www.google.com/" target="_blank" rel="noopener">https://www.google.com/</a></p>
+<h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">----</span><br><span class="line">**<span class="strong">*</span></span><br><span class="line"><span class="strong">*</span>***<span class="strong">*</span></span><br></pre></td></tr></table></figure>
+<h2 id="效果："><a href="#效果：" class="headerlink" title="效果："></a>效果：</h2><hr>
+<hr>
+<hr>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">&gt;这是引用的内容</span><br><span class="line"><span class="meta">&gt;&gt;</span>这是引用的内容</span><br><span class="line"><span class="meta">&gt;&gt;</span>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;这是引用的内容</span><br></pre></td></tr></table></figure>
+<p>效果：</p>
+<blockquote>
+<p>这是引用的内容</p>
+<blockquote>
+<p>这是引用的内容</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>这是引用的内容</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>1.无序列表使用星号(*)、加号(+)或是减号(-)作为列表标记：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">* </span>第一项</span><br><span class="line"><span class="bullet">* </span>第二项</span><br><span class="line"><span class="bullet">* </span>第三项</span><br><span class="line"></span><br><span class="line"><span class="bullet">+ </span>第一项</span><br><span class="line"><span class="bullet">+ </span>第二项</span><br><span class="line"><span class="bullet">+ </span>第三项</span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>第一项</span><br><span class="line"><span class="bullet">- </span>第二项</span><br><span class="line"><span class="bullet">- </span>第三项</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
+</ul>
+<ul>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
+</ul>
+<ul>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
+</ul>
+<p>2.有序列表使用数字并加上 . 号来表示，如：</p>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="number">1.</span> 第一项</span><br><span class="line"><span class="number">2.</span> 第二项</span><br><span class="line"><span class="number">3.</span> 第三项</span><br></pre></td></tr></table></figure>
+<ol>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
+</ol>
+<p>3.列表嵌套只需在子列表中的选项添加四个空格即可：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="bullet">1. </span>第一项：</span><br><span class="line"><span class="bullet">    - </span>第一项嵌套的第一个元素</span><br><span class="line"><span class="bullet">    - </span>第一项嵌套的第二个元素</span><br><span class="line"><span class="bullet">2. </span>第二项：</span><br><span class="line"><span class="bullet">    - </span>第二项嵌套的第一个元素</span><br><span class="line"><span class="bullet">    - </span>第二项嵌套的第二个元素</span><br></pre></td></tr></table></figure>
+<ol>
+<li>第一项：<ul>
+<li>第一项嵌套的第一个元素</li>
+<li>第一项嵌套的第二个元素</li>
+</ul>
+</li>
+<li>第二项：<ul>
+<li>第二项嵌套的第一个元素</li>
+<li>第二项嵌套的第二个元素</li>
+</ul>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Markdown</category>
+      </categories>
+      <tags>
+        <tag>makedown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Lua迭代器</title>
+    <url>/2020/06/12/%E8%BF%AD%E4%BB%A3%E5%99%A8/</url>
+    <content><![CDATA[<h1 id="ipairs-和pairs-的区别"><a href="#ipairs-和pairs-的区别" class="headerlink" title="ipairs()和pairs()的区别"></a>ipairs()和pairs()的区别</h1><p>pairs会遍历表中所有的key-value值，而ipairs会根据key的数值从1开始加1递增遍历对应的table[i]值，直到出现第一个不是按1递增的数值时候退出。</p>
+<p>下面我们以例子说明一下吧</p>
+<p>stars = {[1] = “Sun”, [2] = “Moon”, [5] = ‘Earth’}</p>
+<p>for i, v in pairs(stars) do</p>
+<p>   print(i, v)</p>
+<p>end</p>
+<a id="more"></a>
+
+<p>使用pairs()将会遍历表中所有的数据，输出结果是：</p>
+<p>1    Sun<br>2    Moon<br>5    Earth</p>
+<p>如果使用ipairs()的话，</p>
+<p>for i, v in ipairs(stars) do</p>
+<p>   print(i, v)</p>
+<p>end</p>
+<p>当i的值遍历到第三个元素时，i的值为5，此时i并不是上一个次i值（2）的+1递增，所以遍历结束，结果则会是：</p>
+<p>1    Sun<br>2    Moon</p>
+<p>ipairs()和pairs()的区别就是这么简单。</p>
+<h1 id="泛型-for-迭代器"><a href="#泛型-for-迭代器" class="headerlink" title="泛型 for 迭代器"></a>泛型 for 迭代器</h1><p>泛型 for 在自己内部保存迭代函数，实际上它保存三个值：迭代函数、状态常量、控制变量。<br>泛型 for 迭代器提供了集合的 key/value 对，语法格式如下：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">pairs</span>(t) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(k, v)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<!--more-->
+
+
+<p>上面代码中，k, v为变量列表；pairs(t)为表达式列表。</p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">array</span> = &#123;"Google", "Runoob"&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for key</span>,<span class="keyword">value</span> <span class="keyword">in</span> ipairs(<span class="keyword">array</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   print(key, <span class="keyword">value</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">执行结果：</span><br><span class="line"><span class="number">1</span>  Google</span><br><span class="line"><span class="number">2</span>  Runoob</span><br></pre></td></tr></table></figure>
+
+<p>Lua 默认提供的迭代函数 ipairs。</p>
+<p>泛型 for 的执行过程：</p>
+<ul>
+<li>首先，初始化，计算 in 后面表达式的值，表达式应该返回泛型 for 需要的三个值：迭代函数、状态常量、控制变量；与多值赋值一样，如果表达式返回的结果个数不足三个会自动用 nil 补足，多出部分会被忽略。</li>
+<li>第二，将状态常量和控制变量作为参数调用迭代函数（注意：对于 for 结构来说，状态常量没有用处，仅仅在初始化时获取他的值并传递给迭代函数）。</li>
+<li>第三，将迭代函数返回的值赋给变量列表。</li>
+<li>第四，如果返回的第一个值为nil循环结束，否则执行循环体。</li>
+<li>第五，回到第二步再次调用迭代函数</li>
+</ul>
+<h1 id="无状态的迭代器"><a href="#无状态的迭代器" class="headerlink" title="无状态的迭代器"></a>无状态的迭代器</h1><p>无状态的迭代器是指不保留任何状态的迭代器，因此在循环中我们可以利用无状态迭代器避免创建闭包花费额外的代价。</p>
+<p>每一次迭代，迭代函数都是用两个变量（状态常量和控制变量）的值作为参数被调用，一个无状态的迭代器只利用这两个值可以获取下一个元素。这种无状态迭代器的典型的简单的例子是 ipairs，它遍历数组的每一个元素。</p>
+<p>以下实例我们使用了一个简单的函数来实现迭代器，实现 数字 n 的平方：</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">--求数字<span class="built_in">j</span>到N的平方</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">square</span><span class="params">(N, j)</span></span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">j</span> &lt;= N</span><br><span class="line">    then</span><br><span class="line">        <span class="keyword">return</span>  <span class="built_in">j</span>+<span class="number">1</span> ,  <span class="built_in">j</span>*<span class="built_in">j</span> --  这里的<span class="built_in">j</span>+<span class="number">1</span> 是为了传给<span class="keyword">for</span>的<span class="built_in">i</span>值，类似++<span class="built_in">i</span>，否则<span class="built_in">i</span>一直不变，死循环</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">--         迭代器函数、恒定状态、控制变量的初值</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>,n in square ,     <span class="number">3</span> ,    <span class="number">1</span></span><br><span class="line">do</span><br><span class="line">    --这里的<span class="built_in">i</span>,n是square返回的</span><br><span class="line">    print(<span class="built_in">i</span><span class="number">-1</span> ,<span class="string">"的平方是"</span> , n)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">iter</span> <span class="params">(a, i)</span></span></span><br><span class="line">    <span class="built_in">i</span> = <span class="built_in">i</span> + <span class="number">1</span></span><br><span class="line">    local v = a[<span class="built_in">i</span>]</span><br><span class="line">    <span class="keyword">if</span> v then</span><br><span class="line">       <span class="keyword">return</span> <span class="built_in">i</span>, v</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ipairs</span> <span class="params">(a)</span></span></span><br><span class="line">    <span class="keyword">return</span> iter, a, <span class="number">0</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>当 Lua 调用 ipairs(a) 开始循环时，他获取三个值：迭代函数 iter、状态常量 a、控制变量初始值 0；然后 Lua 调用 iter(a,0) 返回 1, a[1]（除非 a[1]=nil）；第二次迭代调用 iter(a,1) 返回 2, a[2]……直到第一个 nil 元素。</p>
+<h1 id="多状态的迭代器"><a href="#多状态的迭代器" class="headerlink" title="多状态的迭代器"></a>多状态的迭代器</h1><p>很多情况下，迭代器需要保存多个状态信息而不是简单的状态常量和控制变量，最简单的方法是使用闭包，还有一种方法就是将所有的状态信息封装到 table 内，将 table 作为迭代器的状态常量，因为这种情况下可以将所有的信息存放在 table 内，所以迭代函数通常不需要第二个参数。</p>
+<p>以下实例我们创建了自己的迭代器：</p>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">array</span> = &#123;"Google", "Runoob"&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> elementIterator (collection)</span><br><span class="line">   <span class="keyword">local</span> <span class="keyword">index</span> = <span class="number">0</span></span><br><span class="line">   <span class="keyword">local</span> count = #collection</span><br><span class="line">   <span class="comment">-- 闭包函数</span></span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">function</span> ()</span><br><span class="line">      <span class="keyword">index</span> = <span class="keyword">index</span> + <span class="number">1</span></span><br><span class="line">      <span class="keyword">if</span> <span class="keyword">index</span> &lt;= count</span><br><span class="line">      <span class="keyword">then</span></span><br><span class="line">         <span class="comment">--  返回迭代器的当前元素</span></span><br><span class="line">         <span class="keyword">return</span> collection[<span class="keyword">index</span>]</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> element <span class="keyword">in</span> elementIterator(<span class="keyword">array</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   print(element)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">Google</span><br><span class="line">Runoob</span><br></pre></td></tr></table></figure>
+<p>以上实例中我们可以看到，elementIterator 内使用了闭包函数，实现计算集合大小并输出各个元素。</p>
 ]]></content>
       <categories>
         <category>lua语言</category>
@@ -791,6 +834,241 @@
       </categories>
       <tags>
         <tag>lua</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C语言篇</title>
+    <url>/2020/06/21/%E9%9D%A2%E8%AF%95C%E8%AF%AD%E8%A8%80%E7%AF%87/</url>
+    <content><![CDATA[<h2 id="一个程序从开始运行到结束的完整过程"><a href="#一个程序从开始运行到结束的完整过程" class="headerlink" title="一个程序从开始运行到结束的完整过程"></a>一个程序从开始运行到结束的完整过程</h2><ul>
+<li>预处理（.i文件）<br>在编译的时候会被尾开去换成空际的代码这个层开编译的时候会被展开替换成实际的代码,这个展升的步骤就是在预处理的时候进行的当然预处理并不仅仅只是做宏的展开，它还做了类似头文件插入<br>预处理之后的产品依然还是C/C++代码,它在代码的逻辑上和输入的C/C++源代码是完全- -样的. </li>
+<li>汇编 (.s文件)<br>汇编语言是将机器语言符号化了的语言是机器不能直接识别的低级语言我们可以通过下面的命令将预处理后的代码编译成汇编语言:</li>
+<li>编译（.o文件，目标文件）<br>汇编这一步是将汇编代码编译成机器语言:</li>
+<li>链接<br>c语言写的程序需要依赖各种库，所以编译后还需要把库链接到最终的可执行程序中去</li>
+</ul>
+<h2 id="预处理器（Preprocessor）"><a href="#预处理器（Preprocessor）" class="headerlink" title="预处理器（Preprocessor）"></a>预处理器（Preprocessor）</h2><ol>
+<li>用预处理指令#define 声明一个常数，用以表明1年中有多少秒（忽略闰年问题）<br><code>#define SECONDS_PER_YEAR (60 * 60 * 24 * 365)UL</code></li>
+</ol>
+<p>我在这想看到几件事情：<br>1). #define 语法的基本知识（例如：不能以分号结束，括号的使用，等等）<br>2). 懂得预处理器将为你计算常数表达式的值，因此，直接写出你是如何计算一年中有多少秒而不是计算出实际的值，是更清晰而没有代价的。<br>3). 意识到这个表达式将使一个16位机的整型数溢出-因此要用到长整型符号L,告诉编译器这个常数是的长整型数。<br>4). 如果你在你的表达式中用到UL（表示无符号长整型），那么你有了一个好的起点。记住，第一印象很重要。</p>
+<h2 id="写一个“标准”宏MIN-MAX，这个宏输入两个参数并返回较小-大的一个。"><a href="#写一个“标准”宏MIN-MAX，这个宏输入两个参数并返回较小-大的一个。" class="headerlink" title="写一个“标准”宏MIN/MAX，这个宏输入两个参数并返回较小/大的一个。"></a>写一个“标准”宏MIN/MAX，这个宏输入两个参数并返回较小/大的一个。</h2><p><code>#define MIN(A,B) ((A) &lt;= (B) (A) : ))</code><br><code>#define Max(a, b) (a &gt; b ? a : b)</code></p>
+<p>1). 标识#define在宏中应用的基本知识。这是很重要的，因为直到嵌入(inline)操作符变为标准C的一部分，宏是方便产生嵌入代码的唯一方法，对于嵌入式系统来说，为了能达到要求的性能，嵌入代码经常是必须的方法。<br>2). 三重条件操作符的知识。这个操作符存在C语言中的原因是它使得编译器能产生比if-then-else更优化的代码，了解这个用法是很重要的。<br>3). 懂得在宏中小心地把参数用括号括起来</p>
+<h2 id="预处理器标识-error的目的是什么？"><a href="#预处理器标识-error的目的是什么？" class="headerlink" title="预处理器标识#error的目的是什么？"></a>预处理器标识#error的目的是什么？</h2><pre><code>停止编译并显示错误信息</code></pre><h2 id="嵌入式系统中经常要用到无限循环，你怎么样用C编写死循环呢？"><a href="#嵌入式系统中经常要用到无限循环，你怎么样用C编写死循环呢？" class="headerlink" title="嵌入式系统中经常要用到无限循环，你怎么样用C编写死循环呢？"></a>嵌入式系统中经常要用到无限循环，你怎么样用C编写死循环呢？</h2><p>这个问题用几个解决方案。我首选的方案是：<br>while(1) { }<br>一些程序员更喜欢如下方案：<br>for(;;) { }<br>这个实现方式让我为难，因为这个语法没有确切表达到底怎么回事。如果一个应试者给出这个作为方案，我将用这个作为一个机会去探究他们这样做的<br>基本原理。如果他们的基本答案是：“我被教着这样做，但从没有想到过为什么。”这会给我留下一个坏印象。<br>第三个方案是用 goto<br>Loop:<br>…<br>goto Loop;<br>应试者如给出上面的方案，这说明或者他是一个汇编语言程序员（这也许是好事）或者他是一个想进入新领域的BASIC/FORTRAN程序员。</p>
+<p>数据声明（Data declarations）</p>
+<h2 id="用变量a给出下面的定义"><a href="#用变量a给出下面的定义" class="headerlink" title="用变量a给出下面的定义"></a>用变量a给出下面的定义</h2><p>a) 一个整型数（An integer）<br>b) 一个指向整型数的指针（A pointer to an integer）<br>c) 一个指向指针的的指针，它指向的指针是指向一个整型数（A pointer to a pointer to an integer）<br>d) 一个有10个整型数的数组（An array of 10 integers）<br>e) 一个有10个指针的数组，该指针是指向一个整型数的（An array of 10 pointers to integers）<br>f) 一个指向有10个整型数数组的指针（A pointer to an array of 10 integers）<br>g) 一个指向函数的指针，该函数有一个整型参数并返回一个整型数（A pointer to a function that takes an integer as an argument and returns an integer）<br>h) 一个有10个指针的数组，该指针指向一个函数，该函数有一个整型参数并返回一个整型数（ An array of ten pointers to functions that take an integer argument and return an integer ）</p>
+<p>答案是：<br>a) int a; // An integer<br>b) int <em>a; // A pointer to an integer<br>c) int *</em>a; // A pointer to a pointer to an integer<br>d) int a[10]; // An array of 10 integers<br>e) int <em>a[10]; // An array of 10 pointers to integers<br>f) int (</em>a)[10]; // A pointer to an array of 10 integers<br>g) int (<em>a)(int); // A pointer to a function a that takes an integer argument and returns an integer<br>h) int (</em>a[10])(int); // An array of 10 pointers to functions that take an integer argument and return an integer</p>
+<h2 id="关键字static的作用是什么？"><a href="#关键字static的作用是什么？" class="headerlink" title="关键字static的作用是什么？"></a>关键字static的作用是什么？</h2><p>这个简单的问题很少有人能回答完全。在C语言中，关键字static有三个明显的作用：<br>1). 在函数体，一个被声明为静态的变量在这一函数被调用过程中维持其值不变。<br>2). 在模块内（但在函数体外），一个被声明为静态的变量可以被模块内所用函数访问，但不能被模块外其它函数访问。它是一个本地的全局变量。<br>3). 在模块内，一个被声明为静态的函数只可被这一模块内的其它函数调用。那就是，这个函数被限制在声明它的模块的本地范围内使用。<br>大多数应试者能正确回答第一部分，一部分能正确回答第二部分，同是很少的人能懂得第三部分。这是一个应试者的严重的缺点，因为他显然不懂得本地化数据和代码范围的好处和重要性。</p>
+<h2 id="关键字const是什么含意？"><a href="#关键字const是什么含意？" class="headerlink" title="关键字const是什么含意？"></a>关键字const是什么含意？</h2><p>只要一个变量前用const来修饰，就意味着该变量里的数据只能被访问，而不能被修改，也就是意味着const“只读”</p>
+<figure class="highlight zephir"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Const</span> <span class="keyword">int</span> a;</span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> a;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> *a; <span class="comment">//const靠近*，地址内容不可变，地址可变，*a=100//err ；a=NULL//OK</span></span><br><span class="line"><span class="keyword">int</span> * <span class="keyword">const</span> a;<span class="comment">//看const靠近*还是a，靠近a表示地址可变，地址里面的内容不可变，</span></span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> * a <span class="keyword">const</span>;</span><br></pre></td></tr></table></figure>
+<p>前两个的作用是一样，a是一个常整型数。第三个意味着a是一个指向常整型数的指针（也就是，整型数是不可修改的，但指针可以）。第四个意思a是一个指向整型数的常指针（也就是说，指针指向的整型数是可以修改的，但指针是不可修改的）。最后一个意味着a是一个指向常整型数的常指针（也就是说，指针指向的整型数是不可修改的，同时指针也是不可修改的）。：<br>1). 关键字const的作用是为给读你代码的人传达非常有用的信息，实际上，声明一个参数为常量是为了告诉了用户这个参数的应用目的。如果你曾花很多时间清理其它人留下的垃圾，你就会很快学会感谢这点多余的信息。（当然，懂得用const的程序员很少会留下的垃圾让别人来清理的。）<br>2). 通过给优化器一些附加的信息，使用关键字const也许能产生更紧凑的代码。<br>3). 合理地使用关键字const可以使编译器很自然地保护那些不希望被改变的参数，防止其被无意的代码修改。简而言之，这样可以减少bug的出现。</p>
+<h2 id="关键字volatile有什么含意-并给出三个不同的例子。"><a href="#关键字volatile有什么含意-并给出三个不同的例子。" class="headerlink" title="关键字volatile有什么含意 并给出三个不同的例子。"></a>关键字volatile有什么含意 并给出三个不同的例子。</h2><p>一个定义为volatile的变量是说这变量可能会被意想不到地改变，这样，编译器就不会去假设这个变量的值了。精确地说就是，优化器在用到这个变量时必须每次都小心地重新读取这个变量的值，而不是使用保存在寄存器里的备份。下面是volatile变量的几个例子：</p>
+<ol>
+<li>并行设备的硬件寄存器（如：状态寄存器）</li>
+<li>一个中断服务子程序中会访问到的非自动变量(Non-automatic variables)</li>
+<li>多线程应用中被几个任务共享的变量<br>假设被面试者正确地回答了这是问题（嗯，怀疑这否会是这样），我将稍微深究一下，看一下这家伙是不是直正懂得volatile完全的重要性。<br>1). 一个参数既可以是const还可以是volatile吗？解释为什么。<br>2). 一个指针可以是volatile 吗？解释为什么。<br>下面是答案：<br>1). volatile修饰符告诉complier变量值可以以任何不被程序明确指明的方式改变，最常见的例子就是外部端口的值，它的变化可以不用程序内的任何赋值语句就有可能改变的，这种变量就可以用volatile来修饰，complier不会优化掉它。<br>const修饰的变量在程序里面是不能改变的，但是可以被程序外的东西修改，就象上面说的外部端口的值，如果仅仅使用const，有可能complier会优化掉这些变量，加上volatile就万无一失了。<br>2). 可以。尽管这并不很常见。一个例子是当一个中服务子程序修该一个指向一个buffer的指针时。</li>
+</ol>
+<h2 id="位操作（Bit-manipulation）"><a href="#位操作（Bit-manipulation）" class="headerlink" title="位操作（Bit manipulation）"></a>位操作（Bit manipulation）</h2><p>嵌入式系统总是要用户对变量或寄存器进行位操作。给定一个整型变量a，写两段代码，第一个设置a的bit 3，第二个清除a 的bit 3。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BIT3 (0x1&lt;&lt;3) </span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> a; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">set_bit3</span><span class="params">(<span class="keyword">void</span>)</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">a |= BIT3; </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">clear_bit3</span><span class="params">(<span class="keyword">void</span>)</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">a &amp;= ~BIT3; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="要求设置一绝对地址为0x67a9的整型变量的值为0xaa55"><a href="#要求设置一绝对地址为0x67a9的整型变量的值为0xaa55" class="headerlink" title="要求设置一绝对地址为0x67a9的整型变量的值为0xaa55"></a>要求设置一绝对地址为0x67a9的整型变量的值为0xaa55</h2><figure class="highlight x86asm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> *<span class="built_in">ptr</span><span class="comment">; </span></span><br><span class="line"><span class="built_in">ptr</span> = (<span class="keyword">int</span> *)<span class="number">0x67a9</span><span class="comment">; </span></span><br><span class="line">*<span class="built_in">ptr</span> = <span class="number">0xaa55</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="中断函数（Interrupts）"><a href="#中断函数（Interrupts）" class="headerlink" title="中断函数（Interrupts）"></a>中断函数（Interrupts）</h2><p>中断是嵌入式系统中重要的组成部分，这导致了很多编译开发商提供一种扩展—让标准C支持中断。具代表事实是，产生了一个新的关键字<strong>interrupt。下面的代码就使用了</strong>interrupt关键字去定义了一个中断服务子程序(ISR)，请评论一下这段代码的。<br>__interrupt double compute_area (double radius)<br>{<br>double area = PI * radius * radius;<br>printf(” Area = %f”, area);<br>return area;<br>}<br>这个函数有太多的错误了，以至让人不知从何说起了：<br>1). ISR 不能返回一个值。如果你不懂这个，那么你不会被雇用的。<br>2). ISR 不能传递参数。如果你没有看到这一点，你被雇用的机会等同第一项。<br>3). 在许多的处理器/编译器中，浮点一般都是不可重入的。有些处理器/编译器需要让额处的寄存器入栈，有些处理器/编译器就是不允许在ISR中做浮点运算。此外，ISR应该是短而有效率的，在ISR中做浮点运算是不明智的。<br>4). 与第三点一脉相承，printf()经常有重入和性能上的问题。如果你丢掉了第三和第四点，我不会太为难你的。不用说，如果你能得到后两点，那么你的被雇用前景越来越光明了。</p>
+<h2 id="const与-define相比"><a href="#const与-define相比" class="headerlink" title="const与#define相比"></a>const与#define相比</h2><p>1）就起作用的阶段而言：#define是在编译的预处理阶段起作用，而const是在 编译、运行的时候起作用。<br>2）就起作用的方式而言： #define只是简单的字符串替换，没有类型检查。而const有对应的数据类型，是要进行判断的，可以避免一些低级的错误。<br>3）就存储方式而言：#define只是进行展开，有多少地方使用，就替换多少次，它定义的宏常量在内存中有若干个备份；const定义的只读变量在程序运行过程中只有一份备份。<br>4）从代码调试的方便程度而言： const常量可以进行调试的，define是不能进行调试的，因为在预编译阶段就已经替换掉了。</p>
+<h2 id="typedef与define的区别"><a href="#typedef与define的区别" class="headerlink" title="typedef与define的区别"></a>typedef与define的区别</h2><p>typedef ：typedef是在计算机编程语言中用来为复杂的声明定义简单的别名，它与宏定义有些差异。它本身是一种存储类的关键字，与auto、extern、mutable、static、register等关键字不能出现在同一个表达式中。<br><code>typedef int size;//size就是int类型，定义变量时可以写 size a；</code></p>
+<p>typedef是C语言中用来声明自定义数据类型，配合各种原有数据类型来达到简化编程的目的的类型定义关键字。#define是预处理指令，是宏定义。</p>
+<h2 id="简介-和-的作用"><a href="#简介-和-的作用" class="headerlink" title="简介##和#的作用"></a>简介##和#的作用</h2><p> ##的作用就是把2个宏参数连接为1个数。<br> #的作用就是讲#后面的宏参数进行字符串的操作，也就是将#后面的参数两边加上一对双引号使其成为字符串。<br> <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"> <span class="meta">#<span class="meta-keyword">define</span> TE(a,b) (a#b)</span></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"> </span>&#123;</span><br><span class="line"> 	<span class="keyword">int</span> num = TE(<span class="number">12</span>,<span class="number">34</span>);</span><br><span class="line"> 	<span class="built_in">printf</span>(<span class="string">"num=%d"</span>,num);</span><br><span class="line"> &#125;</span><br><span class="line">输出：num=<span class="number">1234</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TE(param) #param</span></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"> </span>&#123;</span><br><span class="line"> 	<span class="keyword">char</span> *pstr = TE(<span class="number">1234</span>);</span><br><span class="line"> 	<span class="built_in">printf</span>(<span class="string">"num=%s"</span>,pstr);</span><br><span class="line"> &#125;</span><br><span class="line"> 输出：sptr=<span class="number">1234</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="virtual关键字"><a href="#virtual关键字" class="headerlink" title="virtual关键字"></a>virtual关键字</h2><p>为C++关键字，virtual声明的函数为虚函数，告诉编译器不要静态链接</p>
+<h2 id="指针与引用的相同和区别；如何相互转换？"><a href="#指针与引用的相同和区别；如何相互转换？" class="headerlink" title="指针与引用的相同和区别；如何相互转换？"></a>指针与引用的相同和区别；如何相互转换？</h2><p>区别：</p>
+<ol>
+<li>指针是一个实体，而引用仅是个别名</li>
+<li>指针和引用的自增(++)运算意义不一样，指针是对内存地址的自增，引用是对值的自增；<br>量或对象的地址)的大小；</li>
+<li>引用使用时无需解引用(*)，指针需要解引用；</li>
+<li>引用只能在定义时被初始化一次，之后不可变；指针可变；</li>
+<li>引用不能为空，指针可以为空；</li>
+<li>引用没有const，指针有const；</li>
+<li>“sizeof 引用”得到的是所指向的变量(对象)的大小，而“sizeof 指针”得到的是指针本身的大小，在32位系统指针变量一般占用4字节内存。</li>
+</ol>
+<p>指针和引用之间怎么转换：</p>
+<ol>
+<li>指针转引用：把指针用*就可以转换成对象，可以用在引用参数当中。</li>
+<li>引用转指针：把引用类型的对象用&amp;取地址就获得指针了。</li>
+</ol>
+<h2 id="h头文件中的ifndef-define-endif-的作用？"><a href="#h头文件中的ifndef-define-endif-的作用？" class="headerlink" title=".h头文件中的ifndef/define/endif 的作用？"></a>.h头文件中的ifndef/define/endif 的作用？</h2><p>答：防止该头文件被重复引用。</p>
+<h2 id="全局变量和局部变量在内存中是否有区别？如果有，是什么区别？"><a href="#全局变量和局部变量在内存中是否有区别？如果有，是什么区别？" class="headerlink" title="全局变量和局部变量在内存中是否有区别？如果有，是什么区别？"></a>全局变量和局部变量在内存中是否有区别？如果有，是什么区别？</h2><p>答 ：全局变量储存在静态数据区，局部变量在栈中。</p>
+<h2 id="堆栈溢出一般是由什么原因导致的？"><a href="#堆栈溢出一般是由什么原因导致的？" class="headerlink" title="堆栈溢出一般是由什么原因导致的？"></a>堆栈溢出一般是由什么原因导致的？</h2><ul>
+<li>没有回收垃圾资源</li>
+<li>层次太深的递归调用</li>
+</ul>
+<h2 id="程序的内存分配"><a href="#程序的内存分配" class="headerlink" title="程序的内存分配"></a>程序的内存分配</h2><p>答：一个由C/C++编译的程序占用的内存分为以下几个部分</p>
+<ul>
+<li>栈区（stack）—由编译器自动分配释放，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。函数执行结束时这些存储单元自动释放。</li>
+<li>堆分配（又称动态内存分配）。程序在运行时用malloc或者new申请内存，程序员自己用free或者delete释放，动态内存的生存期由我们自己决定。</li>
+<li>全局区（静态区）（static）—全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域，未初始化的全局变量和未初始化的静态变量在相邻的另一块区域。程序结束后由系统释放。内存分配在程序编译之前完成，且在程序的整个运行期间都存在，例如全局变量、静态变量等。</li>
+</ul>
+<h2 id="在1G内存的计算机中能否malloc-1-2G-？为什么？"><a href="#在1G内存的计算机中能否malloc-1-2G-？为什么？" class="headerlink" title="在1G内存的计算机中能否malloc(1.2G)？为什么？"></a>在1G内存的计算机中能否malloc(1.2G)？为什么？</h2><p>答：是有可能申请1.2G的内存的。<br>解析：回答这个问题前需要知道malloc的作用和原理，应用程序通过malloc函数可以向程序的虚拟空间申请一块虚拟地址空间，与物理内存没有直接关系，得到的是在虚拟地址空间中的地址，之后程序运行所提供的物理内存是由操作系统完成的。</p>
+<h2 id="堆和栈的区别"><a href="#堆和栈的区别" class="headerlink" title="堆和栈的区别"></a>堆和栈的区别</h2><p>答：堆（heap）和栈(stack)的区别</p>
+<ol>
+<li>申请方式<br>stack:由系统自动分配。例如，声明在函数中一个局部变量int b;系统自动在栈中为b开辟空间<br>heap:需要程序员自己申请，并指明大小，<br>在c中malloc函数<br>如p1=(char*)malloc(10);<br>但是注意p1本身是在栈中的。</li>
+<li>申请后系统的响应<br> 栈：只要栈的剩余空间大于所申请空间，系统将为程序提供内存，否则将报异常提示栈溢出。<br> 堆：首先应该知道操作系统有一个记录空闲内存地址的链表，当系统收到程序的申请时，会遍历该链表，寻找第一个空间大于所申请空间的堆结点，然后将该结点从空闲结点链表中删除，并将该结点的空间分配给程序，另外，对于大多数系统，会在这块内存空间中的首地址处记录本次分配的大小，这样，代码中的delete语句才能正确的释放本内存空间。另外，由于找到的堆结点的大小不一定正好等于申请的大小，系统会自动的将多余的那部分重新放入空闲链表中。</li>
+<li>申请大小的限制<br> 栈：栈是向低地址扩展的数据结构，是一块连续的内存的区域，即栈顶的地址和栈的最大容量是系统预先规定好的，linux系统可以使用ulimit -a命令查看当前系统的栈的大小，默认为10M（64位系统），如果申请的空间超过栈的剩余空间时，将提示overflow。因此，能从栈获得的空间较小。<br> 堆：堆是向高地址扩展的数据结构，是不连续的内存区域。这是由于系统是用链表来存储的空闲内存地址的，自然是不连续的，而链表的遍历方向是由低地址向高地址。堆的大小受限于计算机系统中有效的虚拟内存。由此可见，堆获得的空间比较灵活，也比较大。</li>
+<li>申请效率的比较：<br> 栈:由系统自动分配，速度较快。但程序员是无法控制的。<br> 堆:是由malloc分配的内存，一般速度比较慢，而且容易产生内存碎片,不过用起来最方便.</li>
+<li>堆和栈中的存储内容<br> 栈：在函数调用时，第一个进栈的是主函数中后的下一条指令（函数调用语句的下一条可执行语句）的地址，然后是函数的各个参数，在大多数的C编译器中，参数是由右往左入栈的，然后是函数中的局部变量。注意静态变量是不入栈的。当本次函数调用结束后，局部变量先出栈，然后是参数，最后栈顶指针指向最开始存的地址，也就是主函数中的下一条指令，程序由该点继续运行。<br> 堆：一般是在堆的头部用一个字节存放堆的大小。堆中的具体内容由程序员安排。</li>
+</ol>
+<h2 id="简述数组与指针的区别？"><a href="#简述数组与指针的区别？" class="headerlink" title="简述数组与指针的区别？"></a>简述数组与指针的区别？</h2><p>答：数组要么在静态存储区被创建（如全局数组），要么在栈上被创建(不带static的局部数组），malloc的在堆中。指针可以随时指向任意类型的内存块。</p>
+<h2 id="extern关键字"><a href="#extern关键字" class="headerlink" title="extern关键字"></a>extern关键字</h2><p>extern只适用于普通全局变量，不能于static一起用<br>static全局变量数据相对安全，外部不能修改<br>头文件声明时加extern定义时不要加，因为extern可以多次声明，但只有一个定义</p>
+<h2 id="extern-“C”的作用"><a href="#extern-“C”的作用" class="headerlink" title="extern “C”的作用"></a>extern “C”的作用</h2><p> extern “C”的主要作用就是为了能够正确实现C++代码调用其他C语言代码。加上extern “C”后，会指示编译器这部分代码按C语言的进行编译，而不是C++的。由于C++支持函数重载，因此编译器编译函数的过程中会将函数的参数类型也加到编译后的代码中，而不仅仅是函数名；而C语言并不支持函数重载，因此编译C语言代码的函数时不会带上函数的参数类型，一般之包括函数名。</p>
+<h2 id="new和malloc的区别"><a href="#new和malloc的区别" class="headerlink" title="new和malloc的区别"></a>new和malloc的区别</h2><p>答：</p>
+<ol>
+<li>new、delete是C++中独有的操作符，而malloc和free是C/C++中的标准库函数。</li>
+<li>使用new创建对象在分配内存的时候会自动调用构造函数，同时也可以完成对对象的初始化，同理要记得delete也能自动调用析构函数。因为malloc和 free是库函数而不是运算符，不在编译器控制范围之内，所以不能够自动调用构造函数和析构函数。也就是mallloc只是单纯地为变量分配内存，free也只是释放变量的内存。</li>
+<li>new返回的是指定类型的指针，并且可以自动计算所申请内存的大小。而malloc返回的是void*类型，我们需要强行将其转换为实际类型的指针，并且需要指定好要申请内存的大小，malloc不会自动计算的。</li>
+<li>C++允许重载new/delete操作符，而malloc和free是一个函数，并不能重载。</li>
+<li>new内存分配失败时，会抛出bac_alloc异常。malloc分配内存失败时返回NULL。</li>
+<li>内存区域：先了解自由存储区和堆，两者不相等于的。自由存储区是C++基于new操作符的一个抽象概念，凡是通过new操作符进行内存申请，该内存即为自由存储区。堆是操作系统中的术语，是操作系统所维护的一块特殊内存，用于程序的内存动态分配。new操作符从自由存储区上为对象动态分配内存空间，而malloc函数从堆上动态分配内存。</li>
+</ol>
+<h2 id="C-中struct和class的区别"><a href="#C-中struct和class的区别" class="headerlink" title="C++中struct和class的区别"></a>C++中struct和class的区别</h2><p>在C++中，可以用struct和class定义类，都可以继承。<br>区别在于：structural的默认继承权限和默认访问权限<br>是public，而class的默认继承权限和默认访问权限是<br>private。另外，class还可以定义模板类形参，比如<br><code>template &lt;class T, int i&gt;。</code></p>
+<h2 id="大小端的区别以及各自的优点，哪种时候用"><a href="#大小端的区别以及各自的优点，哪种时候用" class="headerlink" title="大小端的区别以及各自的优点，哪种时候用"></a>大小端的区别以及各自的优点，哪种时候用</h2><p>1) Little-Endian（小端）就是低位字节排放在内存的低地址端，高位字节排放在内存的高地址端。<br>2) Big-Endian（大端）就是高位字节排放在内存的低地址端，低位字节排放在内存的高地址端。<br>大小端各自的优点</p>
+<ul>
+<li>小端模式：强制转换数据不需要调整字节内容</li>
+<li>大端模式：符号位的判定固定为第一个字节，容易判断正负<br>一般操作系统都是小端，而通讯协议是大端的。</li>
+</ul>
+<h2 id="计算机怎么算减法-补码的作用"><a href="#计算机怎么算减法-补码的作用" class="headerlink" title="计算机怎么算减法(补码的作用)"></a>计算机怎么算减法(补码的作用)</h2><h2 id="队列和栈的区别"><a href="#队列和栈的区别" class="headerlink" title="队列和栈的区别"></a>队列和栈的区别</h2><ul>
+<li>队列是先进先出，只能在一端插入另一端删除，可以从头或尾进行遍历（但不能同时遍历），</li>
+<li>栈是先进后出，只能在同一端插入和删除，只能从头部取数据</li>
+</ul>
+<h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p><img src="/images/27.png" alt=""></p>
+<h2 id="char和int之间的转换"><a href="#char和int之间的转换" class="headerlink" title="char和int之间的转换"></a>char和int之间的转换</h2><p>char转int</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">char</span> ch=<span class="string">'9'</span>;</span><br><span class="line"><span class="keyword">int</span> ch_int=ch-<span class="string">'0'</span>;<span class="comment">//此时ch_int=9</span></span><br></pre></td></tr></table></figure>
+<p>int转char</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> i=<span class="number">9</span>；</span><br><span class="line"><span class="keyword">char</span> i_ch=i+<span class="string">'0'</span>;<span class="comment">//此时i_ch='9'</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>字符值</th>
+<th>ASCII值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>‘0’</td>
+<td>48</td>
+</tr>
+<tr>
+<td>‘9’</td>
+<td>57</td>
+</tr>
+<tr>
+<td>‘A’</td>
+<td>65</td>
+</tr>
+<tr>
+<td>‘Z’</td>
+<td>90</td>
+</tr>
+<tr>
+<td>‘a’</td>
+<td>97</td>
+</tr>
+<tr>
+<td>‘z’</td>
+<td>122</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>嵌入式面试题</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ARM语言篇</title>
+    <url>/2020/06/21/%E9%9D%A2%E8%AF%95ARM/</url>
+    <content><![CDATA[<h2 id="FIQ比IRQ快的原因："><a href="#FIQ比IRQ快的原因：" class="headerlink" title="FIQ比IRQ快的原因："></a>FIQ比IRQ快的原因：</h2><p>A、FIQ模式的R8–R14寄存器是独有的，FIQ处理程序可以不必执行保存和恢复中断现场的指令。<br>B、FIQ可以将ISR直接放在FIQ后面的地址空间，不需要跳转。</p>
+<h2 id="在ARM系统中，在函数调用的时候，参数是通过哪种方式传递的"><a href="#在ARM系统中，在函数调用的时候，参数是通过哪种方式传递的" class="headerlink" title="在ARM系统中，在函数调用的时候，参数是通过哪种方式传递的"></a>在ARM系统中，在函数调用的时候，参数是通过哪种方式传递的</h2><p>当参数小于等于4的时候是通过r0-r3寄存器来进行传递的，当参数大于4的时候是通过压栈的方式进行传递。</p>
+<h2 id="简述SPI-UART-I2C三种传输方式"><a href="#简述SPI-UART-I2C三种传输方式" class="headerlink" title="简述SPI,UART,I2C三种传输方式"></a>简述SPI,UART,I2C三种传输方式</h2><ul>
+<li><p>SPI：高速同步串行口，首发独立，可同步进行<br>  SPI接口主要应用在EEPROM，Flash，实时时钟，A/D转化器，数字信号处理，是一种全双工同步通讯总线，该接口一般使用四条线：串行时钟线（sck），主出从入线，主入从出线，低电平有效地的从机选择线。</p>
+</li>
+<li><p>I2C协议：是单片机与其他芯片进行通讯的协议：<br>  A、只要求两条总线线路，一条是串行时钟线，一条是串行数据线；<br>  B、通过软件设定地址<br>  C、是一个多主机总线，如果两个或更多主机同时初始化数据传送可通过冲突检测和仲裁防止数据破坏；<br>  D、I2C总线传输的是数据的总高位</p>
+<ul>
+<li>UART：主要是由一个modem（调制解调器），可以将模拟信号量转化成数字信号量。</li>
+</ul>
+</li>
+</ul>
+<h2 id="在ARM的汇编程序中，有如下几种伪指令：、-、-、-、-。"><a href="#在ARM的汇编程序中，有如下几种伪指令：、-、-、-、-。" class="headerlink" title="在ARM的汇编程序中，有如下几种伪指令：、_、__、__、__。"></a>在ARM的汇编程序中，有如下几种伪指令：<strong><strong><em>、_</em></strong></strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>。</h2><p>答案：符号定义伪指令、数据定义伪指令、汇编控制伪指令、宏指令、其他伪指令</p>
+<h2 id="协处理器主要控制：-、-、-。"><a href="#协处理器主要控制：-、-、-。" class="headerlink" title="协处理器主要控制：__、__、__。"></a>协处理器主要控制：<strong>__</strong>、<strong>__</strong>、<strong>__</strong>。</h2><p>答案：片内的MMU、指令和数据缓存（IDC）、写缓冲（Write Buffer）</p>
+<h2 id="当一个异常出现以后，ARM微处理器会执行哪几步操作？"><a href="#当一个异常出现以后，ARM微处理器会执行哪几步操作？" class="headerlink" title="当一个异常出现以后，ARM微处理器会执行哪几步操作？"></a>当一个异常出现以后，ARM微处理器会执行哪几步操作？</h2><p>答：当一个异常出现以后，ARM微处理器会执行以下几步操作。<br>A、将下一条指令的地址存入相应连接寄存器LR，以便程序在处理异常返回时能从正确的位置重新开始执行。若异常是从ARM状态进入，则LR寄存器中保存 的是下一条指令的地址（当前PC＋4或PC＋8，与异常的类型有关）；若异常是从Thumb状态进入，则在LR寄存器中保存当前PC的偏移量，这样，异常 处理程序就不需要确定异常是从何种状态进入的。例如：在软件中断异常SWI，指令 MOV PC，R14_svc总是返回到下一条指令，不管SWI是在ARM状态执行，还是在Thumb状态执行。<br>B、将CPSR复制到相应的SPSR中。<br>C、根据异常类型，强制设置CPSR的运行模式位。<br>D、强制PC从相关的异常向量地址取下一条指令执行，从而跳转到相应的异常处理程序处。</p>
+<h2 id="ARM微处理器在较新的体系结构中支持两种指令集：-、-。"><a href="#ARM微处理器在较新的体系结构中支持两种指令集：-、-。" class="headerlink" title="ARM微处理器在较新的体系结构中支持两种指令集：__、__。"></a>ARM微处理器在较新的体系结构中支持两种指令集：<strong>__</strong>、<strong>__</strong>。</h2><p>答案：ARM指令集、Thumb指令集</p>
+<h2 id="ARM处理器有9种基本寻址方式，分别是：-、-、-、-、-、-、-、-、-。"><a href="#ARM处理器有9种基本寻址方式，分别是：-、-、-、-、-、-、-、-、-。" class="headerlink" title="ARM处理器有9种基本寻址方式，分别是：__、__、__、__、__、__、__、__、__。"></a>ARM处理器有9种基本寻址方式，分别是：<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>。</h2><p>答案：寄存器寻址、立即寻址、寄存器偏移寻址、寄存器间接寻址、基址寻址、多寄存器寻址、堆栈寻址、块拷贝寻址、相对寻址</p>
+<h2 id="ARM指令集可以分为6类，分别是：-、-、-、-、-、-。"><a href="#ARM指令集可以分为6类，分别是：-、-、-、-、-、-。" class="headerlink" title="ARM指令集可以分为6类，分别是：__、__、__、__、__、__。"></a>ARM指令集可以分为6类，分别是：<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>。</h2><p>答案：跳转指令、数据处理指令、程序状态寄存器（PSR）传输指令、Load/Store指令、协处理器指令、异常中断产生指令</p>
+<h2 id="表示递增和递减的满堆栈和空堆栈有哪几种组合，请比较它们的特点。"><a href="#表示递增和递减的满堆栈和空堆栈有哪几种组合，请比较它们的特点。" class="headerlink" title="表示递增和递减的满堆栈和空堆栈有哪几种组合，请比较它们的特点。"></a>表示递增和递减的满堆栈和空堆栈有哪几种组合，请比较它们的特点。</h2><pre><code>答：有4种类型的堆栈，表示递增和递减的满堆栈和空堆栈的各种组合。</code></pre><ul>
+<li>满递增：堆栈通过增大存储器的地址向上增长，堆栈指针指向内含有效数据项的最高地址。指令如LDMFA，STMFA等。</li>
+<li>空递增：堆栈通过增大存储器的地址向上增长，堆栈指针指向堆栈上的第一个空地址。指令如LDMEA，STMEA等。</li>
+<li>满递减：堆栈通过减小存储器的地址向下增长，堆栈指针指向内含有效数据项的最低地址。指令如LDMFD，STMFD等。</li>
+<li>空递减：堆栈通过减小存储器的地址向下增长，堆栈指针指向堆栈下的第一个空地址。指令如LDMED，STMED等。</li>
+</ul>
+<h2 id="ARM协处理器指令包括哪3类，请描述它们的功能。"><a href="#ARM协处理器指令包括哪3类，请描述它们的功能。" class="headerlink" title="ARM协处理器指令包括哪3类，请描述它们的功能。"></a>ARM协处理器指令包括哪3类，请描述它们的功能。</h2><p>答：ARM协处理器指令包括以下3类：</p>
+<ul>
+<li>用于ARM处理器初始化ARM协处理器的数据处理操作。</li>
+<li>用于ARM处理器的寄存器和ARM协处理器的寄存器间的数据传送操作。</li>
+<li>用于在ARM协处理器的寄存器和内存单元之间传送数据。</li>
+</ul>
+<p>14、可执行映像文件通常由几部分构成，它们有什么特点？</p>
+<pre><code>答：可执行映像文件通常由以下几部分构成。
+
+一个或多个代码段，代码段的属性为只读。
+
+零个或多个包含初始化数据的数据段，数据段的属性为可读写。
+
+零个或多个不包含初始化数据的数据段，数据段的属性为可读写。</code></pre><h2 id="ARM嵌入式系统主要由-、-和-构成。"><a href="#ARM嵌入式系统主要由-、-和-构成。" class="headerlink" title="ARM嵌入式系统主要由__、__和__构成。"></a>ARM嵌入式系统主要由<strong>__</strong>、<strong>__</strong>和<strong>__</strong>构成。</h2><p>答案：嵌入式处理器、相关支撑硬件、嵌入式软件系统</p>
+<h2 id="总线通常包括-、-和-。"><a href="#总线通常包括-、-和-。" class="headerlink" title="总线通常包括__、__和__。"></a>总线通常包括<strong>__</strong>、<strong>__</strong>和<strong>__</strong>。</h2><p>答案：数据总线、地址总线、控制总线</p>
+<h2 id="复位后，ARM处理器处于（B）模式，（D）状态"><a href="#复位后，ARM处理器处于（B）模式，（D）状态" class="headerlink" title="复位后，ARM处理器处于（B）模式，（D）状态"></a>复位后，ARM处理器处于（B）模式，（D）状态</h2><p>A、user B、SVC C、system D、ARM E、Thumb</p>
+<h2 id="ARM处理器中优先级别最高的异常为（E）"><a href="#ARM处理器中优先级别最高的异常为（E）" class="headerlink" title="ARM处理器中优先级别最高的异常为（E）"></a>ARM处理器中优先级别最高的异常为（E）</h2><p>A、FIQ     B、SWI     C、IRQ     D、SVC     E、RESET</p>
+<h2 id="ATPCS规定中，栈是（B）"><a href="#ATPCS规定中，栈是（B）" class="headerlink" title="ATPCS规定中，栈是（B）"></a>ATPCS规定中，栈是（B）</h2><p>A、满加    B、满减    C、空加    D、空减</p>
+<h2 id="CPU复位后执行MOV-R0，PC指令后，R0寄存器的值为（C）"><a href="#CPU复位后执行MOV-R0，PC指令后，R0寄存器的值为（C）" class="headerlink" title="CPU复位后执行MOV R0，PC指令后，R0寄存器的值为（C）"></a>CPU复位后执行MOV R0，PC指令后，R0寄存器的值为（C）</h2><p>A、0x0    B、0x4    C、0x8    D、0xC</p>
+<h2 id="ARM中可以访问状态寄存器的指令是（D），能够访问内存的指令是（B）"><a href="#ARM中可以访问状态寄存器的指令是（D），能够访问内存的指令是（B）" class="headerlink" title="ARM中可以访问状态寄存器的指令是（D），能够访问内存的指令是（B）"></a>ARM中可以访问状态寄存器的指令是（D），能够访问内存的指令是（B）</h2><p>A、MOV    B、LDR    C、MCR    D、MRS</p>
+<h2 id="ARM7TDMI使用3级流水线，分3个阶段，分别为取指、译码和-执行。"><a href="#ARM7TDMI使用3级流水线，分3个阶段，分别为取指、译码和-执行。" class="headerlink" title="ARM7TDMI使用3级流水线，分3个阶段，分别为取指、译码和 执行。"></a>ARM7TDMI使用3级流水线，分3个阶段，分别为取指、译码和 执行。</h2><h2 id="中断向量是指（C-）。"><a href="#中断向量是指（C-）。" class="headerlink" title="中断向量是指（C　）。"></a>中断向量是指（C　）。</h2><p>A、中断断点的地址                 B、中断向量表起始地址<br>C、中断处理程序入口地址         D、中断返回地址　</p>
+<h2 id="ROM-RAM的概念浅析"><a href="#ROM-RAM的概念浅析" class="headerlink" title="ROM RAM的概念浅析"></a>ROM RAM的概念浅析</h2><ul>
+<li>ROM<br>  存储固化程序的，存放指令代码和一些固定数值，程序运行后不可改动。<br>  c文件及h文件中所有代码、全局变量、局部变量、’const’限定符定义的常量数据、startup.asm文件中的代码（类似ARM中的bootloader或者X86中的BIOS，一些低端的单片机是没有这个的）通通都存储在ROM中。</li>
+<li>RAM<br>  程序运行中数据的随机存取（掉电后数据消失），整个程序中，所用到的需要被改写的量，都存储在 RAM 中，“被改变的量”包括全局变量、局部变量、堆栈段。</li>
+</ul>
+<h2 id="波特率是什么，为什么双方波特率要相同，高低波特率有什么区别"><a href="#波特率是什么，为什么双方波特率要相同，高低波特率有什么区别" class="headerlink" title="波特率是什么，为什么双方波特率要相同，高低波特率有什么区别"></a>波特率是什么，为什么双方波特率要相同，高低波特率有什么区别</h2><p>波特率：即单位时间内传输的符号个数。异步通讯中由于没有时钟信号接口中是没有时钟信号的)，所以两个通讯设备之间需要约定好波特率，即每个码元的长度。常见的波特率为4800、 9600、 115200 等。波特率越高传输速度越快，可靠性降低。</p>
+<h2 id="IIC-SPI-UART时序图"><a href="#IIC-SPI-UART时序图" class="headerlink" title="IIC\SPI\UART时序图"></a>IIC\SPI\UART时序图</h2><p>看博客通信协议分类</p>
+<h2 id="什么是异步串口和同步串口"><a href="#什么是异步串口和同步串口" class="headerlink" title="什么是异步串口和同步串口"></a>什么是异步串口和同步串口</h2><ul>
+<li><p>异步通信：<br>  异步通信中的接收方并不知道数据什么时候会到达，收发双方可以有各自自己的时钟。发送方发送的时间间隔可以不均，接收方是在数据的起始位和停止位的帮助下实现信息同步的。这种传输通常是很小的分组，比如一个字符为一组，为这个组配备起始位和结束位。所以这种传输方式的效率是比较低的，毕竟额外加入了很多的辅助位作为负载，常用在低速的传输中。<br>  举个例子，我们的键盘按下一个按键，发出一个字符信号，异步传输机制就会为它加上前后的辅助同步信息，帮助接收方识别到我们按下了哪一个按键。因为我们敲击键盘的节奏不固定，所以异步是一种很适合的方式。</p>
+</li>
+<li><p>同步通信：<br>  同步通信中双方使用频率一致的时钟，它的分组相比异步则大得多，称为一个数据帧，通过独特的bit串作为启停标识。发送方要以固定的节奏去发送数据，而接收方要时刻做好接收数据的准备，识别到前导码后马上要开始接收数据了。同步这种方式中因为分组很大，很长一段数据才会有额外的辅助位负载，所以效率更高，更加适合对速度要求高的传输，当然这种通信对时序的要求也更高。</p>
+</li>
+</ul>
+<h2 id="IO口工作方式"><a href="#IO口工作方式" class="headerlink" title="IO口工作方式"></a>IO口工作方式</h2><ul>
+<li>上拉输入：上拉就是把电位拉高，比如拉到Vcc。上拉就是将不确定的信号通过一个电阻嵌位在高电平！电阻同时起限流作用！弱强只是上拉电阻的阻值不同，没有什么严格区分。</li>
+<li>下拉输入：就是把电压拉低，拉到GND。与上拉原理相似。</li>
+<li>浮空输入：浮空（floating）就是逻辑器件的输入引脚即不接高电平，也不接低电平。由于逻辑器件的内部结构，当它输入引脚悬空时，相当于该引脚接了高电平。一般实际运用时，引脚不建议悬空，易受干扰。 通俗讲就是让管脚什么都不接，浮空着。</li>
+<li>模拟输入：模拟输入是指传统方式的输入.数字输入是输入PCM数字信号,即0,1的二进制数字信号,通过数模转换,转换成模拟信号,经前级放大进入功率放大器,功率放大器还是模拟的。</li>
+<li>推挽输出:可以输出高,低电平,连接数字器件; 推挽结构一般是指两个三极管分别受两互补信号的控制,总是在一个三极管导通的时候另一个截止。高低电平由IC的电源低定。</li>
+<li>开漏输出:输出端相当于三极管的集电极. 要得到高电平状态需要上拉电阻才行. 适合于做电流型的驱动,其吸收电流的能力相对强(一般20mA以内).</li>
+<li>复用输出：可以理解为GPIO口被用作第二功能时的配置情况（即并非作为通用IO口使用）。端口必须配置成复用功能输出模式(推挽或开漏)。<br><img src="/images/26.png" alt=""></li>
+</ul>
+<h2 id="CPU内部结构"><a href="#CPU内部结构" class="headerlink" title="CPU内部结构"></a>CPU内部结构</h2><ul>
+<li>算术逻辑单元<br>  是计算机的运算器，它完成算术运算和逻辑运算两种操作。<br>  逻辑运算是通过比较来完成的，即两个数据进行比较，判断是否等于、小于或大于等。算术运算包括加、减、乘、除等运算，实际上算术逻辑单元使用一个或多个加法器来完成加、减、乘、除等运算。</li>
+<li>寄存器<br>  寄存器是微处理器作算术运算和逻辑运算时，用来临时寄存中间数据和地址的存储位置。它们的硬件组成类似于内存的存储单元，只是存取速度比内存的更快，容量更小。寄存器通常放在CPU内部，并由控制器控制。</li>
+<li>控制器<br>  控制器是协调和控制出现在中央处理器中的所有操作。控制器并不输入、输出、处理或存储数据，而是启动和控制这些操作的顺序。此外，为了启动在存储器和输入输出设备之间进行数据或指令传送，控制器必须和输入输出设备进行通信。</li>
+</ul>
+<h2 id="中断怎么发生，中断处理大概流程"><a href="#中断怎么发生，中断处理大概流程" class="headerlink" title="中断怎么发生，中断处理大概流程"></a>中断怎么发生，中断处理大概流程</h2><ul>
+<li>中断是指由于接收到来自外围硬件（相对于中央处理器和内存）的异步信号或来自软件的同步信号，而进行相应的硬件／软件处理。发出这样的信号称为进行中断请求</li>
+<li>每当一个中断发生以后，ARM处理器便强制把PC指针置为向量表中对应中断类型的地址值(中断服务函数)，然后在进入中断前会把cpu许多寄存器状态压入堆栈，中断结束后取出寄存器的值，确保cpu工作状态和进入中断前一样。函数调用只在堆栈压入下一条指令的地址，不保存其他寄存器的数据，cpu工作状态会变<br>因为编译时无法确定中断发生的时间，所以要还原工作状态</li>
+</ul>
+<h2 id="中断与异常有何区别"><a href="#中断与异常有何区别" class="headerlink" title="中断与异常有何区别"></a>中断与异常有何区别</h2><ul>
+<li>中断：中断是指来自CPU执行指令以外的事件发生后，处理机暂停正在运行的程序，转去执行处理该事件的程序的过程。</li>
+<li>异常：异常是指源自CPU执行指令内部的事件发生后，处理机暂停正在运行的程序，转去执行该事件的过程。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>嵌入式面试题</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
       </tags>
   </entry>
   <entry>
@@ -898,54 +1176,60 @@
       </tags>
   </entry>
   <entry>
-    <title>Lua迭代器</title>
-    <url>/2020/06/12/%E8%BF%AD%E4%BB%A3%E5%99%A8/</url>
-    <content><![CDATA[<h1 id="ipairs-和pairs-的区别"><a href="#ipairs-和pairs-的区别" class="headerlink" title="ipairs()和pairs()的区别"></a>ipairs()和pairs()的区别</h1><p>pairs会遍历表中所有的key-value值，而ipairs会根据key的数值从1开始加1递增遍历对应的table[i]值，直到出现第一个不是按1递增的数值时候退出。</p>
-<p>下面我们以例子说明一下吧</p>
-<p>stars = {[1] = “Sun”, [2] = “Moon”, [5] = ‘Earth’}</p>
-<p>for i, v in pairs(stars) do</p>
-<p>   print(i, v)</p>
-<p>end</p>
+    <title>c语言中对可变参数列表的简单理解</title>
+    <url>/2020/06/12/c%E8%AF%AD%E8%A8%80%E5%8F%AF%E5%8F%98%E6%95%B0%E7%9B%AE%E5%8F%82%E6%95%B0/</url>
+    <content><![CDATA[<p>C中变长实参头文件stdarg.h提供了一个数据类型va-list和三个宏（va-start、va-arg和va-end），用它们在被调用函数不知道参数个数和类型时对可变参数表进行测试，从而为访问可变参数提供了方便且有效的方法。va-list是一个char类型的指针，当被调用函数使用一个可变参数时，它声明一个类型为va-list的变量，该变量用来指向va-arg和va-end所需信息的位置。下面给出va_list、va-start、va-arg和va-end在C中的源码：<br><code>typedef char *  va_list;</code><br><code>#define va_start(ap,v)  ( ap = (va_list)&amp;v + _INTSIZEOF(v) )   //得到可变参数中第一个参数的首地址</code><br><code>#define va_arg(ap,type)    ( *(type *)((ap += _INTSIZEOF(type)) - _INTSIZEOF(type)) )    //将参数转换成需要的类型，并使ap指向下一个参数</code><br><code>#define va_end(ap)      ( ap = (va_list)0 )//功能就是把指针ap赋值为0，使它不指向内存的变量</code></p>
+<a id="more"></a>
+<hr>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdarg.h&gt;</span></span></span><br><span class="line"> <span class="comment">/*函数sum中首先定义了可变参数表指针vap，而后通过va_start ( vap, n )取得了参数表首地址（赋值给了vap），</span></span><br><span class="line"><span class="comment"> 其后的for循环则用来遍历可变参数表。*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> n,...)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i , sum = <span class="number">0</span>;</span><br><span class="line">	va_list vap;  <span class="comment">//声明va_list变量</span></span><br><span class="line">	va_start(vap , n);     <span class="comment">//指向可变参数表中的第一个参数</span></span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span> ; i &lt; n ; ++i)</span><br><span class="line">		sum += va_arg(vap , <span class="keyword">int</span>);     <span class="comment">//取出可变参数表中的参数，并修改参数指针vap使其增加以指向表中下一个参数</span></span><br><span class="line">	va_end(vap);    <span class="comment">//把指针vap赋值为0</span></span><br><span class="line">	<span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> m = sum(<span class="number">3</span> , <span class="number">45</span> , <span class="number">89</span> , <span class="number">72</span>);</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;m&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>函数原型声明，至少需要一个确定的参数，注意括号内的省略号</li>
+<li>在调用参数表之前，定义一个 va_list 类型的变量，(假设va_list 类型变量被定义为ap)；</li>
+<li>然后应该对ap进行初始化，让它指向可变参数表里面的第一个参数，这是通过 va_start 来实现的，第一个参数是 ap 本身，第二个参数是在变参表前面紧挨着的一个变量,即“…”之前的那个参数；</li>
+<li>然后是获取参数，调用va_arg，它的第一个参数是ap，第二个参数是要获取的参数的指定类型，然后返回这个指定类型的值，并且把ap的位置指向变参表的下一个变量位置；</li>
+<li>获取所有的参数之后，我们有必要将这个ap指针关掉，以免发生危险，方法是调用 va_end，他是输入的参数ap置为NULL，应该养成获取完参数表之后关闭指针的习惯。通常va_start和va_end是成对出现。<strong>va-end必须在va-arg读完所有参数后再调用</strong></li>
+</ul>
+]]></content>
+      <categories>
+        <category>C语言</category>
+      </categories>
+      <tags>
+        <tag>C语言</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>lua函数</title>
+    <url>/2020/06/12/Lua%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<p>函数定义</p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line">optional_function_scope <span class="function"><span class="keyword">function</span> <span class="title">function_name</span><span class="params">( argument1, argument2, argument3<span class="rest_arg">..., argumentn</span>)</span></span></span><br><span class="line"><span class="function">    <span class="title">function_body</span></span></span><br><span class="line"><span class="function">    <span class="title">return</span> <span class="title">result_params_comma_separated</span></span></span><br><span class="line"><span class="function"><span class="title">end</span></span></span><br></pre></td></tr></table></figure>
+
 <a id="more"></a>
 
-<p>使用pairs()将会遍历表中所有的数据，输出结果是：</p>
-<p>1    Sun<br>2    Moon<br>5    Earth</p>
-<p>如果使用ipairs()的话，</p>
-<p>for i, v in ipairs(stars) do</p>
-<p>   print(i, v)</p>
-<p>end</p>
-<p>当i的值遍历到第三个元素时，i的值为5，此时i并不是上一个次i值（2）的+1递增，所以遍历结束，结果则会是：</p>
-<p>1    Sun<br>2    Moon</p>
-<p>ipairs()和pairs()的区别就是这么简单。</p>
-<h1 id="泛型-for-迭代器"><a href="#泛型-for-迭代器" class="headerlink" title="泛型 for 迭代器"></a>泛型 for 迭代器</h1><p>泛型 for 在自己内部保存迭代函数，实际上它保存三个值：迭代函数、状态常量、控制变量。<br>泛型 for 迭代器提供了集合的 key/value 对，语法格式如下：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">pairs</span>(t) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(k, v)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<!--more-->
-
-
-<p>上面代码中，k, v为变量列表；pairs(t)为表达式列表。</p>
-<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">array</span> = &#123;"Google", "Runoob"&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for key</span>,<span class="keyword">value</span> <span class="keyword">in</span> ipairs(<span class="keyword">array</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   print(key, <span class="keyword">value</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">执行结果：</span><br><span class="line"><span class="number">1</span>  Google</span><br><span class="line"><span class="number">2</span>  Runoob</span><br></pre></td></tr></table></figure>
-
-<p>Lua 默认提供的迭代函数 ipairs。</p>
-<p>泛型 for 的执行过程：</p>
+<p>解析：</p>
 <ul>
-<li>首先，初始化，计算 in 后面表达式的值，表达式应该返回泛型 for 需要的三个值：迭代函数、状态常量、控制变量；与多值赋值一样，如果表达式返回的结果个数不足三个会自动用 nil 补足，多出部分会被忽略。</li>
-<li>第二，将状态常量和控制变量作为参数调用迭代函数（注意：对于 for 结构来说，状态常量没有用处，仅仅在初始化时获取他的值并传递给迭代函数）。</li>
-<li>第三，将迭代函数返回的值赋给变量列表。</li>
-<li>第四，如果返回的第一个值为nil循环结束，否则执行循环体。</li>
-<li>第五，回到第二步再次调用迭代函数</li>
+<li>optional_function_scope: 该参数是可选的制定函数是全局函数还是局部函数，未设置该参数默认为全局函数，如果你需要设置函数为局部函数需要使用关键字 local。</li>
+<li>function_name: 指定函数名称。</li>
+<li>argument1, argument2, argument3…, argumentn: 函数参数，多个参数以逗号隔开，函数也可以不带参数。</li>
+<li>function_body: 函数体，函数中需要执行的代码语句块。</li>
+<li>result_params_comma_separated: 函数返回值，Lua语言函数可以返回多个值，每个值以逗号隔开。</li>
 </ul>
-<h1 id="无状态的迭代器"><a href="#无状态的迭代器" class="headerlink" title="无状态的迭代器"></a>无状态的迭代器</h1><p>无状态的迭代器是指不保留任何状态的迭代器，因此在循环中我们可以利用无状态迭代器避免创建闭包花费额外的代价。</p>
-<p>每一次迭代，迭代函数都是用两个变量（状态常量和控制变量）的值作为参数被调用，一个无状态的迭代器只利用这两个值可以获取下一个元素。这种无状态迭代器的典型的简单的例子是 ipairs，它遍历数组的每一个元素。</p>
-<p>以下实例我们使用了一个简单的函数来实现迭代器，实现 数字 n 的平方：</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">--求数字<span class="built_in">j</span>到N的平方</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">square</span><span class="params">(N, j)</span></span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">j</span> &lt;= N</span><br><span class="line">    then</span><br><span class="line">        <span class="keyword">return</span>  <span class="built_in">j</span>+<span class="number">1</span> ,  <span class="built_in">j</span>*<span class="built_in">j</span> --  这里的<span class="built_in">j</span>+<span class="number">1</span> 是为了传给<span class="keyword">for</span>的<span class="built_in">i</span>值，类似++<span class="built_in">i</span>，否则<span class="built_in">i</span>一直不变，死循环</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">--         迭代器函数、恒定状态、控制变量的初值</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>,n in square ,     <span class="number">3</span> ,    <span class="number">1</span></span><br><span class="line">do</span><br><span class="line">    --这里的<span class="built_in">i</span>,n是square返回的</span><br><span class="line">    print(<span class="built_in">i</span><span class="number">-1</span> ,<span class="string">"的平方是"</span> , n)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="多返回值"><a href="#多返回值" class="headerlink" title="多返回值"></a>多返回值</h2><p>Lua函数可以返回多个结果值，在return后列出要返回的值的列表即可返回多值</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">maximum</span> <span class="params">(a)</span></span></span><br><span class="line">    <span class="keyword">local</span> mi = <span class="number">1</span>             <span class="comment">-- 最大值索引</span></span><br><span class="line">    <span class="keyword">local</span> m = a[mi]          <span class="comment">-- 最大值</span></span><br><span class="line">    <span class="keyword">for</span> i,val <span class="keyword">in</span> <span class="built_in">ipairs</span>(a) <span class="keyword">do</span></span><br><span class="line">       <span class="keyword">if</span> val &gt; m <span class="keyword">then</span></span><br><span class="line">           mi = i</span><br><span class="line">           m = val</span><br><span class="line">       <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">return</span> m, mi</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(maximum(&#123;<span class="number">8</span>,<span class="number">10</span>,<span class="number">23</span>,<span class="number">12</span>,<span class="number">5</span>&#125;))</span><br><span class="line"></span><br><span class="line">执行结果：</span><br><span class="line"><span class="number">23</span> <span class="number">3</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">iter</span> <span class="params">(a, i)</span></span></span><br><span class="line">    <span class="built_in">i</span> = <span class="built_in">i</span> + <span class="number">1</span></span><br><span class="line">    local v = a[<span class="built_in">i</span>]</span><br><span class="line">    <span class="keyword">if</span> v then</span><br><span class="line">       <span class="keyword">return</span> <span class="built_in">i</span>, v</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ipairs</span> <span class="params">(a)</span></span></span><br><span class="line">    <span class="keyword">return</span> iter, a, <span class="number">0</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>当 Lua 调用 ipairs(a) 开始循环时，他获取三个值：迭代函数 iter、状态常量 a、控制变量初始值 0；然后 Lua 调用 iter(a,0) 返回 1, a[1]（除非 a[1]=nil）；第二次迭代调用 iter(a,1) 返回 2, a[2]……直到第一个 nil 元素。</p>
-<h1 id="多状态的迭代器"><a href="#多状态的迭代器" class="headerlink" title="多状态的迭代器"></a>多状态的迭代器</h1><p>很多情况下，迭代器需要保存多个状态信息而不是简单的状态常量和控制变量，最简单的方法是使用闭包，还有一种方法就是将所有的状态信息封装到 table 内，将 table 作为迭代器的状态常量，因为这种情况下可以将所有的信息存放在 table 内，所以迭代函数通常不需要第二个参数。</p>
-<p>以下实例我们创建了自己的迭代器：</p>
-<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">array</span> = &#123;"Google", "Runoob"&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> elementIterator (collection)</span><br><span class="line">   <span class="keyword">local</span> <span class="keyword">index</span> = <span class="number">0</span></span><br><span class="line">   <span class="keyword">local</span> count = #collection</span><br><span class="line">   <span class="comment">-- 闭包函数</span></span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">function</span> ()</span><br><span class="line">      <span class="keyword">index</span> = <span class="keyword">index</span> + <span class="number">1</span></span><br><span class="line">      <span class="keyword">if</span> <span class="keyword">index</span> &lt;= count</span><br><span class="line">      <span class="keyword">then</span></span><br><span class="line">         <span class="comment">--  返回迭代器的当前元素</span></span><br><span class="line">         <span class="keyword">return</span> collection[<span class="keyword">index</span>]</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> element <span class="keyword">in</span> elementIterator(<span class="keyword">array</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   print(element)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">Google</span><br><span class="line">Runoob</span><br></pre></td></tr></table></figure>
-<p>以上实例中我们可以看到，elementIterator 内使用了闭包函数，实现计算集合大小并输出各个元素。</p>
+<hr>
+<h2 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h2><p>Lua 函数可以接受可变数目的参数，和 C 语言类似，在函数参数列表中使用三点 … 表示函数有可变的参数</p>
+<figure class="highlight nimrod"><table><tr><td class="code"><pre><span class="line">function add(...)  </span><br><span class="line">local s = <span class="number">0</span>  </span><br><span class="line">  <span class="keyword">for</span> i, v <span class="keyword">in</span> ipairs<span class="meta">&#123;...&#125;</span> <span class="keyword">do</span>   --&gt; <span class="meta">&#123;...&#125;</span> 表示一个由所有变长参数构成的数组  </span><br><span class="line">    s = s + v  </span><br><span class="line">  <span class="keyword">end</span>  </span><br><span class="line">  <span class="keyword">return</span> s  </span><br><span class="line"><span class="keyword">end</span>  </span><br><span class="line">print(add(<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>))  ---&gt;<span class="number">25</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight nimrod"><table><tr><td class="code"><pre><span class="line">function average(...)</span><br><span class="line">   <span class="literal">result</span> = <span class="number">0</span></span><br><span class="line">   local arg=<span class="meta">&#123;...&#125;</span>    --&gt; arg 为一个表，局部变量</span><br><span class="line">   <span class="keyword">for</span> i,v <span class="keyword">in</span> ipairs(arg) <span class="keyword">do</span></span><br><span class="line">      <span class="literal">result</span> = <span class="literal">result</span> + v</span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">   print(<span class="string">"总共传入 "</span> .. <span class="comment">#arg .. " 个数")</span></span><br><span class="line">   <span class="keyword">return</span> <span class="literal">result</span>/<span class="comment">#arg</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">"平均值为"</span>,average(<span class="number">10</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>))</span><br></pre></td></tr></table></figure>
+
+
+<p>有时候我们可能需要几个固定参数加上可变参数，固定参数必须放在变长参数之前:</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fwrite</span><span class="params">(fmt, ...)</span></span>  <span class="comment">---&gt; 固定的参数fmt</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">io</span>.<span class="built_in">write</span>(<span class="built_in">string</span>.<span class="built_in">format</span>(fmt, ...))    </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">fwrite(<span class="string">"runoob\n"</span>)       <span class="comment">---&gt;fmt = "runoob", 没有变长参数。  </span></span><br><span class="line">fwrite(<span class="string">"%d%d\n"</span>, <span class="number">1</span>, <span class="number">2</span>)   <span class="comment">---&gt;fmt = "%d%d", 变长参数为 1 和 2</span></span><br><span class="line"></span><br><span class="line">输出结果：</span><br><span class="line">runoob</span><br><span class="line"><span class="number">12</span></span><br></pre></td></tr></table></figure>
+
+<p>通常在遍历变长参数的时候只需要使用 {…}，然而变长参数可能会包含一些 nil，那么就可以用 select 函数来访问变长参数了：select(‘#’, …) 或者 select(n, …)</p>
+<p>select(‘#’, …) 返回可变参数的长度<br>select(n, …) 用于返回 n 到 select(‘#’,…) 的参数</p>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">do</span>  </span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(<span class="rest_arg">...)  </span></span></span></span><br><span class="line"><span class="function"><span class="params"><span class="rest_arg">        for</span> i = 1, select(<span class="string">'#'</span>, <span class="rest_arg">...) do</span>  --&gt;获取参数总数</span></span></span><br><span class="line"><span class="function"><span class="params">            local arg = select(i, <span class="rest_arg">...); --&gt;读取参数</span></span></span></span><br><span class="line"><span class="function"><span class="params"><span class="rest_arg">            print</span>(<span class="string">"arg"</span>, arg)</span></span>;  </span><br><span class="line">        end  </span><br><span class="line">    end  </span><br><span class="line"> </span><br><span class="line">    foo(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>);  </span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>lua语言</category>

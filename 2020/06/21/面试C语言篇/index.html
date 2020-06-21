@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="面试," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一个程序从开始运行到结束的完整过程 预处理（.i文件）在编译的时候会被尾开去换成空际的代码这个层开编译的时候会被展开替换成实际的代码,这个展升的步骤就是在预处理的时候进行的当然预处理并不仅仅只是做宏的展开，它还做了类似头文件插入预处理之后的产品依然还是C&#x2F;C++代码,它在代码的逻辑上和输入的C&#x2F;C++源代码是完全- -样的.  汇编 (.s文件)汇编语言是将机器语言符号化了的语言是机器不能直接识别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言篇">
+<meta property="og:url" content="https://pixvc.github.io/2020/06/21/%E9%9D%A2%E8%AF%95C%E8%AF%AD%E8%A8%80%E7%AF%87/index.html">
+<meta property="og:site_name" content="周菜鸡">
+<meta property="og:description" content="一个程序从开始运行到结束的完整过程 预处理（.i文件）在编译的时候会被尾开去换成空际的代码这个层开编译的时候会被展开替换成实际的代码,这个展升的步骤就是在预处理的时候进行的当然预处理并不仅仅只是做宏的展开，它还做了类似头文件插入预处理之后的产品依然还是C&#x2F;C++代码,它在代码的逻辑上和输入的C&#x2F;C++源代码是完全- -样的.  汇编 (.s文件)汇编语言是将机器语言符号化了的语言是机器不能直接识别">
+<meta property="og:image" content="https://pixvc.github.io/images/27.png">
+<meta property="article:published_time" content="2020-06-21T03:31:58.831Z">
+<meta property="article:modified_time" content="2020-06-21T14:53:50.644Z">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pixvc.github.io/images/27.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://pixvc.github.io/2020/06/21/面试C语言篇/"/>
+
+
+
+
+
+  <title>C语言篇 | 周菜鸡</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">周菜鸡</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">je t'aime</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://pixvc.github.io/2020/06/21/%E9%9D%A2%E8%AF%95C%E8%AF%AD%E8%A8%80%E7%AF%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="周菜鸡">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C语言篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T11:31:58+08:00">
+                2020-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">嵌入式面试题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一个程序从开始运行到结束的完整过程"><a href="#一个程序从开始运行到结束的完整过程" class="headerlink" title="一个程序从开始运行到结束的完整过程"></a>一个程序从开始运行到结束的完整过程</h2><ul>
+<li>预处理（.i文件）<br>在编译的时候会被尾开去换成空际的代码这个层开编译的时候会被展开替换成实际的代码,这个展升的步骤就是在预处理的时候进行的当然预处理并不仅仅只是做宏的展开，它还做了类似头文件插入<br>预处理之后的产品依然还是C/C++代码,它在代码的逻辑上和输入的C/C++源代码是完全- -样的. </li>
+<li>汇编 (.s文件)<br>汇编语言是将机器语言符号化了的语言是机器不能直接识别的低级语言我们可以通过下面的命令将预处理后的代码编译成汇编语言:</li>
+<li>编译（.o文件，目标文件）<br>汇编这一步是将汇编代码编译成机器语言:</li>
+<li>链接<br>c语言写的程序需要依赖各种库，所以编译后还需要把库链接到最终的可执行程序中去</li>
+</ul>
+<h2 id="预处理器（Preprocessor）"><a href="#预处理器（Preprocessor）" class="headerlink" title="预处理器（Preprocessor）"></a>预处理器（Preprocessor）</h2><ol>
+<li>用预处理指令#define 声明一个常数，用以表明1年中有多少秒（忽略闰年问题）<br><code>#define SECONDS_PER_YEAR (60 * 60 * 24 * 365)UL</code></li>
+</ol>
+<p>我在这想看到几件事情：<br>1). #define 语法的基本知识（例如：不能以分号结束，括号的使用，等等）<br>2). 懂得预处理器将为你计算常数表达式的值，因此，直接写出你是如何计算一年中有多少秒而不是计算出实际的值，是更清晰而没有代价的。<br>3). 意识到这个表达式将使一个16位机的整型数溢出-因此要用到长整型符号L,告诉编译器这个常数是的长整型数。<br>4). 如果你在你的表达式中用到UL（表示无符号长整型），那么你有了一个好的起点。记住，第一印象很重要。</p>
+<h2 id="写一个“标准”宏MIN-MAX，这个宏输入两个参数并返回较小-大的一个。"><a href="#写一个“标准”宏MIN-MAX，这个宏输入两个参数并返回较小-大的一个。" class="headerlink" title="写一个“标准”宏MIN/MAX，这个宏输入两个参数并返回较小/大的一个。"></a>写一个“标准”宏MIN/MAX，这个宏输入两个参数并返回较小/大的一个。</h2><p><code>#define MIN(A,B) ((A) &lt;= (B) (A) : ))</code><br><code>#define Max(a, b) (a &gt; b ? a : b)</code></p>
+<p>1). 标识#define在宏中应用的基本知识。这是很重要的，因为直到嵌入(inline)操作符变为标准C的一部分，宏是方便产生嵌入代码的唯一方法，对于嵌入式系统来说，为了能达到要求的性能，嵌入代码经常是必须的方法。<br>2). 三重条件操作符的知识。这个操作符存在C语言中的原因是它使得编译器能产生比if-then-else更优化的代码，了解这个用法是很重要的。<br>3). 懂得在宏中小心地把参数用括号括起来</p>
+<h2 id="预处理器标识-error的目的是什么？"><a href="#预处理器标识-error的目的是什么？" class="headerlink" title="预处理器标识#error的目的是什么？"></a>预处理器标识#error的目的是什么？</h2><pre><code>停止编译并显示错误信息</code></pre><h2 id="嵌入式系统中经常要用到无限循环，你怎么样用C编写死循环呢？"><a href="#嵌入式系统中经常要用到无限循环，你怎么样用C编写死循环呢？" class="headerlink" title="嵌入式系统中经常要用到无限循环，你怎么样用C编写死循环呢？"></a>嵌入式系统中经常要用到无限循环，你怎么样用C编写死循环呢？</h2><p>这个问题用几个解决方案。我首选的方案是：<br>while(1) { }<br>一些程序员更喜欢如下方案：<br>for(;;) { }<br>这个实现方式让我为难，因为这个语法没有确切表达到底怎么回事。如果一个应试者给出这个作为方案，我将用这个作为一个机会去探究他们这样做的<br>基本原理。如果他们的基本答案是：“我被教着这样做，但从没有想到过为什么。”这会给我留下一个坏印象。<br>第三个方案是用 goto<br>Loop:<br>…<br>goto Loop;<br>应试者如给出上面的方案，这说明或者他是一个汇编语言程序员（这也许是好事）或者他是一个想进入新领域的BASIC/FORTRAN程序员。</p>
+<p>数据声明（Data declarations）</p>
+<h2 id="用变量a给出下面的定义"><a href="#用变量a给出下面的定义" class="headerlink" title="用变量a给出下面的定义"></a>用变量a给出下面的定义</h2><p>a) 一个整型数（An integer）<br>b) 一个指向整型数的指针（A pointer to an integer）<br>c) 一个指向指针的的指针，它指向的指针是指向一个整型数（A pointer to a pointer to an integer）<br>d) 一个有10个整型数的数组（An array of 10 integers）<br>e) 一个有10个指针的数组，该指针是指向一个整型数的（An array of 10 pointers to integers）<br>f) 一个指向有10个整型数数组的指针（A pointer to an array of 10 integers）<br>g) 一个指向函数的指针，该函数有一个整型参数并返回一个整型数（A pointer to a function that takes an integer as an argument and returns an integer）<br>h) 一个有10个指针的数组，该指针指向一个函数，该函数有一个整型参数并返回一个整型数（ An array of ten pointers to functions that take an integer argument and return an integer ）</p>
+<p>答案是：<br>a) int a; // An integer<br>b) int <em>a; // A pointer to an integer<br>c) int *</em>a; // A pointer to a pointer to an integer<br>d) int a[10]; // An array of 10 integers<br>e) int <em>a[10]; // An array of 10 pointers to integers<br>f) int (</em>a)[10]; // A pointer to an array of 10 integers<br>g) int (<em>a)(int); // A pointer to a function a that takes an integer argument and returns an integer<br>h) int (</em>a[10])(int); // An array of 10 pointers to functions that take an integer argument and return an integer</p>
+<h2 id="关键字static的作用是什么？"><a href="#关键字static的作用是什么？" class="headerlink" title="关键字static的作用是什么？"></a>关键字static的作用是什么？</h2><p>这个简单的问题很少有人能回答完全。在C语言中，关键字static有三个明显的作用：<br>1). 在函数体，一个被声明为静态的变量在这一函数被调用过程中维持其值不变。<br>2). 在模块内（但在函数体外），一个被声明为静态的变量可以被模块内所用函数访问，但不能被模块外其它函数访问。它是一个本地的全局变量。<br>3). 在模块内，一个被声明为静态的函数只可被这一模块内的其它函数调用。那就是，这个函数被限制在声明它的模块的本地范围内使用。<br>大多数应试者能正确回答第一部分，一部分能正确回答第二部分，同是很少的人能懂得第三部分。这是一个应试者的严重的缺点，因为他显然不懂得本地化数据和代码范围的好处和重要性。</p>
+<h2 id="关键字const是什么含意？"><a href="#关键字const是什么含意？" class="headerlink" title="关键字const是什么含意？"></a>关键字const是什么含意？</h2><p>只要一个变量前用const来修饰，就意味着该变量里的数据只能被访问，而不能被修改，也就是意味着const“只读”</p>
+<figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Const</span> <span class="keyword">int</span> a;</span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> a;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> *a; <span class="comment">//const靠近*，地址内容不可变，地址可变，*a=100//err ；a=NULL//OK</span></span><br><span class="line"><span class="keyword">int</span> * <span class="keyword">const</span> a;<span class="comment">//看const靠近*还是a，靠近a表示地址可变，地址里面的内容不可变，</span></span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> * a <span class="keyword">const</span>;</span><br></pre></td></tr></table></figure>
+<p>前两个的作用是一样，a是一个常整型数。第三个意味着a是一个指向常整型数的指针（也就是，整型数是不可修改的，但指针可以）。第四个意思a是一个指向整型数的常指针（也就是说，指针指向的整型数是可以修改的，但指针是不可修改的）。最后一个意味着a是一个指向常整型数的常指针（也就是说，指针指向的整型数是不可修改的，同时指针也是不可修改的）。：<br>1). 关键字const的作用是为给读你代码的人传达非常有用的信息，实际上，声明一个参数为常量是为了告诉了用户这个参数的应用目的。如果你曾花很多时间清理其它人留下的垃圾，你就会很快学会感谢这点多余的信息。（当然，懂得用const的程序员很少会留下的垃圾让别人来清理的。）<br>2). 通过给优化器一些附加的信息，使用关键字const也许能产生更紧凑的代码。<br>3). 合理地使用关键字const可以使编译器很自然地保护那些不希望被改变的参数，防止其被无意的代码修改。简而言之，这样可以减少bug的出现。</p>
+<h2 id="关键字volatile有什么含意-并给出三个不同的例子。"><a href="#关键字volatile有什么含意-并给出三个不同的例子。" class="headerlink" title="关键字volatile有什么含意 并给出三个不同的例子。"></a>关键字volatile有什么含意 并给出三个不同的例子。</h2><p>一个定义为volatile的变量是说这变量可能会被意想不到地改变，这样，编译器就不会去假设这个变量的值了。精确地说就是，优化器在用到这个变量时必须每次都小心地重新读取这个变量的值，而不是使用保存在寄存器里的备份。下面是volatile变量的几个例子：</p>
+<ol>
+<li>并行设备的硬件寄存器（如：状态寄存器）</li>
+<li>一个中断服务子程序中会访问到的非自动变量(Non-automatic variables)</li>
+<li>多线程应用中被几个任务共享的变量<br>假设被面试者正确地回答了这是问题（嗯，怀疑这否会是这样），我将稍微深究一下，看一下这家伙是不是直正懂得volatile完全的重要性。<br>1). 一个参数既可以是const还可以是volatile吗？解释为什么。<br>2). 一个指针可以是volatile 吗？解释为什么。<br>下面是答案：<br>1). volatile修饰符告诉complier变量值可以以任何不被程序明确指明的方式改变，最常见的例子就是外部端口的值，它的变化可以不用程序内的任何赋值语句就有可能改变的，这种变量就可以用volatile来修饰，complier不会优化掉它。<br>const修饰的变量在程序里面是不能改变的，但是可以被程序外的东西修改，就象上面说的外部端口的值，如果仅仅使用const，有可能complier会优化掉这些变量，加上volatile就万无一失了。<br>2). 可以。尽管这并不很常见。一个例子是当一个中服务子程序修该一个指向一个buffer的指针时。</li>
+</ol>
+<h2 id="位操作（Bit-manipulation）"><a href="#位操作（Bit-manipulation）" class="headerlink" title="位操作（Bit manipulation）"></a>位操作（Bit manipulation）</h2><p>嵌入式系统总是要用户对变量或寄存器进行位操作。给定一个整型变量a，写两段代码，第一个设置a的bit 3，第二个清除a 的bit 3。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BIT3 (0x1&lt;&lt;3) </span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> a; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">set_bit3</span><span class="params">(<span class="keyword">void</span>)</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">a |= BIT3; </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">clear_bit3</span><span class="params">(<span class="keyword">void</span>)</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">a &amp;= ~BIT3; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="要求设置一绝对地址为0x67a9的整型变量的值为0xaa55"><a href="#要求设置一绝对地址为0x67a9的整型变量的值为0xaa55" class="headerlink" title="要求设置一绝对地址为0x67a9的整型变量的值为0xaa55"></a>要求设置一绝对地址为0x67a9的整型变量的值为0xaa55</h2><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *<span class="built_in">ptr</span><span class="comment">; </span></span><br><span class="line"><span class="built_in">ptr</span> = (<span class="keyword">int</span> *)<span class="number">0x67a9</span><span class="comment">; </span></span><br><span class="line">*<span class="built_in">ptr</span> = <span class="number">0xaa55</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="中断函数（Interrupts）"><a href="#中断函数（Interrupts）" class="headerlink" title="中断函数（Interrupts）"></a>中断函数（Interrupts）</h2><p>中断是嵌入式系统中重要的组成部分，这导致了很多编译开发商提供一种扩展—让标准C支持中断。具代表事实是，产生了一个新的关键字<strong>interrupt。下面的代码就使用了</strong>interrupt关键字去定义了一个中断服务子程序(ISR)，请评论一下这段代码的。<br>__interrupt double compute_area (double radius)<br>{<br>double area = PI * radius * radius;<br>printf(” Area = %f”, area);<br>return area;<br>}<br>这个函数有太多的错误了，以至让人不知从何说起了：<br>1). ISR 不能返回一个值。如果你不懂这个，那么你不会被雇用的。<br>2). ISR 不能传递参数。如果你没有看到这一点，你被雇用的机会等同第一项。<br>3). 在许多的处理器/编译器中，浮点一般都是不可重入的。有些处理器/编译器需要让额处的寄存器入栈，有些处理器/编译器就是不允许在ISR中做浮点运算。此外，ISR应该是短而有效率的，在ISR中做浮点运算是不明智的。<br>4). 与第三点一脉相承，printf()经常有重入和性能上的问题。如果你丢掉了第三和第四点，我不会太为难你的。不用说，如果你能得到后两点，那么你的被雇用前景越来越光明了。</p>
+<h2 id="const与-define相比"><a href="#const与-define相比" class="headerlink" title="const与#define相比"></a>const与#define相比</h2><p>1）就起作用的阶段而言：#define是在编译的预处理阶段起作用，而const是在 编译、运行的时候起作用。<br>2）就起作用的方式而言： #define只是简单的字符串替换，没有类型检查。而const有对应的数据类型，是要进行判断的，可以避免一些低级的错误。<br>3）就存储方式而言：#define只是进行展开，有多少地方使用，就替换多少次，它定义的宏常量在内存中有若干个备份；const定义的只读变量在程序运行过程中只有一份备份。<br>4）从代码调试的方便程度而言： const常量可以进行调试的，define是不能进行调试的，因为在预编译阶段就已经替换掉了。</p>
+<h2 id="typedef与define的区别"><a href="#typedef与define的区别" class="headerlink" title="typedef与define的区别"></a>typedef与define的区别</h2><p>typedef ：typedef是在计算机编程语言中用来为复杂的声明定义简单的别名，它与宏定义有些差异。它本身是一种存储类的关键字，与auto、extern、mutable、static、register等关键字不能出现在同一个表达式中。<br><code>typedef int size;//size就是int类型，定义变量时可以写 size a；</code></p>
+<p>typedef是C语言中用来声明自定义数据类型，配合各种原有数据类型来达到简化编程的目的的类型定义关键字。#define是预处理指令，是宏定义。</p>
+<h2 id="简介-和-的作用"><a href="#简介-和-的作用" class="headerlink" title="简介##和#的作用"></a>简介##和#的作用</h2><p> ##的作用就是把2个宏参数连接为1个数。<br> #的作用就是讲#后面的宏参数进行字符串的操作，也就是将#后面的参数两边加上一对双引号使其成为字符串。<br> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">#<span class="meta-keyword">define</span> TE(a,b) (a#b)</span></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"> </span>&#123;</span><br><span class="line"> 	<span class="keyword">int</span> num = TE(<span class="number">12</span>,<span class="number">34</span>);</span><br><span class="line"> 	<span class="built_in">printf</span>(<span class="string">"num=%d"</span>,num);</span><br><span class="line"> &#125;</span><br><span class="line">输出：num=<span class="number">1234</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TE(param) #param</span></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"> </span>&#123;</span><br><span class="line"> 	<span class="keyword">char</span> *pstr = TE(<span class="number">1234</span>);</span><br><span class="line"> 	<span class="built_in">printf</span>(<span class="string">"num=%s"</span>,pstr);</span><br><span class="line"> &#125;</span><br><span class="line"> 输出：sptr=<span class="number">1234</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="virtual关键字"><a href="#virtual关键字" class="headerlink" title="virtual关键字"></a>virtual关键字</h2><p>为C++关键字，virtual声明的函数为虚函数，告诉编译器不要静态链接</p>
+<h2 id="指针与引用的相同和区别；如何相互转换？"><a href="#指针与引用的相同和区别；如何相互转换？" class="headerlink" title="指针与引用的相同和区别；如何相互转换？"></a>指针与引用的相同和区别；如何相互转换？</h2><p>区别：</p>
+<ol>
+<li>指针是一个实体，而引用仅是个别名</li>
+<li>指针和引用的自增(++)运算意义不一样，指针是对内存地址的自增，引用是对值的自增；<br>量或对象的地址)的大小；</li>
+<li>引用使用时无需解引用(*)，指针需要解引用；</li>
+<li>引用只能在定义时被初始化一次，之后不可变；指针可变；</li>
+<li>引用不能为空，指针可以为空；</li>
+<li>引用没有const，指针有const；</li>
+<li>“sizeof 引用”得到的是所指向的变量(对象)的大小，而“sizeof 指针”得到的是指针本身的大小，在32位系统指针变量一般占用4字节内存。</li>
+</ol>
+<p>指针和引用之间怎么转换：</p>
+<ol>
+<li>指针转引用：把指针用*就可以转换成对象，可以用在引用参数当中。</li>
+<li>引用转指针：把引用类型的对象用&amp;取地址就获得指针了。</li>
+</ol>
+<h2 id="h头文件中的ifndef-define-endif-的作用？"><a href="#h头文件中的ifndef-define-endif-的作用？" class="headerlink" title=".h头文件中的ifndef/define/endif 的作用？"></a>.h头文件中的ifndef/define/endif 的作用？</h2><p>答：防止该头文件被重复引用。</p>
+<h2 id="全局变量和局部变量在内存中是否有区别？如果有，是什么区别？"><a href="#全局变量和局部变量在内存中是否有区别？如果有，是什么区别？" class="headerlink" title="全局变量和局部变量在内存中是否有区别？如果有，是什么区别？"></a>全局变量和局部变量在内存中是否有区别？如果有，是什么区别？</h2><p>答 ：全局变量储存在静态数据区，局部变量在栈中。</p>
+<h2 id="堆栈溢出一般是由什么原因导致的？"><a href="#堆栈溢出一般是由什么原因导致的？" class="headerlink" title="堆栈溢出一般是由什么原因导致的？"></a>堆栈溢出一般是由什么原因导致的？</h2><ul>
+<li>没有回收垃圾资源</li>
+<li>层次太深的递归调用</li>
+</ul>
+<h2 id="程序的内存分配"><a href="#程序的内存分配" class="headerlink" title="程序的内存分配"></a>程序的内存分配</h2><p>答：一个由C/C++编译的程序占用的内存分为以下几个部分</p>
+<ul>
+<li>栈区（stack）—由编译器自动分配释放，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。函数执行结束时这些存储单元自动释放。</li>
+<li>堆分配（又称动态内存分配）。程序在运行时用malloc或者new申请内存，程序员自己用free或者delete释放，动态内存的生存期由我们自己决定。</li>
+<li>全局区（静态区）（static）—全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域，未初始化的全局变量和未初始化的静态变量在相邻的另一块区域。程序结束后由系统释放。内存分配在程序编译之前完成，且在程序的整个运行期间都存在，例如全局变量、静态变量等。</li>
+</ul>
+<h2 id="在1G内存的计算机中能否malloc-1-2G-？为什么？"><a href="#在1G内存的计算机中能否malloc-1-2G-？为什么？" class="headerlink" title="在1G内存的计算机中能否malloc(1.2G)？为什么？"></a>在1G内存的计算机中能否malloc(1.2G)？为什么？</h2><p>答：是有可能申请1.2G的内存的。<br>解析：回答这个问题前需要知道malloc的作用和原理，应用程序通过malloc函数可以向程序的虚拟空间申请一块虚拟地址空间，与物理内存没有直接关系，得到的是在虚拟地址空间中的地址，之后程序运行所提供的物理内存是由操作系统完成的。</p>
+<h2 id="堆和栈的区别"><a href="#堆和栈的区别" class="headerlink" title="堆和栈的区别"></a>堆和栈的区别</h2><p>答：堆（heap）和栈(stack)的区别</p>
+<ol>
+<li>申请方式<br>stack:由系统自动分配。例如，声明在函数中一个局部变量int b;系统自动在栈中为b开辟空间<br>heap:需要程序员自己申请，并指明大小，<br>在c中malloc函数<br>如p1=(char*)malloc(10);<br>但是注意p1本身是在栈中的。</li>
+<li>申请后系统的响应<br> 栈：只要栈的剩余空间大于所申请空间，系统将为程序提供内存，否则将报异常提示栈溢出。<br> 堆：首先应该知道操作系统有一个记录空闲内存地址的链表，当系统收到程序的申请时，会遍历该链表，寻找第一个空间大于所申请空间的堆结点，然后将该结点从空闲结点链表中删除，并将该结点的空间分配给程序，另外，对于大多数系统，会在这块内存空间中的首地址处记录本次分配的大小，这样，代码中的delete语句才能正确的释放本内存空间。另外，由于找到的堆结点的大小不一定正好等于申请的大小，系统会自动的将多余的那部分重新放入空闲链表中。</li>
+<li>申请大小的限制<br> 栈：栈是向低地址扩展的数据结构，是一块连续的内存的区域，即栈顶的地址和栈的最大容量是系统预先规定好的，linux系统可以使用ulimit -a命令查看当前系统的栈的大小，默认为10M（64位系统），如果申请的空间超过栈的剩余空间时，将提示overflow。因此，能从栈获得的空间较小。<br> 堆：堆是向高地址扩展的数据结构，是不连续的内存区域。这是由于系统是用链表来存储的空闲内存地址的，自然是不连续的，而链表的遍历方向是由低地址向高地址。堆的大小受限于计算机系统中有效的虚拟内存。由此可见，堆获得的空间比较灵活，也比较大。</li>
+<li>申请效率的比较：<br> 栈:由系统自动分配，速度较快。但程序员是无法控制的。<br> 堆:是由malloc分配的内存，一般速度比较慢，而且容易产生内存碎片,不过用起来最方便.</li>
+<li>堆和栈中的存储内容<br> 栈：在函数调用时，第一个进栈的是主函数中后的下一条指令（函数调用语句的下一条可执行语句）的地址，然后是函数的各个参数，在大多数的C编译器中，参数是由右往左入栈的，然后是函数中的局部变量。注意静态变量是不入栈的。当本次函数调用结束后，局部变量先出栈，然后是参数，最后栈顶指针指向最开始存的地址，也就是主函数中的下一条指令，程序由该点继续运行。<br> 堆：一般是在堆的头部用一个字节存放堆的大小。堆中的具体内容由程序员安排。</li>
+</ol>
+<h2 id="简述数组与指针的区别？"><a href="#简述数组与指针的区别？" class="headerlink" title="简述数组与指针的区别？"></a>简述数组与指针的区别？</h2><p>答：数组要么在静态存储区被创建（如全局数组），要么在栈上被创建(不带static的局部数组），malloc的在堆中。指针可以随时指向任意类型的内存块。</p>
+<h2 id="extern关键字"><a href="#extern关键字" class="headerlink" title="extern关键字"></a>extern关键字</h2><p>extern只适用于普通全局变量，不能于static一起用<br>static全局变量数据相对安全，外部不能修改<br>头文件声明时加extern定义时不要加，因为extern可以多次声明，但只有一个定义</p>
+<h2 id="extern-“C”的作用"><a href="#extern-“C”的作用" class="headerlink" title="extern “C”的作用"></a>extern “C”的作用</h2><p> extern “C”的主要作用就是为了能够正确实现C++代码调用其他C语言代码。加上extern “C”后，会指示编译器这部分代码按C语言的进行编译，而不是C++的。由于C++支持函数重载，因此编译器编译函数的过程中会将函数的参数类型也加到编译后的代码中，而不仅仅是函数名；而C语言并不支持函数重载，因此编译C语言代码的函数时不会带上函数的参数类型，一般之包括函数名。</p>
+<h2 id="new和malloc的区别"><a href="#new和malloc的区别" class="headerlink" title="new和malloc的区别"></a>new和malloc的区别</h2><p>答：</p>
+<ol>
+<li>new、delete是C++中独有的操作符，而malloc和free是C/C++中的标准库函数。</li>
+<li>使用new创建对象在分配内存的时候会自动调用构造函数，同时也可以完成对对象的初始化，同理要记得delete也能自动调用析构函数。因为malloc和 free是库函数而不是运算符，不在编译器控制范围之内，所以不能够自动调用构造函数和析构函数。也就是mallloc只是单纯地为变量分配内存，free也只是释放变量的内存。</li>
+<li>new返回的是指定类型的指针，并且可以自动计算所申请内存的大小。而malloc返回的是void*类型，我们需要强行将其转换为实际类型的指针，并且需要指定好要申请内存的大小，malloc不会自动计算的。</li>
+<li>C++允许重载new/delete操作符，而malloc和free是一个函数，并不能重载。</li>
+<li>new内存分配失败时，会抛出bac_alloc异常。malloc分配内存失败时返回NULL。</li>
+<li>内存区域：先了解自由存储区和堆，两者不相等于的。自由存储区是C++基于new操作符的一个抽象概念，凡是通过new操作符进行内存申请，该内存即为自由存储区。堆是操作系统中的术语，是操作系统所维护的一块特殊内存，用于程序的内存动态分配。new操作符从自由存储区上为对象动态分配内存空间，而malloc函数从堆上动态分配内存。</li>
+</ol>
+<h2 id="C-中struct和class的区别"><a href="#C-中struct和class的区别" class="headerlink" title="C++中struct和class的区别"></a>C++中struct和class的区别</h2><p>在C++中，可以用struct和class定义类，都可以继承。<br>区别在于：structural的默认继承权限和默认访问权限<br>是public，而class的默认继承权限和默认访问权限是<br>private。另外，class还可以定义模板类形参，比如<br><code>template &lt;class T, int i&gt;。</code></p>
+<h2 id="大小端的区别以及各自的优点，哪种时候用"><a href="#大小端的区别以及各自的优点，哪种时候用" class="headerlink" title="大小端的区别以及各自的优点，哪种时候用"></a>大小端的区别以及各自的优点，哪种时候用</h2><p>1) Little-Endian（小端）就是低位字节排放在内存的低地址端，高位字节排放在内存的高地址端。<br>2) Big-Endian（大端）就是高位字节排放在内存的低地址端，低位字节排放在内存的高地址端。<br>大小端各自的优点</p>
+<ul>
+<li>小端模式：强制转换数据不需要调整字节内容</li>
+<li>大端模式：符号位的判定固定为第一个字节，容易判断正负<br>一般操作系统都是小端，而通讯协议是大端的。</li>
+</ul>
+<h2 id="计算机怎么算减法-补码的作用"><a href="#计算机怎么算减法-补码的作用" class="headerlink" title="计算机怎么算减法(补码的作用)"></a>计算机怎么算减法(补码的作用)</h2><h2 id="队列和栈的区别"><a href="#队列和栈的区别" class="headerlink" title="队列和栈的区别"></a>队列和栈的区别</h2><ul>
+<li>队列是先进先出，只能在一端插入另一端删除，可以从头或尾进行遍历（但不能同时遍历），</li>
+<li>栈是先进后出，只能在同一端插入和删除，只能从头部取数据</li>
+</ul>
+<h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p><img src="/images/27.png" alt=""></p>
+<h2 id="char和int之间的转换"><a href="#char和int之间的转换" class="headerlink" title="char和int之间的转换"></a>char和int之间的转换</h2><p>char转int</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch=<span class="string">'9'</span>;</span><br><span class="line"><span class="keyword">int</span> ch_int=ch-<span class="string">'0'</span>;<span class="comment">//此时ch_int=9</span></span><br></pre></td></tr></table></figure>
+<p>int转char</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i=<span class="number">9</span>；</span><br><span class="line"><span class="keyword">char</span> i_ch=i+<span class="string">'0'</span>;<span class="comment">//此时i_ch='9'</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>字符值</th>
+<th>ASCII值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>‘0’</td>
+<td>48</td>
+</tr>
+<tr>
+<td>‘9’</td>
+<td>57</td>
+</tr>
+<tr>
+<td>‘A’</td>
+<td>65</td>
+</tr>
+<tr>
+<td>‘Z’</td>
+<td>90</td>
+</tr>
+<tr>
+<td>‘a’</td>
+<td>97</td>
+</tr>
+<tr>
+<td>‘z’</td>
+<td>122</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"># 面试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/21/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B/" rel="next" title="线程与进程">
+                <i class="fa fa-chevron-left"></i> 线程与进程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/21/%E9%9D%A2%E8%AF%95ARM/" rel="prev" title="ARM语言篇">
+                ARM语言篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives%7C%7Carchive">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yourname" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://pornhub.com" target="_blank" title="p站">
+                      
+                        <i class="fa fa-fw fa-globe"></i>p站</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一个程序从开始运行到结束的完整过程"><span class="nav-number">1.</span> <span class="nav-text">一个程序从开始运行到结束的完整过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预处理器（Preprocessor）"><span class="nav-number">2.</span> <span class="nav-text">预处理器（Preprocessor）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写一个“标准”宏MIN-MAX，这个宏输入两个参数并返回较小-大的一个。"><span class="nav-number">3.</span> <span class="nav-text">写一个“标准”宏MIN&#x2F;MAX，这个宏输入两个参数并返回较小&#x2F;大的一个。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预处理器标识-error的目的是什么？"><span class="nav-number">4.</span> <span class="nav-text">预处理器标识#error的目的是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌入式系统中经常要用到无限循环，你怎么样用C编写死循环呢？"><span class="nav-number">5.</span> <span class="nav-text">嵌入式系统中经常要用到无限循环，你怎么样用C编写死循环呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用变量a给出下面的定义"><span class="nav-number">6.</span> <span class="nav-text">用变量a给出下面的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键字static的作用是什么？"><span class="nav-number">7.</span> <span class="nav-text">关键字static的作用是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键字const是什么含意？"><span class="nav-number">8.</span> <span class="nav-text">关键字const是什么含意？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键字volatile有什么含意-并给出三个不同的例子。"><span class="nav-number">9.</span> <span class="nav-text">关键字volatile有什么含意 并给出三个不同的例子。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#位操作（Bit-manipulation）"><span class="nav-number">10.</span> <span class="nav-text">位操作（Bit manipulation）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要求设置一绝对地址为0x67a9的整型变量的值为0xaa55"><span class="nav-number">11.</span> <span class="nav-text">要求设置一绝对地址为0x67a9的整型变量的值为0xaa55</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断函数（Interrupts）"><span class="nav-number">12.</span> <span class="nav-text">中断函数（Interrupts）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const与-define相比"><span class="nav-number">13.</span> <span class="nav-text">const与#define相比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#typedef与define的区别"><span class="nav-number">14.</span> <span class="nav-text">typedef与define的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简介-和-的作用"><span class="nav-number">15.</span> <span class="nav-text">简介##和#的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#virtual关键字"><span class="nav-number">16.</span> <span class="nav-text">virtual关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针与引用的相同和区别；如何相互转换？"><span class="nav-number">17.</span> <span class="nav-text">指针与引用的相同和区别；如何相互转换？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#h头文件中的ifndef-define-endif-的作用？"><span class="nav-number">18.</span> <span class="nav-text">.h头文件中的ifndef&#x2F;define&#x2F;endif 的作用？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全局变量和局部变量在内存中是否有区别？如果有，是什么区别？"><span class="nav-number">19.</span> <span class="nav-text">全局变量和局部变量在内存中是否有区别？如果有，是什么区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆栈溢出一般是由什么原因导致的？"><span class="nav-number">20.</span> <span class="nav-text">堆栈溢出一般是由什么原因导致的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的内存分配"><span class="nav-number">21.</span> <span class="nav-text">程序的内存分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在1G内存的计算机中能否malloc-1-2G-？为什么？"><span class="nav-number">22.</span> <span class="nav-text">在1G内存的计算机中能否malloc(1.2G)？为什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆和栈的区别"><span class="nav-number">23.</span> <span class="nav-text">堆和栈的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简述数组与指针的区别？"><span class="nav-number">24.</span> <span class="nav-text">简述数组与指针的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extern关键字"><span class="nav-number">25.</span> <span class="nav-text">extern关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extern-“C”的作用"><span class="nav-number">26.</span> <span class="nav-text">extern “C”的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#new和malloc的区别"><span class="nav-number">27.</span> <span class="nav-text">new和malloc的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-中struct和class的区别"><span class="nav-number">28.</span> <span class="nav-text">C++中struct和class的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大小端的区别以及各自的优点，哪种时候用"><span class="nav-number">29.</span> <span class="nav-text">大小端的区别以及各自的优点，哪种时候用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机怎么算减法-补码的作用"><span class="nav-number">30.</span> <span class="nav-text">计算机怎么算减法(补码的作用)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#队列和栈的区别"><span class="nav-number">31.</span> <span class="nav-text">队列和栈的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量作用域"><span class="nav-number">32.</span> <span class="nav-text">变量作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#char和int之间的转换"><span class="nav-number">33.</span> <span class="nav-text">char和int之间的转换</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder"></span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":1}});</script></body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
