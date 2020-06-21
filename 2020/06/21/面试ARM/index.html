@@ -87,7 +87,7 @@
 <meta property="og:description" content="FIQ比IRQ快的原因：A、FIQ模式的R8–R14寄存器是独有的，FIQ处理程序可以不必执行保存和恢复中断现场的指令。B、FIQ可以将ISR直接放在FIQ后面的地址空间，不需要跳转。 在ARM系统中，在函数调用的时候，参数是通过哪种方式传递的当参数小于等于4的时候是通过r0-r3寄存器来进行传递的，当参数大于4的时候是通过压栈的方式进行传递。 简述SPI,UART,I2C三种传输方式 SPI：高">
 <meta property="og:image" content="https://pixvc.github.io/images/26.png">
 <meta property="article:published_time" content="2020-06-21T13:50:02.862Z">
-<meta property="article:modified_time" content="2020-06-21T14:32:30.747Z">
+<meta property="article:modified_time" content="2020-06-21T15:08:09.807Z">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pixvc.github.io/images/26.png">
@@ -387,6 +387,10 @@
 </ul>
 </li>
 </ul>
+<a id="more"></a>
+
+
+
 <h2 id="在ARM的汇编程序中，有如下几种伪指令：、-、-、-、-。"><a href="#在ARM的汇编程序中，有如下几种伪指令：、-、-、-、-。" class="headerlink" title="在ARM的汇编程序中，有如下几种伪指令：、_、__、__、__。"></a>在ARM的汇编程序中，有如下几种伪指令：<strong><strong><em>、_</em></strong></strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>。</h2><p>答案：符号定义伪指令、数据定义伪指令、汇编控制伪指令、宏指令、其他伪指令</p>
 <h2 id="协处理器主要控制：-、-、-。"><a href="#协处理器主要控制：-、-、-。" class="headerlink" title="协处理器主要控制：__、__、__。"></a>协处理器主要控制：<strong>__</strong>、<strong>__</strong>、<strong>__</strong>。</h2><p>答案：片内的MMU、指令和数据缓存（IDC）、写缓冲（Write Buffer）</p>
 <h2 id="当一个异常出现以后，ARM微处理器会执行哪几步操作？"><a href="#当一个异常出现以后，ARM微处理器会执行哪几步操作？" class="headerlink" title="当一个异常出现以后，ARM微处理器会执行哪几步操作？"></a>当一个异常出现以后，ARM微处理器会执行哪几步操作？</h2><p>答：当一个异常出现以后，ARM微处理器会执行以下几步操作。<br>A、将下一条指令的地址存入相应连接寄存器LR，以便程序在处理异常返回时能从正确的位置重新开始执行。若异常是从ARM状态进入，则LR寄存器中保存 的是下一条指令的地址（当前PC＋4或PC＋8，与异常的类型有关）；若异常是从Thumb状态进入，则在LR寄存器中保存当前PC的偏移量，这样，异常 处理程序就不需要确定异常是从何种状态进入的。例如：在软件中断异常SWI，指令 MOV PC，R14_svc总是返回到下一条指令，不管SWI是在ARM状态执行，还是在Thumb状态执行。<br>B、将CPSR复制到相应的SPSR中。<br>C、根据异常类型，强制设置CPSR的运行模式位。<br>D、强制PC从相关的异常向量地址取下一条指令执行，从而跳转到相应的异常处理程序处。</p>
