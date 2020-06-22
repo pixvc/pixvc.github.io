@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="面试," />
+  <meta name="keywords" content="面试,ARM," />
 
 
 
@@ -81,14 +81,15 @@
 
 <meta name="description" content="FIQ比IRQ快的原因：A、FIQ模式的R8–R14寄存器是独有的，FIQ处理程序可以不必执行保存和恢复中断现场的指令。B、FIQ可以将ISR直接放在FIQ后面的地址空间，不需要跳转。 在ARM系统中，在函数调用的时候，参数是通过哪种方式传递的当参数小于等于4的时候是通过r0-r3寄存器来进行传递的，当参数大于4的时候是通过压栈的方式进行传递。 简述SPI,UART,I2C三种传输方式 SPI：高">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ARM语言篇">
+<meta property="og:title" content="ARM篇">
 <meta property="og:url" content="https://pixvc.github.io/2020/06/21/%E9%9D%A2%E8%AF%95ARM/index.html">
 <meta property="og:site_name" content="周菜鸡">
 <meta property="og:description" content="FIQ比IRQ快的原因：A、FIQ模式的R8–R14寄存器是独有的，FIQ处理程序可以不必执行保存和恢复中断现场的指令。B、FIQ可以将ISR直接放在FIQ后面的地址空间，不需要跳转。 在ARM系统中，在函数调用的时候，参数是通过哪种方式传递的当参数小于等于4的时候是通过r0-r3寄存器来进行传递的，当参数大于4的时候是通过压栈的方式进行传递。 简述SPI,UART,I2C三种传输方式 SPI：高">
 <meta property="og:image" content="https://pixvc.github.io/images/26.png">
 <meta property="article:published_time" content="2020-06-21T13:50:02.862Z">
-<meta property="article:modified_time" content="2020-06-21T15:08:09.807Z">
+<meta property="article:modified_time" content="2020-06-22T13:33:07.616Z">
 <meta property="article:tag" content="面试">
+<meta property="article:tag" content="ARM">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pixvc.github.io/images/26.png">
 
@@ -126,7 +127,7 @@
 
 
 
-  <title>ARM语言篇 | 周菜鸡</title>
+  <title>ARM篇 | 周菜鸡</title>
   
 
 
@@ -304,7 +305,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ARM语言篇</h1>
+          <h1 class="post-title" itemprop="name headline">ARM篇</h1>
         
 
         <div class="post-meta">
@@ -397,7 +398,8 @@
 <h2 id="ARM微处理器在较新的体系结构中支持两种指令集：-、-。"><a href="#ARM微处理器在较新的体系结构中支持两种指令集：-、-。" class="headerlink" title="ARM微处理器在较新的体系结构中支持两种指令集：__、__。"></a>ARM微处理器在较新的体系结构中支持两种指令集：<strong>__</strong>、<strong>__</strong>。</h2><p>答案：ARM指令集、Thumb指令集</p>
 <h2 id="ARM处理器有9种基本寻址方式，分别是：-、-、-、-、-、-、-、-、-。"><a href="#ARM处理器有9种基本寻址方式，分别是：-、-、-、-、-、-、-、-、-。" class="headerlink" title="ARM处理器有9种基本寻址方式，分别是：__、__、__、__、__、__、__、__、__。"></a>ARM处理器有9种基本寻址方式，分别是：<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>。</h2><p>答案：寄存器寻址、立即寻址、寄存器偏移寻址、寄存器间接寻址、基址寻址、多寄存器寻址、堆栈寻址、块拷贝寻址、相对寻址</p>
 <h2 id="ARM指令集可以分为6类，分别是：-、-、-、-、-、-。"><a href="#ARM指令集可以分为6类，分别是：-、-、-、-、-、-。" class="headerlink" title="ARM指令集可以分为6类，分别是：__、__、__、__、__、__。"></a>ARM指令集可以分为6类，分别是：<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>、<strong>__</strong>。</h2><p>答案：跳转指令、数据处理指令、程序状态寄存器（PSR）传输指令、Load/Store指令、协处理器指令、异常中断产生指令</p>
-<h2 id="表示递增和递减的满堆栈和空堆栈有哪几种组合，请比较它们的特点。"><a href="#表示递增和递减的满堆栈和空堆栈有哪几种组合，请比较它们的特点。" class="headerlink" title="表示递增和递减的满堆栈和空堆栈有哪几种组合，请比较它们的特点。"></a>表示递增和递减的满堆栈和空堆栈有哪几种组合，请比较它们的特点。</h2><pre><code>答：有4种类型的堆栈，表示递增和递减的满堆栈和空堆栈的各种组合。</code></pre><ul>
+<h2 id="表示递增和递减的满堆栈和空堆栈有哪几种组合，请比较它们的特点。"><a href="#表示递增和递减的满堆栈和空堆栈有哪几种组合，请比较它们的特点。" class="headerlink" title="表示递增和递减的满堆栈和空堆栈有哪几种组合，请比较它们的特点。"></a>表示递增和递减的满堆栈和空堆栈有哪几种组合，请比较它们的特点。</h2><p>答：有4种类型的堆栈，表示递增和递减的满堆栈和空堆栈的各种组合。</p>
+<ul>
 <li>满递增：堆栈通过增大存储器的地址向上增长，堆栈指针指向内含有效数据项的最高地址。指令如LDMFA，STMFA等。</li>
 <li>空递增：堆栈通过增大存储器的地址向上增长，堆栈指针指向堆栈上的第一个空地址。指令如LDMEA，STMEA等。</li>
 <li>满递减：堆栈通过减小存储器的地址向下增长，堆栈指针指向内含有效数据项的最低地址。指令如LDMFD，STMFD等。</li>
@@ -410,13 +412,8 @@
 <li>用于在ARM协处理器的寄存器和内存单元之间传送数据。</li>
 </ul>
 <p>14、可执行映像文件通常由几部分构成，它们有什么特点？</p>
-<pre><code>答：可执行映像文件通常由以下几部分构成。
-
-一个或多个代码段，代码段的属性为只读。
-
-零个或多个包含初始化数据的数据段，数据段的属性为可读写。
-
-零个或多个不包含初始化数据的数据段，数据段的属性为可读写。</code></pre><h2 id="ARM嵌入式系统主要由-、-和-构成。"><a href="#ARM嵌入式系统主要由-、-和-构成。" class="headerlink" title="ARM嵌入式系统主要由__、__和__构成。"></a>ARM嵌入式系统主要由<strong>__</strong>、<strong>__</strong>和<strong>__</strong>构成。</h2><p>答案：嵌入式处理器、相关支撑硬件、嵌入式软件系统</p>
+<p>答：可执行映像文件通常由以下几部分构成。<br>    一个或多个代码段，代码段的属性为只读。<br>    零个或多个包含初始化数据的数据段，数据段的属性为可读写。<br>    零个或多个不包含初始化数据的数据段，数据段的属性为可读写。</p>
+<h2 id="ARM嵌入式系统主要由-、-和-构成。"><a href="#ARM嵌入式系统主要由-、-和-构成。" class="headerlink" title="ARM嵌入式系统主要由__、__和__构成。"></a>ARM嵌入式系统主要由<strong>__</strong>、<strong>__</strong>和<strong>__</strong>构成。</h2><p>答案：嵌入式处理器、相关支撑硬件、嵌入式软件系统</p>
 <h2 id="总线通常包括-、-和-。"><a href="#总线通常包括-、-和-。" class="headerlink" title="总线通常包括__、__和__。"></a>总线通常包括<strong>__</strong>、<strong>__</strong>和<strong>__</strong>。</h2><p>答案：数据总线、地址总线、控制总线</p>
 <h2 id="复位后，ARM处理器处于（B）模式，（D）状态"><a href="#复位后，ARM处理器处于（B）模式，（D）状态" class="headerlink" title="复位后，ARM处理器处于（B）模式，（D）状态"></a>复位后，ARM处理器处于（B）模式，（D）状态</h2><p>A、user B、SVC C、system D、ARM E、Thumb</p>
 <h2 id="ARM处理器中优先级别最高的异常为（E）"><a href="#ARM处理器中优先级别最高的异常为（E）" class="headerlink" title="ARM处理器中优先级别最高的异常为（E）"></a>ARM处理器中优先级别最高的异常为（E）</h2><p>A、FIQ     B、SWI     C、IRQ     D、SVC     E、RESET</p>
@@ -477,6 +474,8 @@
           
             <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"># 面试</a>
           
+            <a href="/tags/ARM/" rel="tag"># ARM</a>
+          
         </div>
       
 
@@ -497,6 +496,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/22/TCP%20UDP%E5%8D%8F%E8%AE%AE/" rel="prev" title="TCP/UDP">
+                TCP/UDP <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -573,7 +576,7 @@
               
                 <a href="/archives%7C%7Carchive">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -584,7 +587,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -595,7 +598,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
