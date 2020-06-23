@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="周菜鸡">
 <meta property="og:description" content="进程线程的基本概念1.1.1什么是进程，线程？也就是问彼此有什么区别？答：进程是资源（CPU、内存等）分配的基本单位，线程是CPU调度和分配的基本单位（程序执行的最小单位）。  当我们运行一个程序的时候，系统就会创建一个进程，并分配地址空间和其他资源，最后把进程加入就绪队列直到分配到CPU时间就可以正式运行了。 线程是进程的一个执行流，有一个初学者可能误解的概念，进程就像一个容器一样，包括程序运行">
 <meta property="article:published_time" content="2020-06-21T02:50:25.552Z">
-<meta property="article:modified_time" content="2020-06-21T03:21:06.747Z">
+<meta property="article:modified_time" content="2020-06-23T02:36:13.715Z">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
 
@@ -337,8 +337,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">嵌入式面试题</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -380,6 +380,8 @@
 <li>线程是进程的一个执行流，有一个初学者可能误解的概念，进程就像一个容器一样，包括程序运行的程序段、数据段等信息，但是进程其实是不能用来运行代码的，真正运行代码的是进程里的线程。</li>
 <li>进程拥有自己的资源空间，每启动一个进程，系统就会为它分配地址空间；而线程与CPU资源分配无关，多个线程共享同一进程内的资源，使用相同的地址空间。<br>一个进程可以包含若干个线程。</li>
 </ol>
+<hr>
+<p>采用形象一点的比喻更好，比如（取自知乎）：<br>开个QQ，开了一个进程；开了迅雷，开了一个进程。<br>在QQ的这个进程里，传输文字开一个线程、传输语音开了一个线程、弹出对话框又开了一个线程。<br>所以运行某个软件，相当于开了一个进程。在这个软件运行的过程里（在这个进程里），多个工作支撑的完成QQ的运行，那么这“多个工作”分别有一个线程。所以一个进程管着多个线程。</p>
 <h1 id="1-1-2-多进程、多线程的优缺点"><a href="#1-1-2-多进程、多线程的优缺点" class="headerlink" title="1.1.2 多进程、多线程的优缺点"></a>1.1.2 多进程、多线程的优缺点</h1><p>答：</p>
 <h2 id="多进程优点"><a href="#多进程优点" class="headerlink" title="多进程优点"></a>多进程优点</h2><ul>
 <li>每个进程互相独立，不影响主程序的稳定性，子进程崩溃没关系；</li>
@@ -412,6 +414,79 @@
 <p>2）需要大量数据传送使用线程，因为多线程切换速度快，不需要跨越进程边界。</p>
 <p>3）并行操作使用线程。线程是为了实现并行操作的一个手段，也就是刚才说的需要多个并行操作“合作完成大事”，当然是使用线程啦。</p>
 <p>4）最后可以总结为：安全稳定选进程；快速频繁选线程；</p>
+<h1 id="1-1-4-多进程、多线程同步（通讯）的方法"><a href="#1-1-4-多进程、多线程同步（通讯）的方法" class="headerlink" title="1.1.4 多进程、多线程同步（通讯）的方法"></a>1.1.4 多进程、多线程同步（通讯）的方法</h1><h2 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a>进程间通信</h2><p>进程间通信的几种主要手段：    </p>
+<ol>
+<li>管道（Pipe）及有名管道（named pipe）：管道可用于具有亲缘关系进程间的通信，有名管道克服了管道没有名字的限制，因此，除具有管道所具有的功能外，它还允许无亲缘关系进程间的通信；    </li>
+<li>信号（Signal）：信号是比较复杂的通信方式，用于通知接受进程有某种事件生，除了用于进程间通信外，进程还可以发送信号给进程本身；linux除了支持Unix早期 信号语义函数sigal外，还支持语义符合Posix.1标准的信号函数sigaction（实际上， 该函数是基于BSD的，BSD为了实现可靠信号机制，又能够统一对外接口，sigaction函数重新实现了signal函数）；    </li>
+<li>报文（Message）队列（消息队列）：消息队列是消息的链接表，包括Posix消息队列system V消息队列。有足够权限的进程可以向队列中添加消息，被赋予读权限的进程则可以读走队列中的消息。消息队列克服了信号承载信息量少，管道只能承载无格式字节流以及缓冲区大小受限等缺点。</li>
+<li>共享内存：使得多个进程可以访问同一块内存空间，是最快的可用IPC形式。是针其他通信机制运行效率较低设计的。往往与其它通信机制，如信号量结合使用， 来达到进程间的同步及互斥。   </li>
+<li>信号量（semaphore）：主要作为进程间以及同一进程不同线程之间的同步手段。             </li>
+<li>套接字（Socket）：更为一般的进程间通信机制，可用于不同机器之间的进程间通信。起初是由Unix系统的BSD分支开发出来的，但现在一般可以移植到其它类Unix 系统上：Linux和System V的变种都支持套接字。</li>
+</ol>
+<h2 id="线程同步，最常用的是互斥锁、条件变量、信号量、读写锁"><a href="#线程同步，最常用的是互斥锁、条件变量、信号量、读写锁" class="headerlink" title="线程同步，最常用的是互斥锁、条件变量、信号量、读写锁"></a>线程同步，最常用的是互斥锁、条件变量、信号量、读写锁</h2><ul>
+<li>互斥锁:通过锁机制实现线程间的同步。同一时刻只允许一个线程执行一个关键部分的代码</li>
+<li>条件变量（cond）:利用线程间共享的全局变量进行同步的一种机制。条件变量上的基本操作有：触发条件(当条件变为 true 时)；等待条件，挂起线程直到其他线程触发条件。</li>
+<li>信号量:如同进程一样，线程也可以通过信号量来实现通信，虽然是轻量级的。</li>
+</ul>
+<h1 id="1-1-5什么是线程的同步与互斥？"><a href="#1-1-5什么是线程的同步与互斥？" class="headerlink" title="1.1.5什么是线程的同步与互斥？"></a>1.1.5什么是线程的同步与互斥？</h1><ul>
+<li>互斥：指在某一时刻指允许一个进程运行其中的程序片，具有排他性和唯一性。<br>对于线程A和线程B来讲，在同一时刻，只允许一个线程对临界资源进行操作，即当A进入临界区对资源操作时，B就必须等待；当A执行完，退出临界区后，B才能对临界资源进行操作</li>
+<li>同步：指的是在互斥的基础上，实现进程之间的有序访问。假设现有线程A和线程B，线程A需要往缓冲区写数据，线程B需要从缓冲区读数据，但他们之间存在一种制约关系，即当线程A写的时候，B不能来拿数据；B在拿数据的时候A不能往缓冲区写，也就是说，只有当A写完数据（或B取走数据），B才能来读数据（或A才能往里写数据）。这种关系就是一种线程的同步关系。</li>
+</ul>
+<p>*注释：<br>    临界资源：能够被多个线程共享的数据/资源。<br>    临界区：对临界资源进行操作的那一段代码</p>
+<h1 id="1-1-6孤儿进程、僵尸进程、守护进程的概念"><a href="#1-1-6孤儿进程、僵尸进程、守护进程的概念" class="headerlink" title="1.1.6孤儿进程、僵尸进程、守护进程的概念"></a>1.1.6孤儿进程、僵尸进程、守护进程的概念</h1><p>进程在终止前向父进程发送SIGCLD信号，父进程调用wait等待子进程的退出！</p>
+<ul>
+<li><p>孤儿进程：一个父进程退出，而它的一个或多个子进程还在运行，那么那些子进程将成为孤儿进程。孤儿进程将被init进程(进程号为1)所收养，并由init进程对它们完成状态收集工作。</p>
+</li>
+<li><p>僵尸进程：一个进程使用fork创建子进程，如果子进程退出，而父进程并没有调用wait或waitpid获取子进程的状态信息，那么子进程的进程描述符仍然保存在系统中。这种进程称之为僵死进程(ps进程状态为“Z”)。</p>
+</li>
+<li><p>守护进程：是在后台运行不受终端控制的进程（如输入、输出等）。网络服务大部分就是守护进程。<br>孤儿进程没有什么危害，因为将来结束时，init进程会完成他们状态收集的工作。而僵尸进程在内核中还有一些信息(包括进程号)，需要及时处理；但是每个进程都要或长或短地经历僵尸进程的状态。</p>
+</li>
+</ul>
+<h2 id="如何创建守护进程："><a href="#如何创建守护进程：" class="headerlink" title="如何创建守护进程："></a>如何创建守护进程：</h2><ol>
+<li><p>创建子进程，父进程退出：因为守护进程是在后台运行不受终端控制的进程，父进程退出后控制台就以为该程序结束了，我们就可以在子进程进行自己的任务，同时用户仍可以在控制台输入指令，从而在形式上做到了与控制台脱离。</p>
+</li>
+<li><p>在子进程中创建新的会话(脱离控制终端)：使用系统函数setsid()来创建一个新的会话，并担任该会话组的组长，摆脱原会话的控制==&gt;摆脱原进程的控制==&gt;摆脱原控制台的控制。</p>
+</li>
+<li><p>改变当前目录为根目录：1.1.7小节知道子进程继承父进程的目录信息，但进程运行时对当前目录下的文件系统不能卸载，这会有很多隐藏的麻烦，建议使用根目录作为当前目录，当然也可以使用其他目录。</p>
+</li>
+<li><p>重设文件权限掩码，关闭文件描述符：子进程还继承父进程文件权限掩码，即屏蔽掉文件权限中的对应位。此时子进程需将其重置为0，即在此时有大的权限，从而提高该守护进程灵活度。最后，关系从父进程继承的已经打开的文件描述符，如不进行关闭将造成浪费资源以及子进程所有文件系统无法卸载等错误。</p>
+</li>
+</ol>
+<h1 id="1-1-7正确处理僵尸进程的方法"><a href="#1-1-7正确处理僵尸进程的方法" class="headerlink" title="1.1.7正确处理僵尸进程的方法"></a>1.1.7正确处理僵尸进程的方法</h1><ul>
+<li><p>如何杀死僵尸进程<br>方法有二：</p>
+<ol>
+<li>重启服务器电脑，这个是最简单，最易用的方法，但是如果你服务器电脑上运行有其他的程序，那么这个方法，代价很大。所以，尽量使用下面一种方法。</li>
+<li>找到该defunct僵尸进程的父进程，将该进程的父进程杀掉，则此defunct进程将自动消失。</li>
+</ol>
+</li>
+<li><p>如何预防僵尸进程</p>
+<ul>
+<li>在父进程创建子进程之前，就向系统申明自己并不会对这个子进程的exit动作进行任何关注行为，这样的话，子进程一旦退出后，系统就不会去等待父进程的操作，而是直接将该子进程的资源回收掉，也就不会出现僵尸进程了。具体的办法就是，在父进程的初始化函数中，调用这个函数：signal(SIGCHLD,SIG_IGN)；</li>
+<li>如果上述语句没来得及调用，也有另外一个办法。那就是在创建完子进程后，用waitpid等待子进程返回，也能达到上述效果；</li>
+<li>如果上述两个办法都不愿意采用，那还有一招：在父进程创建子进程的时候，连续调用两次fork()，而且使紧跟的子进程直接退出，使其孙子进程成为孤儿进程，从而init进程将代替父进程来接手，负责清除这个孤儿进程。于是，父进程就无需进行任何的清理行为，系统会自动处理；</li>
+</ul>
+</li>
+</ul>
+<h1 id="1-1-8并发，同步，异步，互斥，阻塞，非阻塞的理解"><a href="#1-1-8并发，同步，异步，互斥，阻塞，非阻塞的理解" class="headerlink" title="1.1.8并发，同步，异步，互斥，阻塞，非阻塞的理解"></a>1.1.8并发，同步，异步，互斥，阻塞，非阻塞的理解</h1><ul>
+<li>并发(concurrency)：在操作系统中，是指一个时间段中有几个程序都处于已启动运行到运行完毕之间，且这几个程序都是在同一个处理机上运行。其中两种并发关系分别是同步和互斥。<ul>
+<li>互斥，是指分布在不同进程之间的若干程序片断，当某个进程运行其中一个程序片段时，其它进程就不能运行它们之中的任一程序片段，只能等到该进程运行完这个程序片段后才可以运行。 </li>
+<li>同步，是指分布在不同进程之间的若干程序片断，它们的运行必须严格按照规定的 某种先后次序来运行，这种先后次序依赖于要完成的特定的任务。 显然，同步是一种更为复杂的互斥，而互斥是一种特殊的同步。也就是说互斥是两个线程之间不可以同时运行，他们会相互排斥，必须等待一个线程运行完毕，另一个才能运行，而同步也是不能同时运行，但他是必须要安照某种次序来运行相应的线程（也是一种互斥）！　</li>
+</ul>
+</li>
+</ul>
+<p>总结：<br>互斥：是指某一资源同时只允许一个访问者对其进行访问，具有唯一性和排它性。但互斥无法限制访问者对资源的访问顺序，即访问是无序的。　　<br>同步：是指在互斥的基础上（大多数情况），通过其它机制实现访问者对资源的有序访问。在大多数情况下，同步已经实现了互斥，特别是所有写入资源的情况必定是互斥的。少数情况是指可以允许多个访问者同时访问资源。</p>
+<ul>
+<li>异步(asynchronous)：异步和同步是相对的，同步就是顺序执行，执行完一个再执行下一个，需要等待、协调运行。异步就是彼此独立,在等待某事件的过程中继续做自己的事，不需要等待这一事件完成后再工作。线程就是实现异步的一个方式。异步是让调用方法的主线程不需要同步等待另一线程的完成，从而可以让主线程干其它的事情。<br>同步和异步是针对应用程序和内核的交互而言的，同步指的是用户进程触发IO操作并等待或者轮询的去查看IO操作是否就绪，而异步是指用户进程触发IO操作以后便开始做自己的事情， 而当IO操作已经完成的时候会得到IO完成的通知（异步的特点就是通知）。<br>异步和多线程并不是一个同等关系,异步是最终目的,多线程只是我们实现异步的一种手段。异步是当一个调用请求发送给被调用者,而调用者不用等待其结果的返回而可以做其它的事情。实现异步可以采用多线程技术或则交给另外的进程来处理。</li>
+<li>阻塞，非阻塞<br>阻塞调用是指调用结果返回之前，调用者会进入阻塞状态等待。只有在得到结果之后才会返回。<br>非阻塞调用是指在不能立刻得到结果之前，该函数不会阻塞当前线程，而会立刻返回。</li>
+</ul>
+<hr>
+<p>阻塞调用：比如 socket 的 recv()，调用这个函数的线程如果没有数据返回，它会一直阻塞着，也就是 recv() 后面的代码都不会执行了，程序就停在 recv() 这里等待，所以一般把 recv() 放在单独的线程里调用。</p>
+<p>非阻塞调用：比如非阻塞socket 的 send()，调用这个函数，它只是把待发送的数据复制到TCP输出缓冲区中，就立刻返回了，线程并不会阻塞，数据有没有发出去 send() 是不知道的，不会等待它发出去才返回的。</p>
+<p>*一般来说IO模型可以分为：同步阻塞，同步非阻塞，异步阻塞，异步非阻塞。</p>
+<h1 id="1-1-9父子进程之间的关系"><a href="#1-1-9父子进程之间的关系" class="headerlink" title="1.1.9父子进程之间的关系"></a>1.1.9父子进程之间的关系</h1><p>关于资源：子进程得到的是除了代码段是与父进程共享的以外，其他所有的都是得到父进程的一个副本，子进程的所有资源都继承父进程，得到父进程资源的副本，既然为副本，也就是说，二者并不共享地址空间。，两个是单独的进程，继承了以后二者就没有什么关联了，子进程单独运行。（采用写时复制技术）<br>关于文件描述符：继承父进程的文件描述符时，相当于调用了dup函数，父子进程共享文件表项，即共同操作同一个文件，一个进程修改了文件，另一个进程也知道此文件被修改了。</p>
+<ul>
+<li>fork之后：<br>父子相同处: 全局变量、.data、.text、栈、堆、环境变量、用户ID、宿主目录、进程工作目录、信号处理方式…<br>父子不同处: 1.进程ID   2.fork返回值   3.父进程ID    4.进程运行时间    5.闹钟(定时器)   6.未决信号集</li>
+</ul>
 
       
     </div>
@@ -542,7 +617,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -602,7 +677,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#进程线程的基本概念"><span class="nav-number">1.</span> <span class="nav-text">进程线程的基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-1什么是进程，线程？也就是问彼此有什么区别？"><span class="nav-number">2.</span> <span class="nav-text">1.1.1什么是进程，线程？也就是问彼此有什么区别？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-2-多进程、多线程的优缺点"><span class="nav-number">3.</span> <span class="nav-text">1.1.2 多进程、多线程的优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#多进程优点"><span class="nav-number">3.1.</span> <span class="nav-text">多进程优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多进程缺点"><span class="nav-number">3.2.</span> <span class="nav-text">多进程缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程的优点"><span class="nav-number">3.3.</span> <span class="nav-text">多线程的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程缺点"><span class="nav-number">3.4.</span> <span class="nav-text">多线程缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-3-什么时候用进程，什么时候用线程"><span class="nav-number">4.</span> <span class="nav-text">1.1.3 什么时候用进程，什么时候用线程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#进程线程的基本概念"><span class="nav-number">1.</span> <span class="nav-text">进程线程的基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-1什么是进程，线程？也就是问彼此有什么区别？"><span class="nav-number">2.</span> <span class="nav-text">1.1.1什么是进程，线程？也就是问彼此有什么区别？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-2-多进程、多线程的优缺点"><span class="nav-number">3.</span> <span class="nav-text">1.1.2 多进程、多线程的优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#多进程优点"><span class="nav-number">3.1.</span> <span class="nav-text">多进程优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多进程缺点"><span class="nav-number">3.2.</span> <span class="nav-text">多进程缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程的优点"><span class="nav-number">3.3.</span> <span class="nav-text">多线程的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程缺点"><span class="nav-number">3.4.</span> <span class="nav-text">多线程缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-3-什么时候用进程，什么时候用线程"><span class="nav-number">4.</span> <span class="nav-text">1.1.3 什么时候用进程，什么时候用线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-4-多进程、多线程同步（通讯）的方法"><span class="nav-number">5.</span> <span class="nav-text">1.1.4 多进程、多线程同步（通讯）的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程间通信"><span class="nav-number">5.1.</span> <span class="nav-text">进程间通信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程同步，最常用的是互斥锁、条件变量、信号量、读写锁"><span class="nav-number">5.2.</span> <span class="nav-text">线程同步，最常用的是互斥锁、条件变量、信号量、读写锁</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-5什么是线程的同步与互斥？"><span class="nav-number">6.</span> <span class="nav-text">1.1.5什么是线程的同步与互斥？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-6孤儿进程、僵尸进程、守护进程的概念"><span class="nav-number">7.</span> <span class="nav-text">1.1.6孤儿进程、僵尸进程、守护进程的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何创建守护进程："><span class="nav-number">7.1.</span> <span class="nav-text">如何创建守护进程：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-7正确处理僵尸进程的方法"><span class="nav-number">8.</span> <span class="nav-text">1.1.7正确处理僵尸进程的方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-8并发，同步，异步，互斥，阻塞，非阻塞的理解"><span class="nav-number">9.</span> <span class="nav-text">1.1.8并发，同步，异步，互斥，阻塞，非阻塞的理解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-9父子进程之间的关系"><span class="nav-number">10.</span> <span class="nav-text">1.1.9父子进程之间的关系</span></a></li></ol></div>
             
 
           </div>

@@ -85,14 +85,15 @@
 <meta property="og:url" content="https://pixvc.github.io/2020/06/22/TCP%20UDP%E5%8D%8F%E8%AE%AE/index.html">
 <meta property="og:site_name" content="周菜鸡">
 <meta property="og:description" content="TCP&#x2F;IP协议是一个协议簇。里面包括很多协议的，UDP只是其中的一个， 之所以命名为TCP&#x2F;IP协议，因为TCP、IP协议是两个很重要的协议，就用他两命名了。TCP&#x2F;IP协议集包括应用层,传输层，网络层，网络访问层。 TCP TCP（Transmission Control Protocol，传输控制协议）是面向连接的协议，也就是说，在收发数据前，必须和对方建立可靠的连接。 一个TCP连接必须要">
+<meta property="og:image" content="https://pixvc.github.io/images/30.png">
 <meta property="og:image" content="https://pixvc.github.io/images/28.png">
 <meta property="og:image" content="https://pixvc.github.io/images/29.png">
 <meta property="article:published_time" content="2020-06-22T09:12:53.232Z">
-<meta property="article:modified_time" content="2020-06-22T13:59:32.698Z">
+<meta property="article:modified_time" content="2020-06-22T14:13:49.922Z">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="TCP&#x2F;UDP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pixvc.github.io/images/28.png">
+<meta name="twitter:image" content="https://pixvc.github.io/images/30.png">
 
 
 
@@ -378,24 +379,21 @@
       
 
       
-        <p>TCP/IP协议是一个协议簇。里面包括很多协议的，UDP只是其中的一个， 之所以命名为TCP/IP协议，因为TCP、IP协议是两个很重要的协议，就用他两命名了。<br>TCP/IP协议集包括应用层,传输层，网络层，网络访问层。</p>
+        <p>TCP/IP协议是一个协议簇。里面包括很多协议的，UDP只是其中的一个， 之所以命名为TCP/IP协议，因为TCP、IP协议是两个很重要的协议，就用他两命名了。<br>TCP/IP协议集包括应用层,传输层，网络层，网络访问层。<br><img src="/images/30.png" alt=""></p>
 <h1 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h1><ul>
-<li><p>TCP（Transmission Control Protocol，传输控制协议）是面向连接的协议，也就是说，在收发数据前，必须和对方建立可靠的连接。 一个TCP连接必须要经过三次“对话”才能建立起来，其中的过程非常复杂</p>
-</li>
-<li><p>ACK 是TCP报头的控制位之一，对数据进行确认。确认由目的端发出， 用它来告诉发送端这个序列号之前的数据段都收到了。 比如确认号为X，则表示前X-1个数据段都收到了，只有当ACK=1时,确认号才有效，当ACK=0时，确认号无效，这时会要求重传数据，保证数据的完整性。</p>
-</li>
-<li><p>SYN：用作建立连接时的同步信号</p>
-</li>
-<li><p>FIN：表示后面没有数据需要发送，通常意昧着所建立的连接需要关闭了。</p>
-<h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><p><img src="/images/28.png" alt=""><br>换个易于理解的视角来看为什么要3次握手。<br>客户端和服务端通信前要进行连接，“3次握手”的作用就是双方都能明确自己和对方的收、发能力是正常的。</p>
-</li>
-<li><p>第一次握手：客户端发送网络包，服务端收到了。这样服务端就能得出结论：客户端的发送能力、服务端的接收能力是正常的。</p>
-</li>
-<li><p>第二次握手：服务端发包，客户端收到了。这样客户端就能得出结论：服务端的接收、发送能力，客户端的接收、发送能力是正常的。 从客户端的视角来看，我接到了服务端发送过来的响应数据包，说明服务端接收到了我在第一次握手时发送的网络包，并且成功发送了响应数据包，这就说明，服务端的接收、发送能力正常。而另一方面，我收到了服务端的响应数据包，说明我第一次发送的网络包成功到达服务端，这样，我自己的发送和接收能力也是正常的。</p>
-</li>
-<li><p>第三次握手：客户端发包，服务端收到了。这样服务端就能得出结论：客户端的接收、发送能力，服务端的发送、接收能力是正常的。 第一、二次握手后，服务端并不知道客户端的接收能力以及自己的发送能力是否正常。而在第三次握手时，服务端收到了客户端对第二次握手作的回应。从服务端的角度，我在第二次握手时的响应数据发送出去了，客户端接收到了。所以，我的发送能力是正常的。而客户端的接收能力也是正常的。</p>
-</li>
+<li>TCP（Transmission Control Protocol，传输控制协议）是面向连接的协议，也就是说，在收发数据前，必须和对方建立可靠的连接。 一个TCP连接必须要经过三次“对话”才能建立起来，其中的过程非常复杂</li>
 </ul>
+<hr>
+<ul>
+<li>ACK 是TCP报头的控制位之一，对数据进行确认。确认由目的端发出， 用它来告诉发送端这个序列号之前的数据段都收到了。 比如确认号为X，则表示前X-1个数据段都收到了，只有当ACK=1时,确认号才有效，当ACK=0时，确认号无效，这时会要求重传数据，保证数据的完整性。</li>
+<li>SYN：用作建立连接时的同步信号</li>
+<li>FIN：表示后面没有数据需要发送，通常意昧着所建立的连接需要关闭了。<h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><img src="/images/28.png" alt=""><br>换个易于理解的视角来看为什么要3次握手。<br>客户端和服务端通信前要进行连接，“3次握手”的作用就是双方都能明确自己和对方的收、发能力是正常的。</li>
+<li>第一次握手：客户端发送网络包，服务端收到了。这样服务端就能得出结论：客户端的发送能力、服务端的接收能力是正常的。</li>
+<li>第二次握手：服务端发包，客户端收到了。这样客户端就能得出结论：服务端的接收、发送能力，客户端的接收、发送能力是正常的。 从客户端的视角来看，我接到了服务端发送过来的响应数据包，说明服务端接收到了我在第一次握手时发送的网络包，并且成功发送了响应数据包，这就说明，服务端的接收、发送能力正常。而另一方面，我收到了服务端的响应数据包，说明我第一次发送的网络包成功到达服务端，这样，我自己的发送和接收能力也是正常的。</li>
+<li>第三次握手：客户端发包，服务端收到了。这样服务端就能得出结论：客户端的接收、发送能力，服务端的发送、接收能力是正常的。 第一、二次握手后，服务端并不知道客户端的接收能力以及自己的发送能力是否正常。而在第三次握手时，服务端收到了客户端对第二次握手作的回应。从服务端的角度，我在第二次握手时的响应数据发送出去了，客户端接收到了。所以，我的发送能力是正常的。而客户端的接收能力也是正常的。</li>
+</ul>
+<a id="more"></a>
+
 <p>经历了上面的三次握手过程，客户端和服务端都确认了自己的接收、发送能力是正常的。之后就可以正常通信了。</p>
 <p>实际情况：</p>
 <ol>
@@ -425,7 +423,7 @@
 <li>基于连接与无连接；</li>
 <li>对系统资源的要求（TCP较多，UDP少）；</li>
 <li>UDP程序结构较简单；</li>
-<li>流模式与数据报模式 ；</li>
+<li>流模式与数据报模式(TCP数据量大)</li>
 <li>TCP保证数据正确性，UDP可能丢包；</li>
 <li>TCP保证数据顺序，UDP不保证。</li>
 </ol>
@@ -584,7 +582,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
