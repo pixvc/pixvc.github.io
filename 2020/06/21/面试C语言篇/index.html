@@ -87,7 +87,7 @@
 <meta property="og:description" content="一个程序从开始运行到结束的完整过程 预处理（.i文件）在编译的时候会被尾开去换成空际的代码这个层开编译的时候会被展开替换成实际的代码,这个展升的步骤就是在预处理的时候进行的当然预处理并不仅仅只是做宏的展开，它还做了类似头文件插入预处理之后的产品依然还是C&#x2F;C++代码,它在代码的逻辑上和输入的C&#x2F;C++源代码是完全- -样的.  汇编 (.s文件)汇编语言是将机器语言符号化了的语言是机器不能直接识别">
 <meta property="og:image" content="https://pixvc.github.io/images/27.png">
 <meta property="article:published_time" content="2020-06-21T03:31:58.831Z">
-<meta property="article:modified_time" content="2020-06-21T15:07:58.992Z">
+<meta property="article:modified_time" content="2020-06-24T10:14:42.082Z">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pixvc.github.io/images/27.png">
@@ -445,6 +445,11 @@
 <li>全局区（静态区）（static）—全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域，未初始化的全局变量和未初始化的静态变量在相邻的另一块区域。程序结束后由系统释放。内存分配在程序编译之前完成，且在程序的整个运行期间都存在，例如全局变量、静态变量等。</li>
 </ul>
 <h2 id="在1G内存的计算机中能否malloc-1-2G-？为什么？"><a href="#在1G内存的计算机中能否malloc-1-2G-？为什么？" class="headerlink" title="在1G内存的计算机中能否malloc(1.2G)？为什么？"></a>在1G内存的计算机中能否malloc(1.2G)？为什么？</h2><p>答：是有可能申请1.2G的内存的。<br>解析：回答这个问题前需要知道malloc的作用和原理，应用程序通过malloc函数可以向程序的虚拟空间申请一块虚拟地址空间，与物理内存没有直接关系，得到的是在虚拟地址空间中的地址，之后程序运行所提供的物理内存是由操作系统完成的。</p>
+<p>*Mmu的作用是把虚拟地址映射到物理地址，当程序开始运行会产生进程同时产生虚拟内存(虚拟内存可以比物理内存大)，编程的时候我们使用的为虚拟地址（比如0xd8884）<br>MMU把这个虚拟地址对应到实际地址上，加载cpu时从实际地址上取</p>
+<ul>
+<li>虚拟内存：为每个进程提供了一个一致的、私有的地址空间，它让每个进程产生了一种自己在独享主存的错觉（每个进程拥有一片连续完整的内存空间）。这样会更加有效地管理内存并减少出错。<br>创建一个进程时，操作系统会为该进程分配一个 4GB 大小的虚拟 进程地址空间。 之所以是 4GB ，是因为在 32 位的操作系统中，一个指针长度是 4 字节  （32位）， 2的32次 方个地址寻址能力是从 0x00000000~0xFFFFFFFF 即为 4GB 大小的容量。32位Linux下，一个进程空间4G，内核占1G，用户留3G，一个线程默认8M，所以最多380个左右线程。</li>
+</ul>
+<p>用户3GB：<br>1）栈空间：特点是由系统管理，先进后出，里面放了局部变量、函数形参、自动变量。<br>2）堆空间：特点是由用户管理，先进后出，我们可以用malloc、ralloc、calloc来分配空间。<br>3）数据段：数据段里面又分三块，第一块是bss，保存未初始化的全局变量；第二块是rodata，保存了常量；第三块  是.data（静态数据区）保存了初始化的全局变量还有static修饰的变量。<br>4）代码段：存放了源代码。</p>
 <h2 id="堆和栈的区别"><a href="#堆和栈的区别" class="headerlink" title="堆和栈的区别"></a>堆和栈的区别</h2><p>答：堆（heap）和栈(stack)的区别</p>
 <ol>
 <li>申请方式<br>stack:由系统自动分配。例如，声明在函数中一个局部变量int b;系统自动在栈中为b开辟空间<br>heap:需要程序员自己申请，并指明大小，<br>在c中malloc函数<br>如p1=(char*)malloc(10);<br>但是注意p1本身是在栈中的。</li>
@@ -632,7 +637,7 @@
               
                 <a href="/archives%7C%7Carchive">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -654,7 +659,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
