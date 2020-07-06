@@ -56,10 +56,10 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=5.1.4">
 
 
   <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="虚拟内存虚拟内存：为每个进程提供了一个一致的、私有的地址空间，它让每个进程产生了一种自己在独享主存的错觉（每个进程拥有一片连续完整的内存空间）。这样会更加有效地管理内存并减少出错。如果真的给这个进程分配全部的物理内存，那绝大部分物理内存就浪费了。所以现在一般采用分页的技术(将虚拟地址空间和物理内存划分成固定大小的小块)，建立页表，把进程的虚拟地址空间页映射到物理内存的页帧上。这里页表保存的就是映射">
+<meta name="description" content="Linux下七种文件类型总结: 1其他四种：套接字、块设备、字符设备、管道是伪文件，不占用磁盘空间。  虚拟内存虚拟内存：为每个进程提供了一个一致的、私有的地址空间，它让每个进程产生了一种自己在独享主存的错觉（每个进程拥有一片连续完整的内存空间）。这样会更加有效地管理内存并减少出错。如果真的给这个进程分配全部的物理内存，那绝大部分物理内存就浪费了。所以现在一般采用分页的技术(将虚拟地址空间和物理内">
 <meta property="og:type" content="article">
 <meta property="og:title" content="文件描述符与虚拟内存">
 <meta property="og:url" content="https://pixvc.github.io/2020/06/28/%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6/index.html">
 <meta property="og:site_name" content="周菜鸡">
-<meta property="og:description" content="虚拟内存虚拟内存：为每个进程提供了一个一致的、私有的地址空间，它让每个进程产生了一种自己在独享主存的错觉（每个进程拥有一片连续完整的内存空间）。这样会更加有效地管理内存并减少出错。如果真的给这个进程分配全部的物理内存，那绝大部分物理内存就浪费了。所以现在一般采用分页的技术(将虚拟地址空间和物理内存划分成固定大小的小块)，建立页表，把进程的虚拟地址空间页映射到物理内存的页帧上。这里页表保存的就是映射">
+<meta property="og:description" content="Linux下七种文件类型总结: 1其他四种：套接字、块设备、字符设备、管道是伪文件，不占用磁盘空间。  虚拟内存虚拟内存：为每个进程提供了一个一致的、私有的地址空间，它让每个进程产生了一种自己在独享主存的错觉（每个进程拥有一片连续完整的内存空间）。这样会更加有效地管理内存并减少出错。如果真的给这个进程分配全部的物理内存，那绝大部分物理内存就浪费了。所以现在一般采用分页的技术(将虚拟地址空间和物理内">
 <meta property="og:image" content="https://pixvc.github.io/images/36.png">
 <meta property="og:image" content="https://pixvc.github.io/images/32.png">
 <meta property="og:image" content="https://pixvc.github.io/images/37.png">
 <meta property="article:published_time" content="2020-06-28T01:43:47.348Z">
-<meta property="article:modified_time" content="2020-06-28T02:37:44.742Z">
+<meta property="article:modified_time" content="2020-07-05T14:12:48.465Z">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="文件描述符">
 <meta name="twitter:card" content="summary">
@@ -215,7 +215,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
             
@@ -379,7 +379,10 @@
       
 
       
-        <h1 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h1><p>虚拟内存：为每个进程提供了一个一致的、私有的地址空间，它让每个进程产生了一种自己在独享主存的错觉（每个进程拥有一片连续完整的内存空间）。这样会更加有效地管理内存并减少出错。<br>如果真的给这个进程分配全部的物理内存，那绝大部分物理内存就浪费了。所以现在一般采用分页的技术(将虚拟地址空间和物理内存划分成固定大小的小块)，建立页表，把进程的虚拟地址空间页映射到物理内存的页帧上。这里页表保存的就是映射关系。然后随着进程的运行，就会按需分配页，那些长时间未使用的页帧又会被操作系统回收。</p>
+        <p>Linux下七种文件类型总结:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">其他四种：套接字、块设备、字符设备、管道是伪文件，不占用磁盘空间。</span><br></pre></td></tr></table></figure>
+
+<h1 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h1><p>虚拟内存：为每个进程提供了一个一致的、私有的地址空间，它让每个进程产生了一种自己在独享主存的错觉（每个进程拥有一片连续完整的内存空间）。这样会更加有效地管理内存并减少出错。<br>如果真的给这个进程分配全部的物理内存，那绝大部分物理内存就浪费了。所以现在一般采用分页的技术(将虚拟地址空间和物理内存划分成固定大小的小块)，建立页表，把进程的虚拟地址空间页映射到物理内存的页帧上。这里页表保存的就是映射关系。然后随着进程的运行，就会按需分配页，那些长时间未使用的页帧又会被操作系统回收。</p>
 <p>创建一个进程时，操作系统会为该进程分配一个 4GB 大小的虚拟 进程地址空间。 之所以是 4GB ，是因为在 32 位的操作系统中，一个指针长度是 4 字节  （32位）， 2的32次 方个地址寻址能力是从 0x00000000~0xFFFFFFFF 即为 4GB 大小的容量。32位Linux下，一个进程空间4G，内核占1G，用户留3G，一个线程默认8M，所以最多380个左右线程。<br><img src="/images/36.png" alt=""></p>
 <ul>
 <li>内核空间： 内核总是驻留在内存中，是操作系统的一部分。内核空间为内核保留，不允许应用程序读写该区域的内容或直接调用内核代码定义的函数。</li>
@@ -537,7 +540,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives">
+                <a href="/archives/">
               
                   <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
