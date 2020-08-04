@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<!DOCTYPE html><html class="theme-next pisces use-motion" lang="zh-Hans"><head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +12,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  
 
 
 
@@ -48,9 +40,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +60,7 @@
 
 
 
-  <meta name="keywords" content="Linux,进程," />
+  <meta name="keywords" content="Linux,进程,">
 
 
 
@@ -125,7 +117,7 @@
 
 
 
-  <link rel="canonical" href="https://pixvc.github.io/2020/06/24/进程与父子进程/"/>
+  <link rel="canonical" href="https://pixvc.github.io/2020/06/24/进程与父子进程/">
 
 
 
@@ -141,9 +133,9 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.0"><script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}loadCss('/style.css');</script></head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -153,13 +145,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">邹菜鸡</span>
         <span class="logo-line-after"><i></i></span>
@@ -189,7 +181,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -199,7 +191,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -209,7 +201,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -219,7 +211,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
             
             归档
           </a>
@@ -232,7 +224,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
             
             搜索
           </a>
@@ -253,9 +245,7 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -287,20 +277,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://pixvc.github.io/2020/06/24/%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%88%B6%E5%AD%90%E8%BF%9B%E7%A8%8B/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="邹菜鸡">
     </span>
 
@@ -332,7 +322,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -343,7 +333,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/Linux/" itemprop="url" rel="index">
                     <span itemprop="name">Linux</span>
                   </a>
@@ -396,14 +386,14 @@
 <h2 id="进程的状态"><a href="#进程的状态" class="headerlink" title="进程的状态"></a>进程的状态</h2><p>进程基本的状态有5种。分别为初始态，就绪态，运行态，挂起态与终止态。其中初始态为进程准备阶段，常与就绪态结合来看。<br><img src="/images/35.png" alt=""></p>
 <h2 id="创建进程"><a href="#创建进程" class="headerlink" title="创建进程"></a>创建进程</h2><p>打开一个可执行文件也是创建一个进程，例如。./a.out(父进程是bash)、ls也是一个可执行程序（看环境变量path节）</p>
 <h3 id="fork函数-用于创建子进程"><a href="#fork函数-用于创建子进程" class="headerlink" title="fork函数(用于创建子进程)"></a>fork函数(用于创建子进程)</h3><p>创建一个子进程。<br>pid_t fork(void);    失败返回-1；成功返回两个值：① 父进程返回子进程的ID(非负)    ②子进程返回 0<br>pid_t类型（实际上就是int型）表示进程ID，但为了表示-1，它是有符号整型。(0不是有效进程ID，init最小，为1)<br>       注意返回值，不是fork函数能返回两个值，而是fork后，fork函数变为两个，父子需【各自】返回一个。<br><img src="/images/33.png" alt=""><br><strong><em>在语句fork()之前，只有一个进程在执行这段代码</em></strong>，但在这条语句之后，就变成两个进程在执行了，这两个进程的几乎完全相同，将要执行的下一条语句都是if(fpid&lt;0)<br>为什么两个进程的fpid不同呢，这与fork函数的特性有关。fork调用的一个奇妙之处就是它仅仅被调用一次，却能够返回两次，它可能有三种不同的返回值：<br>    1）在父进程中，fork返回新创建子进程的进程ID；<br>    2）在子进程中，fork返回0；<br>    3）如果出现错误，fork返回一个负值；<br>在fork函数执行完毕后，如果创建新进程成功，则出现两个进程，一个是子进程，一个是父进程。在子进程中，fork函数返回0，在父进程中，fork返回新创建子进程的进程ID。我们可以通过fork返回的值来判断当前进程是子进程还是父进程。</p>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;   </span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span>   </span></span><br><span class="line"><span class="function"></span>&#123;   </span><br><span class="line">    <span class="keyword">pid_t</span> fpid; <span class="comment">//fpid表示fork函数返回的值  </span></span><br><span class="line">    <span class="keyword">int</span> count=<span class="number">0</span>;  </span><br><span class="line">    fpid=fork();   </span><br><span class="line">    <span class="keyword">if</span> (fpid &lt; <span class="number">0</span>)   </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"error in fork!"</span>);   </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (fpid == <span class="number">0</span>) &#123;  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"i am the child process, my process id is %d/n"</span>,getpid());   </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"我是爹的儿子/n"</span>); </span><br><span class="line">        count++;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">else</span> &#123;  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"i am the parent process, my process id is %d/n"</span>,getpid());   </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"我是孩子他爹/n"</span>);  </span><br><span class="line">        count++;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"统计结果是: %d/n"</span>,count);  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;  </span><br><span class="line">结果：</span><br><span class="line"> i am the child <span class="built_in">process</span>, my <span class="built_in">process</span> id is <span class="number">5574</span></span><br><span class="line">    我是爹的儿子</span><br><span class="line">    统计结果是: <span class="number">1</span></span><br><span class="line">    i am the parent <span class="built_in">process</span>, my <span class="built_in">process</span> id is <span class="number">5573</span></span><br><span class="line">    我是孩子他爹</span><br><span class="line">    统计结果是: <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight arduino"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;   </span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span>   </span></span><br><span class="line"><span class="function"></span>{   </span><br><span class="line">    <span class="keyword">pid_t</span> fpid; <span class="comment">//fpid表示fork函数返回的值  </span></span><br><span class="line">    <span class="keyword">int</span> count=<span class="number">0</span>;  </span><br><span class="line">    fpid=fork();   </span><br><span class="line">    <span class="keyword">if</span> (fpid &lt; <span class="number">0</span>)   </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"error in fork!"</span>);   </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (fpid == <span class="number">0</span>) {  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"i am the child process, my process id is %d/n"</span>,getpid());   </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"我是爹的儿子/n"</span>); </span><br><span class="line">        count++;  </span><br><span class="line">    }  </span><br><span class="line">    <span class="keyword">else</span> {  </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"i am the parent process, my process id is %d/n"</span>,getpid());   </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"我是孩子他爹/n"</span>);  </span><br><span class="line">        count++;  </span><br><span class="line">    }  </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"统计结果是: %d/n"</span>,count);  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">}  </span><br><span class="line">结果：</span><br><span class="line"> i am the child <span class="built_in">process</span>, my <span class="built_in">process</span> id is <span class="number">5574</span></span><br><span class="line">    我是爹的儿子</span><br><span class="line">    统计结果是: <span class="number">1</span></span><br><span class="line">    i am the parent <span class="built_in">process</span>, my <span class="built_in">process</span> id is <span class="number">5573</span></span><br><span class="line">    我是孩子他爹</span><br><span class="line">    统计结果是: <span class="number">1</span></span><br></pre></td></tr></tbody></table></figure>
 
 <p>特殊例子：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">main ()</span><br><span class="line">&#123;</span><br><span class="line">         <span class="keyword">pid_t</span> pid;</span><br><span class="line">         <span class="built_in">printf</span>(<span class="string">"fork!"</span>);    <span class="comment">//printf("fork!\n")</span></span><br><span class="line"></span><br><span class="line">         pid=fork();</span><br><span class="line"></span><br><span class="line">         <span class="keyword">if</span> (pid &lt; <span class="number">0</span>)</span><br><span class="line">                 <span class="built_in">printf</span>(<span class="string">"error in fork!\n"</span>);</span><br><span class="line">         <span class="keyword">else</span> <span class="keyword">if</span> (pid == <span class="number">0</span>)</span><br><span class="line">                 <span class="built_in">printf</span>(<span class="string">"i am the child process, my process id is %d\n"</span>,getpid());</span><br><span class="line">         <span class="keyword">else</span></span><br><span class="line">                 <span class="built_in">printf</span>(<span class="string">"i am the parent process, my process id is %d\n"</span>,getpid());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">main ()</span><br><span class="line">{</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="keyword">pid_t</span> pid;</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="built_in">printf</span>(<span class="string">"fork!"</span>);&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//printf("fork!\n")</span></span><br><span class="line"></span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pid=fork();</span><br><span class="line"></span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="keyword">if</span> (pid &lt; <span class="number">0</span>)</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="built_in">printf</span>(<span class="string">"error in fork!\n"</span>);</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="keyword">else</span> <span class="keyword">if</span> (pid == <span class="number">0</span>)</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="built_in">printf</span>(<span class="string">"i am the child process, my process id is %d\n"</span>,getpid());</span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="keyword">else</span></span><br><span class="line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="built_in">printf</span>(<span class="string">"i am the parent process, my process id is %d\n"</span>,getpid());</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <p>这个程序打印输出了两个”fork！”这不免让人以为是child process从#include处开始执行，所以也执行了printf(“fork!”); 语句。<br>其实不然，出现这种问题的原因在于：<br>这就跟Printf的缓冲机制有关了,printf某些内容时,操作系统仅仅是把该内容放到了stdout的缓冲队列里了,并没有实际的写到屏幕上 。但是,只要看到有\n, 则会立即刷新stdout,因此就马上能够打印了.</p>
 <p>main函数(parent process)运行了printf(“fork!”) 后, “fork!”仅仅被放到了缓冲里,再运行到fork时,缓冲里面的 AAAAAA 被子进程(child process)继承了,因此在子进程度stdout缓冲里面就也有了”fork!”。所以,你最终看到的会是 “fork!” 被printf了2次!!!!<br>而main函数(parent process)运行 printf(“fork!\n”)后,”fork!” 被立即打印到了屏幕上,之后fork到的子进程(child process)里的stdout缓冲里不会有”fork!”内容 因此你看到的结果会是”fork!” 被printf了1次!!!!</p>
-<h3 id="循环创建n个子进程-重点"><a href="#循环创建n个子进程-重点" class="headerlink" title="循环创建n个子进程(重点)"></a>循环创建n个子进程(重点)</h3><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> #include &lt;stdio.h&gt;</span><br><span class="line"> <span class="number">2</span> #include &lt;stdlib.h&gt;</span><br><span class="line"> <span class="number">3</span> #include &lt;unistd.h&gt;</span><br><span class="line"> <span class="number">4</span> <span class="built_in">int</span> main(<span class="built_in">void</span>)&#123;</span><br><span class="line"> <span class="number">5</span>     <span class="built_in">int</span> i;</span><br><span class="line"> <span class="number">6</span>     pid_t pid;</span><br><span class="line"> <span class="number">7</span>     printf(<span class="string">"xxxxxx\n"</span>);</span><br><span class="line"> <span class="number">8</span>     <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)&#123;</span><br><span class="line"> <span class="number">9</span>         pid = fork();</span><br><span class="line"><span class="number">10</span>         <span class="keyword">if</span>(pid == <span class="number">0</span>)&#123;</span><br><span class="line"><span class="number">11</span>             <span class="keyword">break</span>;  <span class="comment">//如果没有break，子进程也会创建子进程，创建的进程个数为2^n-1，</span></span><br><span class="line">                          <span class="comment">//如果是子进程抢到cpu第一次break后执行下面子进程代码，如果是父进程抢到cpu则继续for</span></span><br><span class="line"><span class="number">12</span>         &#125;</span><br><span class="line"><span class="number">13</span>     &#125;</span><br><span class="line">		sleep(i);  <span class="comment">//保证shell的子进程最后结束</span></span><br><span class="line"><span class="number">14</span>     <span class="keyword">if</span>(i &lt; <span class="number">5</span>)&#123;</span><br><span class="line"><span class="number">15</span>         </span><br><span class="line"><span class="number">16</span>         printf(<span class="string">"I am %d child, pid = %u\n"</span>,i+<span class="number">1</span>,getpid);</span><br><span class="line"><span class="number">17</span>     &#125;<span class="keyword">else</span>&#123;</span><br><span class="line"><span class="number">18</span>        </span><br><span class="line"><span class="number">19</span>         printf(<span class="string">"I am parent\n"</span>);</span><br><span class="line"><span class="number">20</span>     &#125;</span><br><span class="line"><span class="number">21</span></span><br><span class="line"><span class="number">22</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">23</span> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="循环创建n个子进程-重点"><a href="#循环创建n个子进程-重点" class="headerlink" title="循环创建n个子进程(重点)"></a>循环创建n个子进程(重点)</h3><figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> #include &lt;stdio.h&gt;</span><br><span class="line"> <span class="number">2</span> #include &lt;stdlib.h&gt;</span><br><span class="line"> <span class="number">3</span> #include &lt;unistd.h&gt;</span><br><span class="line"> <span class="number">4</span> <span class="built_in">int</span> main(<span class="built_in">void</span>){</span><br><span class="line"> <span class="number">5</span>     <span class="built_in">int</span> i;</span><br><span class="line"> <span class="number">6</span>     pid_t pid;</span><br><span class="line"> <span class="number">7</span>     printf(<span class="string">"xxxxxx\n"</span>);</span><br><span class="line"> <span class="number">8</span>     <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++){</span><br><span class="line"> <span class="number">9</span>         pid = fork();</span><br><span class="line"><span class="number">10</span>         <span class="keyword">if</span>(pid == <span class="number">0</span>){</span><br><span class="line"><span class="number">11</span>             <span class="keyword">break</span>;  <span class="comment">//如果没有break，子进程也会创建子进程，创建的进程个数为2^n-1，</span></span><br><span class="line">                          <span class="comment">//如果是子进程抢到cpu第一次break后执行下面子进程代码，如果是父进程抢到cpu则继续for</span></span><br><span class="line"><span class="number">12</span>         }</span><br><span class="line"><span class="number">13</span>     }</span><br><span class="line">		sleep(i);  <span class="comment">//保证shell的子进程最后结束</span></span><br><span class="line"><span class="number">14</span>     <span class="keyword">if</span>(i &lt; <span class="number">5</span>){</span><br><span class="line"><span class="number">15</span>         </span><br><span class="line"><span class="number">16</span>         printf(<span class="string">"I am %d child, pid = %u\n"</span>,i+<span class="number">1</span>,getpid);</span><br><span class="line"><span class="number">17</span>     }<span class="keyword">else</span>{</span><br><span class="line"><span class="number">18</span>        </span><br><span class="line"><span class="number">19</span>         printf(<span class="string">"I am parent\n"</span>);</span><br><span class="line"><span class="number">20</span>     }</span><br><span class="line"><span class="number">21</span></span><br><span class="line"><span class="number">22</span>     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">23</span> }</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h2><ul>
 <li>getpid函数<br>  获取当前进程ID<br>  pid_t getpid(void);        </li>
 <li>getppid函数<br>  获取当前进程的父进程ID<br>  pid_t getppid(void);</li>
@@ -523,7 +513,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name"></p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -627,7 +617,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">© <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -645,7 +635,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+  <div class="theme-info">主题 — <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
@@ -706,69 +696,69 @@
 
   
   
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+    
   
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+  
+
+  
+
+
+
+  
+  
+
+
+  
+
+  
+
+
+
+  
+  
+
+
+
+
+  
+
+
+  
 
 
 
@@ -807,8 +797,34 @@
 
   
 
-  <script type="text/javascript">
-    // Popup Window;
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+<script src="/bundle.js"></script><script>// Popup Window;
     var isfetched = false;
     var isXml = true;
     // Search DB path;
@@ -1121,31 +1137,4 @@
       if (shouldDismissSearchPopup) {
         onPopupClose();
       }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-
-
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":1}});</script></body>
-</html>
-<!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/src/love.js"></script>
+    });;L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":1}});</script></body></html><!-- 页面点击小红心 -->

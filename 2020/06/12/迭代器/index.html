@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<!DOCTYPE html><html class="theme-next pisces use-motion" lang="zh-Hans"><head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +12,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  
 
 
 
@@ -48,9 +40,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +60,7 @@
 
 
 
-  <meta name="keywords" content="lua," />
+  <meta name="keywords" content="lua,">
 
 
 
@@ -79,12 +71,12 @@
 
 
 
-<meta name="description" content="ipairs()和pairs()的区别pairs会遍历表中所有的key-value值，而ipairs会根据key的数值从1开始加1递增遍历对应的table[i]值，直到出现第一个不是按1递增的数值时候退出。 下面我们以例子说明一下吧 stars &#x3D; {[1] &#x3D; “Sun”, [2] &#x3D; “Moon”, [5] &#x3D; ‘Earth’} for i, v in pairs(stars) do    p">
+<meta name="description" content="ipairs()和pairs()的区别pairs会遍历表中所有的key-value值，而ipairs会根据key的数值从1开始加1递增遍历对应的table[i]值，直到出现第一个不是按1递增的数值时候退出。 下面我们以例子说明一下吧 stars = {[1] = “Sun”, [2] = “Moon”, [5] = ‘Earth’} for i, v in pairs(stars) do    p">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lua迭代器">
 <meta property="og:url" content="https://pixvc.github.io/2020/06/12/%E8%BF%AD%E4%BB%A3%E5%99%A8/index.html">
 <meta property="og:site_name" content="邹菜鸡">
-<meta property="og:description" content="ipairs()和pairs()的区别pairs会遍历表中所有的key-value值，而ipairs会根据key的数值从1开始加1递增遍历对应的table[i]值，直到出现第一个不是按1递增的数值时候退出。 下面我们以例子说明一下吧 stars &#x3D; {[1] &#x3D; “Sun”, [2] &#x3D; “Moon”, [5] &#x3D; ‘Earth’} for i, v in pairs(stars) do    p">
+<meta property="og:description" content="ipairs()和pairs()的区别pairs会遍历表中所有的key-value值，而ipairs会根据key的数值从1开始加1递增遍历对应的table[i]值，直到出现第一个不是按1递增的数值时候退出。 下面我们以例子说明一下吧 stars = {[1] = “Sun”, [2] = “Moon”, [5] = ‘Earth’} for i, v in pairs(stars) do    p">
 <meta property="article:published_time" content="2020-06-12T10:25:54.373Z">
 <meta property="article:modified_time" content="2020-06-16T02:54:25.877Z">
 <meta property="article:tag" content="lua">
@@ -118,7 +110,7 @@
 
 
 
-  <link rel="canonical" href="https://pixvc.github.io/2020/06/12/迭代器/"/>
+  <link rel="canonical" href="https://pixvc.github.io/2020/06/12/迭代器/">
 
 
 
@@ -134,9 +126,9 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.0"><script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}loadCss('/style.css');</script></head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -146,13 +138,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">邹菜鸡</span>
         <span class="logo-line-after"><i></i></span>
@@ -182,7 +174,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -192,7 +184,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -202,7 +194,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -212,7 +204,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
             
             归档
           </a>
@@ -225,7 +217,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
             
             搜索
           </a>
@@ -246,9 +238,7 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -280,20 +270,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://pixvc.github.io/2020/06/12/%E8%BF%AD%E4%BB%A3%E5%99%A8/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="邹菜鸡">
     </span>
 
@@ -325,7 +315,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -336,7 +326,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/lua%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
                     <span itemprop="name">lua语言</span>
                   </a>
@@ -392,13 +382,13 @@
 <p>1    Sun<br>2    Moon</p>
 <p>ipairs()和pairs()的区别就是这么简单。</p>
 <h1 id="泛型-for-迭代器"><a href="#泛型-for-迭代器" class="headerlink" title="泛型 for 迭代器"></a>泛型 for 迭代器</h1><p>泛型 for 在自己内部保存迭代函数，实际上它保存三个值：迭代函数、状态常量、控制变量。<br>泛型 for 迭代器提供了集合的 key/value 对，语法格式如下：</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">pairs</span>(t) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(k, v)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight lua"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">pairs</span>(t) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(k, v)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></tbody></table></figure>
 
 <!--more-->
 
 
 <p>上面代码中，k, v为变量列表；pairs(t)为表达式列表。</p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span> = &#123;"Google", "Runoob"&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for key</span>,<span class="keyword">value</span> <span class="keyword">in</span> ipairs(<span class="keyword">array</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   print(key, <span class="keyword">value</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">执行结果：</span><br><span class="line"><span class="number">1</span>  Google</span><br><span class="line"><span class="number">2</span>  Runoob</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span> = {"Google", "Runoob"}</span><br><span class="line"></span><br><span class="line"><span class="keyword">for key</span>,<span class="keyword">value</span> <span class="keyword">in</span> ipairs(<span class="keyword">array</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   print(key, <span class="keyword">value</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">执行结果：</span><br><span class="line"><span class="number">1</span>  Google</span><br><span class="line"><span class="number">2</span>  Runoob</span><br></pre></td></tr></tbody></table></figure>
 
 <p>Lua 默认提供的迭代函数 ipairs。</p>
 <p>泛型 for 的执行过程：</p>
@@ -412,13 +402,13 @@
 <h1 id="无状态的迭代器"><a href="#无状态的迭代器" class="headerlink" title="无状态的迭代器"></a>无状态的迭代器</h1><p>无状态的迭代器是指不保留任何状态的迭代器，因此在循环中我们可以利用无状态迭代器避免创建闭包花费额外的代价。</p>
 <p>每一次迭代，迭代函数都是用两个变量（状态常量和控制变量）的值作为参数被调用，一个无状态的迭代器只利用这两个值可以获取下一个元素。这种无状态迭代器的典型的简单的例子是 ipairs，它遍历数组的每一个元素。</p>
 <p>以下实例我们使用了一个简单的函数来实现迭代器，实现 数字 n 的平方：</p>
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">--求数字<span class="built_in">j</span>到N的平方</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">square</span><span class="params">(N, j)</span></span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">j</span> &lt;= N</span><br><span class="line">    then</span><br><span class="line">        <span class="keyword">return</span>  <span class="built_in">j</span>+<span class="number">1</span> ,  <span class="built_in">j</span>*<span class="built_in">j</span> --  这里的<span class="built_in">j</span>+<span class="number">1</span> 是为了传给<span class="keyword">for</span>的<span class="built_in">i</span>值，类似++<span class="built_in">i</span>，否则<span class="built_in">i</span>一直不变，死循环</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">--         迭代器函数、恒定状态、控制变量的初值</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>,n in square ,     <span class="number">3</span> ,    <span class="number">1</span></span><br><span class="line">do</span><br><span class="line">    --这里的<span class="built_in">i</span>,n是square返回的</span><br><span class="line">    print(<span class="built_in">i</span><span class="number">-1</span> ,<span class="string">"的平方是"</span> , n)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">--求数字<span class="built_in">j</span>到N的平方</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">square</span><span class="params">(N, j)</span></span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">j</span> &lt;= N</span><br><span class="line">    then</span><br><span class="line">        <span class="keyword">return</span>  <span class="built_in">j</span>+<span class="number">1</span> ,  <span class="built_in">j</span>*<span class="built_in">j</span> --  这里的<span class="built_in">j</span>+<span class="number">1</span> 是为了传给<span class="keyword">for</span>的<span class="built_in">i</span>值，类似++<span class="built_in">i</span>，否则<span class="built_in">i</span>一直不变，死循环</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line">--         迭代器函数、恒定状态、控制变量的初值</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>,n in square ,     <span class="number">3</span> ,    <span class="number">1</span></span><br><span class="line">do</span><br><span class="line">    --这里的<span class="built_in">i</span>,n是square返回的</span><br><span class="line">    print(<span class="built_in">i</span><span class="number">-1</span> ,<span class="string">"的平方是"</span> , n)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></tbody></table></figure>
 
-<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">iter</span> <span class="params">(a, i)</span></span></span><br><span class="line">    <span class="built_in">i</span> = <span class="built_in">i</span> + <span class="number">1</span></span><br><span class="line">    local v = a[<span class="built_in">i</span>]</span><br><span class="line">    <span class="keyword">if</span> v then</span><br><span class="line">       <span class="keyword">return</span> <span class="built_in">i</span>, v</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ipairs</span> <span class="params">(a)</span></span></span><br><span class="line">    <span class="keyword">return</span> iter, a, <span class="number">0</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight matlab"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">iter</span> <span class="params">(a, i)</span></span></span><br><span class="line">    <span class="built_in">i</span> = <span class="built_in">i</span> + <span class="number">1</span></span><br><span class="line">    local v = a[<span class="built_in">i</span>]</span><br><span class="line">    <span class="keyword">if</span> v then</span><br><span class="line">       <span class="keyword">return</span> <span class="built_in">i</span>, v</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ipairs</span> <span class="params">(a)</span></span></span><br><span class="line">    <span class="keyword">return</span> iter, a, <span class="number">0</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></tbody></table></figure>
 <p>当 Lua 调用 ipairs(a) 开始循环时，他获取三个值：迭代函数 iter、状态常量 a、控制变量初始值 0；然后 Lua 调用 iter(a,0) 返回 1, a[1]（除非 a[1]=nil）；第二次迭代调用 iter(a,1) 返回 2, a[2]……直到第一个 nil 元素。</p>
 <h1 id="多状态的迭代器"><a href="#多状态的迭代器" class="headerlink" title="多状态的迭代器"></a>多状态的迭代器</h1><p>很多情况下，迭代器需要保存多个状态信息而不是简单的状态常量和控制变量，最简单的方法是使用闭包，还有一种方法就是将所有的状态信息封装到 table 内，将 table 作为迭代器的状态常量，因为这种情况下可以将所有的信息存放在 table 内，所以迭代函数通常不需要第二个参数。</p>
 <p>以下实例我们创建了自己的迭代器：</p>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span> = &#123;"Google", "Runoob"&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> elementIterator (collection)</span><br><span class="line">   <span class="keyword">local</span> <span class="keyword">index</span> = <span class="number">0</span></span><br><span class="line">   <span class="keyword">local</span> count = #collection</span><br><span class="line">   <span class="comment">-- 闭包函数</span></span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">function</span> ()</span><br><span class="line">      <span class="keyword">index</span> = <span class="keyword">index</span> + <span class="number">1</span></span><br><span class="line">      <span class="keyword">if</span> <span class="keyword">index</span> &lt;= count</span><br><span class="line">      <span class="keyword">then</span></span><br><span class="line">         <span class="comment">--  返回迭代器的当前元素</span></span><br><span class="line">         <span class="keyword">return</span> collection[<span class="keyword">index</span>]</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> element <span class="keyword">in</span> elementIterator(<span class="keyword">array</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   print(element)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">Google</span><br><span class="line">Runoob</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">array</span> = {"Google", "Runoob"}</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> elementIterator (collection)</span><br><span class="line">   <span class="keyword">local</span> <span class="keyword">index</span> = <span class="number">0</span></span><br><span class="line">   <span class="keyword">local</span> count = #collection</span><br><span class="line">   <span class="comment">-- 闭包函数</span></span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">function</span> ()</span><br><span class="line">      <span class="keyword">index</span> = <span class="keyword">index</span> + <span class="number">1</span></span><br><span class="line">      <span class="keyword">if</span> <span class="keyword">index</span> &lt;= count</span><br><span class="line">      <span class="keyword">then</span></span><br><span class="line">         <span class="comment">--  返回迭代器的当前元素</span></span><br><span class="line">         <span class="keyword">return</span> collection[<span class="keyword">index</span>]</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> element <span class="keyword">in</span> elementIterator(<span class="keyword">array</span>)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">   print(element)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">输出：</span><br><span class="line">Google</span><br><span class="line">Runoob</span><br></pre></td></tr></tbody></table></figure>
 <p>以上实例中我们可以看到，elementIterator 内使用了闭包函数，实现计算集合大小并输出各个元素。</p>
 
       
@@ -526,7 +516,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name"></p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -630,7 +620,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">© <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -648,7 +638,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+  <div class="theme-info">主题 — <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
@@ -709,69 +699,69 @@
 
   
   
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+    
   
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+  
+
+  
+
+
+
+  
+  
+
+
+  
+
+  
+
+
+
+  
+  
+
+
+
+
+  
+
+
+  
 
 
 
@@ -810,8 +800,34 @@
 
   
 
-  <script type="text/javascript">
-    // Popup Window;
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+<script src="/bundle.js"></script><script>// Popup Window;
     var isfetched = false;
     var isXml = true;
     // Search DB path;
@@ -1124,31 +1140,4 @@
       if (shouldDismissSearchPopup) {
         onPopupClose();
       }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-
-
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":1}});</script></body>
-</html>
-<!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/src/love.js"></script>
+    });;L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":1}});</script></body></html><!-- 页面点击小红心 -->

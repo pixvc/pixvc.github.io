@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<!DOCTYPE html><html class="theme-next pisces use-motion" lang="zh-Hans"><head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +12,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  
 
 
 
@@ -48,9 +40,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +60,7 @@
 
 
 
-  <meta name="keywords" content="C语言," />
+  <meta name="keywords" content="C语言,">
 
 
 
@@ -79,12 +71,12 @@
 
 
 
-<meta name="description" content="什么是函数指针？这个问题从定义的角度来看很好理解，指向函数的指针就是函数指针，但是我们如何声明一个函数指针呢？又如何将一个地址强制转换为某一个类型的函数指针呢？这里看下面一个例子源码： 1234567void function(int a)&amp;#123;       a &#x3D; 5;&amp;#125;void (*pfunc)(int); 很简单，上面这段代码声明了一个函数fucntion和一个函数指针pfu">
+<meta name="description" content="什么是函数指针？这个问题从定义的角度来看很好理解，指向函数的指针就是函数指针，但是我们如何声明一个函数指针呢？又如何将一个地址强制转换为某一个类型的函数指针呢？这里看下面一个例子源码： 1234567void function(int a)&amp;#123;       a = 5;&amp;#125;void (*pfunc)(int); 很简单，上面这段代码声明了一个函数fucntion和一个函数指针pfu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="函数指针">
 <meta property="og:url" content="https://pixvc.github.io/2020/06/30/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/index.html">
 <meta property="og:site_name" content="邹菜鸡">
-<meta property="og:description" content="什么是函数指针？这个问题从定义的角度来看很好理解，指向函数的指针就是函数指针，但是我们如何声明一个函数指针呢？又如何将一个地址强制转换为某一个类型的函数指针呢？这里看下面一个例子源码： 1234567void function(int a)&amp;#123;       a &#x3D; 5;&amp;#125;void (*pfunc)(int); 很简单，上面这段代码声明了一个函数fucntion和一个函数指针pfu">
+<meta property="og:description" content="什么是函数指针？这个问题从定义的角度来看很好理解，指向函数的指针就是函数指针，但是我们如何声明一个函数指针呢？又如何将一个地址强制转换为某一个类型的函数指针呢？这里看下面一个例子源码： 1234567void function(int a)&amp;#123;       a = 5;&amp;#125;void (*pfunc)(int); 很简单，上面这段代码声明了一个函数fucntion和一个函数指针pfu">
 <meta property="article:published_time" content="2020-06-30T02:21:48.437Z">
 <meta property="article:modified_time" content="2020-06-30T07:44:22.044Z">
 <meta property="article:tag" content="C语言">
@@ -118,7 +110,7 @@
 
 
 
-  <link rel="canonical" href="https://pixvc.github.io/2020/06/30/函数指针/"/>
+  <link rel="canonical" href="https://pixvc.github.io/2020/06/30/函数指针/">
 
 
 
@@ -134,9 +126,9 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.0"><script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}loadCss('/style.css');</script></head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -146,13 +138,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">邹菜鸡</span>
         <span class="logo-line-after"><i></i></span>
@@ -182,7 +174,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -192,7 +184,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -202,7 +194,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -212,7 +204,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
             
             归档
           </a>
@@ -225,7 +217,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
             
             搜索
           </a>
@@ -246,9 +238,7 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -280,20 +270,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://pixvc.github.io/2020/06/30/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="邹菜鸡">
     </span>
 
@@ -325,7 +315,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -336,7 +326,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/C%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index">
                     <span itemprop="name">C语言</span>
                   </a>
@@ -375,12 +365,12 @@
 
       
         <h2 id="什么是函数指针？"><a href="#什么是函数指针？" class="headerlink" title="什么是函数指针？"></a>什么是函数指针？</h2><p>这个问题从定义的角度来看很好理解，指向函数的指针就是函数指针，但是我们如何声明一个函数指针呢？又如何将一个地址强制转换为某一个类型的函数指针呢？这里看下面一个例子源码：</p>
-<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void <span class="function"><span class="keyword">function</span><span class="params">(int a)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">&#123;</span></span></span><br><span class="line"><span class="function"><span class="comment">       a = 5;</span></span></span><br><span class="line"><span class="function"><span class="comment">&#125;</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">void</span> <span class="params">(*pfunc)</span><span class="params">(int)</span>;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight delphi"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void <span class="function"><span class="keyword">function</span><span class="params">(int a)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">{</span></span></span><br><span class="line"><span class="function"><span class="comment">       a = 5;</span></span></span><br><span class="line"><span class="function"><span class="comment">}</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">void</span> <span class="params">(*pfunc)</span><span class="params">(int)</span>;</span></span><br></pre></td></tr></tbody></table></figure>
 <p>很简单，上面这段代码声明了一个函数fucntion和一个函数指针pfunc, 它指向的函数就是一个具有void返回值，int参数的函数。<br>如果将function函数的地址给pfunc指针，可以简单的通过下面两种赋值：<br><code>pfunc = function//函数名就是地址;或者pfunc = &amp;function</code><br>通过指针调用该函数，也有两种方法：<br><code>pfunc(5); 或 (*pfunc)(5);</code></p>
 <hr>
 <h2 id="返回函数指针的函数声名"><a href="#返回函数指针的函数声名" class="headerlink" title="返回函数指针的函数声名"></a>返回函数指针的函数声名</h2><p>先看一下下面的需求1) 定义一个函数；2) 该函数具有以下特点，两个参数，返回值是函数指针，并且一个参数也是函数指针。假如返回值和参数函数指针同为void (<em>)(int); 另一个函数参数是int型。该函数定义名称为my_func。<br>假如说my_func的返回值是int，是不是它的定义可以这么写：`int my_func(int, void (</em>)(int))<code></code>void (<em>pfunc)(int)；`<br>其中pfunc 等价于 void (\</em>)(int)。pfunc就是my_func(int, void (*)(int))。现在如果将两者代替一下是不是就成了这种格式：<br><code>void (*my_func(int, void(*)(int)))(int)</code></p>
 <h2 id="typedef"><a href="#typedef" class="headerlink" title="typedef"></a>typedef</h2><p>例如语句 typedef int *apple; 理解它的正确步骤是这样的：先别看typedef，就剩下int *apple; 这个语句再简单不过，就是声明了一个指向整型变量的指针apple (注意：定义只是一种特殊的声明)，加上typedef之后就解释成声明了一种指向整型变量指针的类型apple 。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*<span class="keyword">sighandler_t</span>)</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">sighandler_t</span> <span class="title">signal</span><span class="params">(<span class="keyword">int</span> signum, <span class="keyword">sighandler_t</span> handler)</span></span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*<span class="keyword">sighandler_t</span>)</span><span class="params">(<span class="keyword">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">sighandler_t</span> <span class="title">signal</span><span class="params">(<span class="keyword">int</span> signum, <span class="keyword">sighandler_t</span> handler)</span></span>;</span><br></pre></td></tr></tbody></table></figure>
 <p>盖住 typedef不看 ，再简单不过，sighandler_t就是一个函数指针，指向的函数接受一个整型参数并返回一个无类型指针 。加上typedef之后sighandler_t就是一种新的类型，就可以像int一样地去用它，不同的是它声明是一种函数指针，这种指针指向的函数接受一个整型参数并返回一个无类型指针 </p>
 
       
@@ -488,7 +478,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name"></p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -592,7 +582,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">© <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -610,7 +600,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+  <div class="theme-info">主题 — <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
@@ -671,69 +661,69 @@
 
   
   
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+    
   
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+  
+
+  
+
+
+
+  
+  
+
+
+  
+
+  
+
+
+
+  
+  
+
+
+
+
+  
+
+
+  
 
 
 
@@ -772,8 +762,34 @@
 
   
 
-  <script type="text/javascript">
-    // Popup Window;
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+<script src="/bundle.js"></script><script>// Popup Window;
     var isfetched = false;
     var isXml = true;
     // Search DB path;
@@ -1086,31 +1102,4 @@
       if (shouldDismissSearchPopup) {
         onPopupClose();
       }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-
-
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":1}});</script></body>
-</html>
-<!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/src/love.js"></script>
+    });;L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":1}});</script></body></html><!-- 页面点击小红心 -->

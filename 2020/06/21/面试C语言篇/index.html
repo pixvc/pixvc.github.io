@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<!DOCTYPE html><html class="theme-next pisces use-motion" lang="zh-Hans"><head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +12,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +32,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  
 
 
 
@@ -48,9 +40,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,7 +60,7 @@
 
 
 
-  <meta name="keywords" content="面试," />
+  <meta name="keywords" content="面试,">
 
 
 
@@ -79,12 +71,12 @@
 
 
 
-<meta name="description" content="一个程序从开始运行到结束的完整过程 预处理（.i文件）在编译的时候会被尾开去换成空际的代码这个层开编译的时候会被展开替换成实际的代码,这个展升的步骤就是在预处理的时候进行的当然预处理并不仅仅只是做宏的展开，它还做了类似头文件插入预处理之后的产品依然还是C&#x2F;C++代码,它在代码的逻辑上和输入的C&#x2F;C++源代码是完全- -样的.  汇编 (.s文件)汇编语言是将机器语言符号化了的语言是机器不能直接识别">
+<meta name="description" content="一个程序从开始运行到结束的完整过程 预处理（.i文件）在编译的时候会被尾开去换成空际的代码这个层开编译的时候会被展开替换成实际的代码,这个展升的步骤就是在预处理的时候进行的当然预处理并不仅仅只是做宏的展开，它还做了类似头文件插入预处理之后的产品依然还是C/C++代码,它在代码的逻辑上和输入的C/C++源代码是完全- -样的.  汇编 (.s文件)汇编语言是将机器语言符号化了的语言是机器不能直接识别">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C语言篇">
 <meta property="og:url" content="https://pixvc.github.io/2020/06/21/%E9%9D%A2%E8%AF%95C%E8%AF%AD%E8%A8%80%E7%AF%87/index.html">
 <meta property="og:site_name" content="邹菜鸡">
-<meta property="og:description" content="一个程序从开始运行到结束的完整过程 预处理（.i文件）在编译的时候会被尾开去换成空际的代码这个层开编译的时候会被展开替换成实际的代码,这个展升的步骤就是在预处理的时候进行的当然预处理并不仅仅只是做宏的展开，它还做了类似头文件插入预处理之后的产品依然还是C&#x2F;C++代码,它在代码的逻辑上和输入的C&#x2F;C++源代码是完全- -样的.  汇编 (.s文件)汇编语言是将机器语言符号化了的语言是机器不能直接识别">
+<meta property="og:description" content="一个程序从开始运行到结束的完整过程 预处理（.i文件）在编译的时候会被尾开去换成空际的代码这个层开编译的时候会被展开替换成实际的代码,这个展升的步骤就是在预处理的时候进行的当然预处理并不仅仅只是做宏的展开，它还做了类似头文件插入预处理之后的产品依然还是C/C++代码,它在代码的逻辑上和输入的C/C++源代码是完全- -样的.  汇编 (.s文件)汇编语言是将机器语言符号化了的语言是机器不能直接识别">
 <meta property="og:image" content="https://pixvc.github.io/images/27.png">
 <meta property="article:published_time" content="2020-06-21T03:31:58.831Z">
 <meta property="article:modified_time" content="2020-06-24T10:14:42.082Z">
@@ -120,7 +112,7 @@
 
 
 
-  <link rel="canonical" href="https://pixvc.github.io/2020/06/21/面试C语言篇/"/>
+  <link rel="canonical" href="https://pixvc.github.io/2020/06/21/面试C语言篇/">
 
 
 
@@ -136,9 +128,9 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.0"><script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}loadCss('/style.css');</script></head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -148,13 +140,13 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">邹菜鸡</span>
         <span class="logo-line-after"><i></i></span>
@@ -184,7 +176,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -194,7 +186,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -204,7 +196,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -214,7 +206,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
             
             归档
           </a>
@@ -227,7 +219,7 @@
             <a href="javascript:;" class="popup-trigger">
           
             
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
             
             搜索
           </a>
@@ -248,9 +240,7 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -282,20 +272,20 @@
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://pixvc.github.io/2020/06/21/%E9%9D%A2%E8%AF%95C%E8%AF%AD%E8%A8%80%E7%AF%87/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="邹菜鸡">
     </span>
 
@@ -327,7 +317,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -338,7 +328,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
                   <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index">
                     <span itemprop="name">嵌入式面试题</span>
                   </a>
@@ -396,7 +386,7 @@
 <p>答案是：<br>a) int a; // An integer<br>b) int <em>a; // A pointer to an integer<br>c) int *</em>a; // A pointer to a pointer to an integer<br>d) int a[10]; // An array of 10 integers<br>e) int <em>a[10]; // An array of 10 pointers to integers<br>f) int (</em>a)[10]; // A pointer to an array of 10 integers<br>g) int (<em>a)(int); // A pointer to a function a that takes an integer argument and returns an integer<br>h) int (</em>a[10])(int); // An array of 10 pointers to functions that take an integer argument and return an integer</p>
 <h2 id="关键字static的作用是什么？"><a href="#关键字static的作用是什么？" class="headerlink" title="关键字static的作用是什么？"></a>关键字static的作用是什么？</h2><p>这个简单的问题很少有人能回答完全。在C语言中，关键字static有三个明显的作用：<br>1). 在函数体，一个被声明为静态的变量在这一函数被调用过程中维持其值不变。<br>2). 在模块内（但在函数体外），一个被声明为静态的变量可以被模块内所用函数访问，但不能被模块外其它函数访问。它是一个本地的全局变量。<br>3). 在模块内，一个被声明为静态的函数只可被这一模块内的其它函数调用。那就是，这个函数被限制在声明它的模块的本地范围内使用。<br>大多数应试者能正确回答第一部分，一部分能正确回答第二部分，同是很少的人能懂得第三部分。这是一个应试者的严重的缺点，因为他显然不懂得本地化数据和代码范围的好处和重要性。</p>
 <h2 id="关键字const是什么含意？"><a href="#关键字const是什么含意？" class="headerlink" title="关键字const是什么含意？"></a>关键字const是什么含意？</h2><p>只要一个变量前用const来修饰，就意味着该变量里的数据只能被访问，而不能被修改，也就是意味着const“只读”</p>
-<figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Const</span> <span class="keyword">int</span> a;</span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> a;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> *a; <span class="comment">//const靠近*，地址内容不可变，地址可变，*a=100//err ；a=NULL//OK</span></span><br><span class="line"><span class="keyword">int</span> * <span class="keyword">const</span> a;<span class="comment">//看const靠近*还是a，靠近a表示地址可变，地址里面的内容不可变，</span></span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> * a <span class="keyword">const</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight zephir"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Const</span> <span class="keyword">int</span> a;</span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> a;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> *a; <span class="comment">//const靠近*，地址内容不可变，地址可变，*a=100//err ；a=NULL//OK</span></span><br><span class="line"><span class="keyword">int</span> * <span class="keyword">const</span> a;<span class="comment">//看const靠近*还是a，靠近a表示地址可变，地址里面的内容不可变，</span></span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> * a <span class="keyword">const</span>;</span><br></pre></td></tr></tbody></table></figure>
 <p>前两个的作用是一样，a是一个常整型数。第三个意味着a是一个指向常整型数的指针（也就是，整型数是不可修改的，但指针可以）。第四个意思a是一个指向整型数的常指针（也就是说，指针指向的整型数是可以修改的，但指针是不可修改的）。最后一个意味着a是一个指向常整型数的常指针（也就是说，指针指向的整型数是不可修改的，同时指针也是不可修改的）。：<br>1). 关键字const的作用是为给读你代码的人传达非常有用的信息，实际上，声明一个参数为常量是为了告诉了用户这个参数的应用目的。如果你曾花很多时间清理其它人留下的垃圾，你就会很快学会感谢这点多余的信息。（当然，懂得用const的程序员很少会留下的垃圾让别人来清理的。）<br>2). 通过给优化器一些附加的信息，使用关键字const也许能产生更紧凑的代码。<br>3). 合理地使用关键字const可以使编译器很自然地保护那些不希望被改变的参数，防止其被无意的代码修改。简而言之，这样可以减少bug的出现。</p>
 <h2 id="关键字volatile有什么含意-并给出三个不同的例子。"><a href="#关键字volatile有什么含意-并给出三个不同的例子。" class="headerlink" title="关键字volatile有什么含意 并给出三个不同的例子。"></a>关键字volatile有什么含意 并给出三个不同的例子。</h2><p>一个定义为volatile的变量是说这变量可能会被意想不到地改变，这样，编译器就不会去假设这个变量的值了。精确地说就是，优化器在用到这个变量时必须每次都小心地重新读取这个变量的值，而不是使用保存在寄存器里的备份。下面是volatile变量的几个例子：</p>
 <ol>
@@ -405,16 +395,16 @@
 <li>多线程应用中被几个任务共享的变量<br>假设被面试者正确地回答了这是问题（嗯，怀疑这否会是这样），我将稍微深究一下，看一下这家伙是不是直正懂得volatile完全的重要性。<br>1). 一个参数既可以是const还可以是volatile吗？解释为什么。<br>2). 一个指针可以是volatile 吗？解释为什么。<br>下面是答案：<br>1). volatile修饰符告诉complier变量值可以以任何不被程序明确指明的方式改变，最常见的例子就是外部端口的值，它的变化可以不用程序内的任何赋值语句就有可能改变的，这种变量就可以用volatile来修饰，complier不会优化掉它。<br>const修饰的变量在程序里面是不能改变的，但是可以被程序外的东西修改，就象上面说的外部端口的值，如果仅仅使用const，有可能complier会优化掉这些变量，加上volatile就万无一失了。<br>2). 可以。尽管这并不很常见。一个例子是当一个中服务子程序修该一个指向一个buffer的指针时。</li>
 </ol>
 <h2 id="位操作（Bit-manipulation）"><a href="#位操作（Bit-manipulation）" class="headerlink" title="位操作（Bit manipulation）"></a>位操作（Bit manipulation）</h2><p>嵌入式系统总是要用户对变量或寄存器进行位操作。给定一个整型变量a，写两段代码，第一个设置a的bit 3，第二个清除a 的bit 3。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BIT3 (0x1&lt;&lt;3) </span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> a; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">set_bit3</span><span class="params">(<span class="keyword">void</span>)</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">a |= BIT3; </span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">clear_bit3</span><span class="params">(<span class="keyword">void</span>)</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">a &amp;= ~BIT3; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="要求设置一绝对地址为0x67a9的整型变量的值为0xaa55"><a href="#要求设置一绝对地址为0x67a9的整型变量的值为0xaa55" class="headerlink" title="要求设置一绝对地址为0x67a9的整型变量的值为0xaa55"></a>要求设置一绝对地址为0x67a9的整型变量的值为0xaa55</h2><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *<span class="built_in">ptr</span><span class="comment">; </span></span><br><span class="line"><span class="built_in">ptr</span> = (<span class="keyword">int</span> *)<span class="number">0x67a9</span><span class="comment">; </span></span><br><span class="line">*<span class="built_in">ptr</span> = <span class="number">0xaa55</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BIT3 (0x1&lt;&lt;3) </span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> a; </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">set_bit3</span><span class="params">(<span class="keyword">void</span>)</span> </span></span><br><span class="line"><span class="function"></span>{ </span><br><span class="line">a |= BIT3; </span><br><span class="line">} </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">clear_bit3</span><span class="params">(<span class="keyword">void</span>)</span> </span></span><br><span class="line"><span class="function"></span>{ </span><br><span class="line">a &amp;= ~BIT3; </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="要求设置一绝对地址为0x67a9的整型变量的值为0xaa55"><a href="#要求设置一绝对地址为0x67a9的整型变量的值为0xaa55" class="headerlink" title="要求设置一绝对地址为0x67a9的整型变量的值为0xaa55"></a>要求设置一绝对地址为0x67a9的整型变量的值为0xaa55</h2><figure class="highlight x86asm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *<span class="built_in">ptr</span><span class="comment">; </span></span><br><span class="line"><span class="built_in">ptr</span> = (<span class="keyword">int</span> *)<span class="number">0x67a9</span><span class="comment">; </span></span><br><span class="line">*<span class="built_in">ptr</span> = <span class="number">0xaa55</span><span class="comment">;</span></span><br></pre></td></tr></tbody></table></figure>
 
 
 <h2 id="中断函数（Interrupts）"><a href="#中断函数（Interrupts）" class="headerlink" title="中断函数（Interrupts）"></a>中断函数（Interrupts）</h2><p>中断是嵌入式系统中重要的组成部分，这导致了很多编译开发商提供一种扩展—让标准C支持中断。具代表事实是，产生了一个新的关键字<strong>interrupt。下面的代码就使用了</strong>interrupt关键字去定义了一个中断服务子程序(ISR)，请评论一下这段代码的。<br>__interrupt double compute_area (double radius)<br>{<br>double area = PI * radius * radius;<br>printf(” Area = %f”, area);<br>return area;<br>}<br>这个函数有太多的错误了，以至让人不知从何说起了：<br>1). ISR 不能返回一个值。如果你不懂这个，那么你不会被雇用的。<br>2). ISR 不能传递参数。如果你没有看到这一点，你被雇用的机会等同第一项。<br>3). 在许多的处理器/编译器中，浮点一般都是不可重入的。有些处理器/编译器需要让额处的寄存器入栈，有些处理器/编译器就是不允许在ISR中做浮点运算。此外，ISR应该是短而有效率的，在ISR中做浮点运算是不明智的。<br>4). 与第三点一脉相承，printf()经常有重入和性能上的问题。如果你丢掉了第三和第四点，我不会太为难你的。不用说，如果你能得到后两点，那么你的被雇用前景越来越光明了。</p>
 <h2 id="const与-define相比"><a href="#const与-define相比" class="headerlink" title="const与#define相比"></a>const与#define相比</h2><p>1）就起作用的阶段而言：#define是在编译的预处理阶段起作用，而const是在 编译、运行的时候起作用。<br>2）就起作用的方式而言： #define只是简单的字符串替换，没有类型检查。而const有对应的数据类型，是要进行判断的，可以避免一些低级的错误。<br>3）就存储方式而言：#define只是进行展开，有多少地方使用，就替换多少次，它定义的宏常量在内存中有若干个备份；const定义的只读变量在程序运行过程中只有一份备份。<br>4）从代码调试的方便程度而言： const常量可以进行调试的，define是不能进行调试的，因为在预编译阶段就已经替换掉了。</p>
 <h2 id="typedef与define的区别"><a href="#typedef与define的区别" class="headerlink" title="typedef与define的区别"></a>typedef与define的区别</h2><p>typedef ：typedef是在计算机编程语言中用来为复杂的声明定义简单的别名，它与宏定义有些差异。它本身是一种存储类的关键字，与auto、extern、mutable、static、register等关键字不能出现在同一个表达式中。<br><code>typedef int size;//size就是int类型，定义变量时可以写 size a；</code></p>
 <p>typedef是C语言中用来声明自定义数据类型，配合各种原有数据类型来达到简化编程的目的的类型定义关键字。#define是预处理指令，是宏定义。</p>
-<h2 id="简介-和-的作用"><a href="#简介-和-的作用" class="headerlink" title="简介##和#的作用"></a>简介##和#的作用</h2><p> ##的作用就是把2个宏参数连接为1个数。<br> #的作用就是讲#后面的宏参数进行字符串的操作，也就是将#后面的参数两边加上一对双引号使其成为字符串。<br> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">#<span class="meta-keyword">define</span> TE(a,b) (a#b)</span></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"> </span>&#123;</span><br><span class="line"> 	<span class="keyword">int</span> num = TE(<span class="number">12</span>,<span class="number">34</span>);</span><br><span class="line"> 	<span class="built_in">printf</span>(<span class="string">"num=%d"</span>,num);</span><br><span class="line"> &#125;</span><br><span class="line">输出：num=<span class="number">1234</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TE(param) #param</span></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"> </span>&#123;</span><br><span class="line"> 	<span class="keyword">char</span> *pstr = TE(<span class="number">1234</span>);</span><br><span class="line"> 	<span class="built_in">printf</span>(<span class="string">"num=%s"</span>,pstr);</span><br><span class="line"> &#125;</span><br><span class="line"> 输出：sptr=<span class="number">1234</span></span><br></pre></td></tr></table></figure>
+<h2 id="简介-和-的作用"><a href="#简介-和-的作用" class="headerlink" title="简介##和#的作用"></a>简介##和#的作用</h2><p> ##的作用就是把2个宏参数连接为1个数。<br> #的作用就是讲#后面的宏参数进行字符串的操作，也就是将#后面的参数两边加上一对双引号使其成为字符串。<br> </p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">#<span class="meta-keyword">define</span> TE(a,b) (a#b)</span></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"> </span>{</span><br><span class="line"> 	<span class="keyword">int</span> num = TE(<span class="number">12</span>,<span class="number">34</span>);</span><br><span class="line"> 	<span class="built_in">printf</span>(<span class="string">"num=%d"</span>,num);</span><br><span class="line"> }</span><br><span class="line">输出：num=<span class="number">1234</span></span><br></pre></td></tr></tbody></table></figure><p></p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TE(param) #param</span></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"> </span>{</span><br><span class="line"> 	<span class="keyword">char</span> *pstr = TE(<span class="number">1234</span>);</span><br><span class="line"> 	<span class="built_in">printf</span>(<span class="string">"num=%s"</span>,pstr);</span><br><span class="line"> }</span><br><span class="line"> 输出：sptr=<span class="number">1234</span></span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="virtual关键字"><a href="#virtual关键字" class="headerlink" title="virtual关键字"></a>virtual关键字</h2><p>为C++关键字，virtual声明的函数为虚函数，告诉编译器不要静态链接</p>
 <h2 id="指针与引用的相同和区别；如何相互转换？"><a href="#指针与引用的相同和区别；如何相互转换？" class="headerlink" title="指针与引用的相同和区别；如何相互转换？"></a>指针与引用的相同和区别；如何相互转换？</h2><p>区别：</p>
@@ -482,9 +472,9 @@
 </ul>
 <h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h2><p><img src="/images/27.png" alt=""></p>
 <h2 id="char和int之间的转换"><a href="#char和int之间的转换" class="headerlink" title="char和int之间的转换"></a>char和int之间的转换</h2><p>char转int</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch=<span class="string">'9'</span>;</span><br><span class="line"><span class="keyword">int</span> ch_int=ch-<span class="string">'0'</span>;<span class="comment">//此时ch_int=9</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch=<span class="string">'9'</span>;</span><br><span class="line"><span class="keyword">int</span> ch_int=ch-<span class="string">'0'</span>;<span class="comment">//此时ch_int=9</span></span><br></pre></td></tr></tbody></table></figure>
 <p>int转char</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i=<span class="number">9</span>；</span><br><span class="line"><span class="keyword">char</span> i_ch=i+<span class="string">'0'</span>;<span class="comment">//此时i_ch='9'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i=<span class="number">9</span>；</span><br><span class="line"><span class="keyword">char</span> i_ch=i+<span class="string">'0'</span>;<span class="comment">//此时i_ch='9'</span></span><br></pre></td></tr></tbody></table></figure>
 
 <table>
 <thead>
@@ -624,7 +614,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name"></p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -708,7 +698,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一个程序从开始运行到结束的完整过程"><span class="nav-number">1.</span> <span class="nav-text">一个程序从开始运行到结束的完整过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预处理器（Preprocessor）"><span class="nav-number">2.</span> <span class="nav-text">预处理器（Preprocessor）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写一个“标准”宏MIN-MAX，这个宏输入两个参数并返回较小-大的一个。"><span class="nav-number">3.</span> <span class="nav-text">写一个“标准”宏MIN&#x2F;MAX，这个宏输入两个参数并返回较小&#x2F;大的一个。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预处理器标识-error的目的是什么？"><span class="nav-number">4.</span> <span class="nav-text">预处理器标识#error的目的是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌入式系统中经常要用到无限循环，你怎么样用C编写死循环呢？"><span class="nav-number">5.</span> <span class="nav-text">嵌入式系统中经常要用到无限循环，你怎么样用C编写死循环呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用变量a给出下面的定义"><span class="nav-number">6.</span> <span class="nav-text">用变量a给出下面的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键字static的作用是什么？"><span class="nav-number">7.</span> <span class="nav-text">关键字static的作用是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键字const是什么含意？"><span class="nav-number">8.</span> <span class="nav-text">关键字const是什么含意？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键字volatile有什么含意-并给出三个不同的例子。"><span class="nav-number">9.</span> <span class="nav-text">关键字volatile有什么含意 并给出三个不同的例子。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#位操作（Bit-manipulation）"><span class="nav-number">10.</span> <span class="nav-text">位操作（Bit manipulation）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要求设置一绝对地址为0x67a9的整型变量的值为0xaa55"><span class="nav-number">11.</span> <span class="nav-text">要求设置一绝对地址为0x67a9的整型变量的值为0xaa55</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断函数（Interrupts）"><span class="nav-number">12.</span> <span class="nav-text">中断函数（Interrupts）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const与-define相比"><span class="nav-number">13.</span> <span class="nav-text">const与#define相比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#typedef与define的区别"><span class="nav-number">14.</span> <span class="nav-text">typedef与define的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简介-和-的作用"><span class="nav-number">15.</span> <span class="nav-text">简介##和#的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#virtual关键字"><span class="nav-number">16.</span> <span class="nav-text">virtual关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针与引用的相同和区别；如何相互转换？"><span class="nav-number">17.</span> <span class="nav-text">指针与引用的相同和区别；如何相互转换？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#h头文件中的ifndef-define-endif-的作用？"><span class="nav-number">18.</span> <span class="nav-text">.h头文件中的ifndef&#x2F;define&#x2F;endif 的作用？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全局变量和局部变量在内存中是否有区别？如果有，是什么区别？"><span class="nav-number">19.</span> <span class="nav-text">全局变量和局部变量在内存中是否有区别？如果有，是什么区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆栈溢出一般是由什么原因导致的？"><span class="nav-number">20.</span> <span class="nav-text">堆栈溢出一般是由什么原因导致的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的内存分配"><span class="nav-number">21.</span> <span class="nav-text">程序的内存分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在1G内存的计算机中能否malloc-1-2G-？为什么？"><span class="nav-number">22.</span> <span class="nav-text">在1G内存的计算机中能否malloc(1.2G)？为什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆和栈的区别"><span class="nav-number">23.</span> <span class="nav-text">堆和栈的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简述数组与指针的区别？"><span class="nav-number">24.</span> <span class="nav-text">简述数组与指针的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extern关键字"><span class="nav-number">25.</span> <span class="nav-text">extern关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extern-“C”的作用"><span class="nav-number">26.</span> <span class="nav-text">extern “C”的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#new和malloc的区别"><span class="nav-number">27.</span> <span class="nav-text">new和malloc的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-中struct和class的区别"><span class="nav-number">28.</span> <span class="nav-text">C++中struct和class的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大小端的区别以及各自的优点，哪种时候用"><span class="nav-number">29.</span> <span class="nav-text">大小端的区别以及各自的优点，哪种时候用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机怎么算减法-补码的作用"><span class="nav-number">30.</span> <span class="nav-text">计算机怎么算减法(补码的作用)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#队列和栈的区别"><span class="nav-number">31.</span> <span class="nav-text">队列和栈的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量作用域"><span class="nav-number">32.</span> <span class="nav-text">变量作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#char和int之间的转换"><span class="nav-number">33.</span> <span class="nav-text">char和int之间的转换</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一个程序从开始运行到结束的完整过程"><span class="nav-number">1.</span> <span class="nav-text">一个程序从开始运行到结束的完整过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预处理器（Preprocessor）"><span class="nav-number">2.</span> <span class="nav-text">预处理器（Preprocessor）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写一个“标准”宏MIN-MAX，这个宏输入两个参数并返回较小-大的一个。"><span class="nav-number">3.</span> <span class="nav-text">写一个“标准”宏MIN/MAX，这个宏输入两个参数并返回较小/大的一个。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预处理器标识-error的目的是什么？"><span class="nav-number">4.</span> <span class="nav-text">预处理器标识#error的目的是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌入式系统中经常要用到无限循环，你怎么样用C编写死循环呢？"><span class="nav-number">5.</span> <span class="nav-text">嵌入式系统中经常要用到无限循环，你怎么样用C编写死循环呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用变量a给出下面的定义"><span class="nav-number">6.</span> <span class="nav-text">用变量a给出下面的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键字static的作用是什么？"><span class="nav-number">7.</span> <span class="nav-text">关键字static的作用是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键字const是什么含意？"><span class="nav-number">8.</span> <span class="nav-text">关键字const是什么含意？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键字volatile有什么含意-并给出三个不同的例子。"><span class="nav-number">9.</span> <span class="nav-text">关键字volatile有什么含意 并给出三个不同的例子。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#位操作（Bit-manipulation）"><span class="nav-number">10.</span> <span class="nav-text">位操作（Bit manipulation）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要求设置一绝对地址为0x67a9的整型变量的值为0xaa55"><span class="nav-number">11.</span> <span class="nav-text">要求设置一绝对地址为0x67a9的整型变量的值为0xaa55</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断函数（Interrupts）"><span class="nav-number">12.</span> <span class="nav-text">中断函数（Interrupts）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const与-define相比"><span class="nav-number">13.</span> <span class="nav-text">const与#define相比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#typedef与define的区别"><span class="nav-number">14.</span> <span class="nav-text">typedef与define的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简介-和-的作用"><span class="nav-number">15.</span> <span class="nav-text">简介##和#的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#virtual关键字"><span class="nav-number">16.</span> <span class="nav-text">virtual关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针与引用的相同和区别；如何相互转换？"><span class="nav-number">17.</span> <span class="nav-text">指针与引用的相同和区别；如何相互转换？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#h头文件中的ifndef-define-endif-的作用？"><span class="nav-number">18.</span> <span class="nav-text">.h头文件中的ifndef/define/endif 的作用？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全局变量和局部变量在内存中是否有区别？如果有，是什么区别？"><span class="nav-number">19.</span> <span class="nav-text">全局变量和局部变量在内存中是否有区别？如果有，是什么区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆栈溢出一般是由什么原因导致的？"><span class="nav-number">20.</span> <span class="nav-text">堆栈溢出一般是由什么原因导致的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序的内存分配"><span class="nav-number">21.</span> <span class="nav-text">程序的内存分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在1G内存的计算机中能否malloc-1-2G-？为什么？"><span class="nav-number">22.</span> <span class="nav-text">在1G内存的计算机中能否malloc(1.2G)？为什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆和栈的区别"><span class="nav-number">23.</span> <span class="nav-text">堆和栈的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简述数组与指针的区别？"><span class="nav-number">24.</span> <span class="nav-text">简述数组与指针的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extern关键字"><span class="nav-number">25.</span> <span class="nav-text">extern关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extern-“C”的作用"><span class="nav-number">26.</span> <span class="nav-text">extern “C”的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#new和malloc的区别"><span class="nav-number">27.</span> <span class="nav-text">new和malloc的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-中struct和class的区别"><span class="nav-number">28.</span> <span class="nav-text">C++中struct和class的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大小端的区别以及各自的优点，哪种时候用"><span class="nav-number">29.</span> <span class="nav-text">大小端的区别以及各自的优点，哪种时候用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机怎么算减法-补码的作用"><span class="nav-number">30.</span> <span class="nav-text">计算机怎么算减法(补码的作用)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#队列和栈的区别"><span class="nav-number">31.</span> <span class="nav-text">队列和栈的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量作用域"><span class="nav-number">32.</span> <span class="nav-text">变量作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#char和int之间的转换"><span class="nav-number">33.</span> <span class="nav-text">char和int之间的转换</span></a></li></ol></div>
             
 
           </div>
@@ -728,7 +718,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">© <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -746,7 +736,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+  <div class="theme-info">主题 — <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
@@ -807,69 +797,69 @@
 
   
   
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    
   
 
   
   
-    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+    
   
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+  
+
+  
+
+
+
+  
+  
+
+
+  
+
+  
+
+
+
+  
+  
+
+
+
+
+  
+
+
+  
 
 
 
@@ -908,8 +898,34 @@
 
   
 
-  <script type="text/javascript">
-    // Popup Window;
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+<script src="/bundle.js"></script><script>// Popup Window;
     var isfetched = false;
     var isXml = true;
     // Search DB path;
@@ -1222,31 +1238,4 @@
       if (shouldDismissSearchPopup) {
         onPopupClose();
       }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-
-
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":1}});</script></body>
-</html>
-<!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/src/love.js"></script>
+    });;L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":1}});</script></body></html><!-- 页面点击小红心 -->
