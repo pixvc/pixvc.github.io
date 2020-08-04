@@ -10,7 +10,7 @@
 
 'use strict';
 
-var precacheConfig = [["/about/index.html","5f4d7a90a2728a635ce7b826ca650809"],["/index.html","86c5e020564768ff5ae23dde7d899ef3"]];
+var precacheConfig = [["/about/index.html","11540e79e8f1957b464359efc19a3e02"],["/index.html","a71a08bd697164cd41f3bd58abe55f58"]];
 var cacheName = 'sw-precache-v3--' + (self.registration ? self.registration.scope : '');
 var firstRegister = 1; // 默认1是首次安装SW， 0是SW更新
 
@@ -286,7 +286,7 @@ self.addEventListener('activate', function (event) {
 
 // Runtime cache 配置转换后的 toolbox 代码.
 
-toolbox.router.get("/**/*", toolbox.cacheFirst, {"origin":"io-oi.me"});
+toolbox.router.get("/**/*", toolbox.cacheFirst, {"origin":"https://pixvc.github.io/"});
 
 
 
